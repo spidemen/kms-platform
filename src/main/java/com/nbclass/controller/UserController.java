@@ -172,6 +172,7 @@ public class UserController {
         return jsonMap;
     }
 
+    /*修改密码-------此处有点问题*/
     @BussinessLog(value="修改密码")
     @RequestMapping(value = "/changePassword",method = RequestMethod.POST)
     @ResponseBody
