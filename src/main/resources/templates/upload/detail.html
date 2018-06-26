@@ -1,0 +1,56 @@
+    <form class="form-horizontal" id="fileDetailForm" method = 'post' th:action="@{/file/edit}">
+        <input class="hidden" name="id" th:value="${file.id}">
+        <div class="box-body">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">文件名 :</label>
+                <div class="col-sm-8">
+                    <input type="text" th:value="${file.name}" class="form-control" name="name" require="必填项"  placeholder="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">url :</label>
+                <div class="col-sm-8">
+                    <input type="text" th:value="${file.url}" class="form-control" name="description" placeholder="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">云文件名 :</label>
+                <div class="col-sm-8">
+                    <input type="text" th:value="${file.relUrl}" class="form-control" name="description" placeholder="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">文件大小 :</label>
+                <div class="col-sm-8">
+                    <input type="text" th:value="${file.size}" class="form-control" name="description" placeholder="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">文件类型 :</label>
+                <div class="col-sm-8">
+                    <input type="text" th:value="${file.type}" class="form-control" name="description" placeholder="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">创建时间 :</label>
+                <div class="col-sm-8">
+                    <input type="text" th:value="${#dates.format(file.createTime,'yyyy-MM-dd HH:mm:ss')}" class="form-control" name="description" placeholder="">
+                </div>
+            </div>
+
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <div class="pull-right">
+                <button th:if="${opertype} == 'edit'" type="button" id="saveFileDetail" class="btn btn-info">确定</button>
+                <button type="button" data-dismiss="modal" class="btn btn-default">取消</button>
+            </div>
+        </div>
+        <!-- /.box-footer -->
+    </form>
+    <script>
+        var opertype="[[${opertype}]]";
+        if(opertype=="detail"){
+            $("#fileDetailForm .form-control").attr("disabled","disabled");
+        }
+    </script>

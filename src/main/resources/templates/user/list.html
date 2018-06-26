@@ -1,0 +1,427 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<section class="content-header">
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">权限管理</a></li>
+        <li class="active">用户管理</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs jax-nav-tabs">
+            <li class="active"><a class="jax-tab-a" href="#tab-content1" data-toggle="tab" onclick="userList(1)">用户列表</a></li>
+            <li class="danger"><a class="jax-tab-a" href="#rubbish" data-toggle="tab" onclick="userList(2)">回收站</a></li>
+        </ul>
+        <div class="tab-content">
+            <!-- Font Awesome Icons -->
+            <div class="tab-pane jax-table active" id="tab-content1">
+<!--                <div class="box box-success">
+                    <div class="box-body jax-table">-->
+                        <div id="toolbar" class="btn-group">
+                            <shiro:hasPermission name="/user/add">
+                            <button id="btn_add" type="button" class="btn btn-primary" data-toggle="modal" data-target="#userModal">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+                            </button>
+                            </shiro:hasPermission>
+                            <shiro:hasPermission name="/user/edit">
+                            <button id="btn_edit" type="button" class="btn btn-success">
+                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+                            </button>
+                            </shiro:hasPermission>
+                            <shiro:hasPermission name="/user/delete">
+                            <button id="btn_delete" type="button" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+                            </button>
+                            </shiro:hasPermission>
+                            <shiro:hasPermission name="/user/detail">
+                            <button id="btn_detail" type="button" class="btn btn-info">
+                                <span class="fa fa-info" aria-hidden="true"></span>详情
+                            </button>
+                            </shiro:hasPermission>
+                            <shiro:hasPermission name="/user/assign/role">
+                            <button id="btn_assign_role" type="button" class="btn btn-warning">
+                                <span class="fa fa-arrow-right" aria-hidden="true"></span>分配角色
+                            </button>
+                            </shiro:hasPermission>
+                        </div>
+                        <table id="table"></table>
+                   <!-- </div>
+                </div>-->
+            </div>
+            <div class="tab-pane jax-table" id="rubbish">
+                <div id="rubbishToolbar" class="btn-group">
+                    <shiro:hasPermission name="/user/reuse">
+                        <button id="btn_reuse" type="button" class="btn btn-success">
+                            <span class="fa fa-reply" aria-hidden="true"></span>启用
+                        </button>
+                    </shiro:hasPermission>
+                </div>
+                <table id="rubbish-table">
+
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- 用户新增模态框 -->
+<div id="userModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog"  role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">新增用户</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="userForm">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label  class="col-sm-3 control-label">用户名 <span style="color: red">*</span>:</label>
+                            <div class="col-sm-8">
+                                <input  name="username" class="form-control" min="3" require="必填项"  placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-3 control-label">密码 <span style="color: red">*</span>:</label>
+                            <div class="col-sm-8">
+                                <input name="password" type="password" class="form-control"  min="3" require="必填项"  placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-3 control-label">确认密码 <span style="color: red">*</span>:</label>
+                            <div class="col-sm-8">
+                                <input name="confirmPassword" type="password" class="form-control"  min="3" require="必填项"  placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-3 control-label">邮箱 :</label>
+                            <div class="col-sm-8">
+                                <input name="email" class="form-control" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-3 control-label">电话 :</label>
+
+                            <div class="col-sm-8">
+                                <input name="phone" class="form-control" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-3 control-label">性别 :</label>
+                            <div class="col-sm-8">
+                                <select name="sex" class="form-control">
+                                    <option value="0">请选择</option>
+                                    <option value="1">男</option>
+                                    <option value="2">女</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-3 control-label">年龄 :</label>
+                            <div class="col-sm-8">
+                                <input name="age" class="form-control" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <div class="pull-right">
+                            <button type="button" id="saveUser" class="btn btn-info">确定</button>
+                            <button type="button" data-dismiss="modal" class="btn btn-default">取消</button>
+                        </div>
+                    </div>
+                    <!-- /.box-footer -->
+                </form>
+            </div>
+            <!--<div class="modal-footer">
+                <button type="button" class="btn btn-primary">保存</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>-->
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!-- 用户详情模态框 -->
+<div id="userDetailModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">用户信息</h4>
+            </div>
+            <div class="modal-body">
+                <div id="userOpenWindow">
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!-- 分配角色模态框 -->
+<div id="assignRoleModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">分配角色</h4>
+            </div>
+            <div class="modal-body">
+                <table id="assignRoleTable">
+                </table>
+            </div>
+            <div class="modal-footer">
+                <div class="pull-right">
+                    <button type="button" id="saveAssign" class="btn btn-info">确定</button>
+                    <button type="button" data-dismiss="modal" class="btn btn-default">取消</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<script>
+    var userIdStr;//批量用户id
+    var roleIdStr;//分配的角色
+    var selectRoleIds;
+    var userIdChecked;
+    var userStatus=1; //1正常，2删除
+    var loadRoleCount=0;
+    var loadUserDelCount=0;
+    var columns = [
+        {checkbox: true },
+        {
+            field: 'userId',
+            title: '用户ID',
+            align : "center"
+        }, {
+            field: 'username',
+            title: '用户名',
+            align : "center"
+        },{
+            field: 'email',
+            title: '邮箱',
+            align : "center"
+        }, {
+            field: 'phone',
+            title: '电话',
+            align : "center",
+        },
+        {
+            field: 'status',
+            title: '用户状态',
+            align : "center",
+            formatter:function(value,row, index){
+                return row.status == '1' ? "启用" : "禁用";
+            }
+        },
+        {
+            field: 'lastLoginTime',
+            title: '最后登录时间',
+            align : "center",
+            formatter : function(value,row, index) {
+                return Core.longMsTimeConvertToDateTime(value);
+            }
+        }];
+    var options={
+        id:"#table",
+        url: '/user/list',
+        columns:columns,
+        toolbar: '#toolbar',
+        showRefresh: true,
+        queryParams : queryParams
+    }
+    Core.initTable(options);
+
+    //tab点击
+    function userList(status) {
+        userStatus=status;
+        if(userStatus==1){
+            Core.refreshTable("#table");
+        }else if(userStatus==2){
+            if(loadUserDelCount==0){
+                var rubbishOptions={
+                    id:"#rubbish-table",
+                    url: '/user/list',
+                    columns:columns,
+                    showRefresh: true,
+                    queryParams : queryParams,
+                    toolbar: '#rubbishToolbar',
+                    onLoadSuccess: function(){  //加载成功时执行
+                        loadUserDelCount=1;
+                    },
+                }
+                Core.initTable(rubbishOptions);
+            }else{
+                Core.refreshTable("#rubbish-table");
+            }
+        }
+    }
+
+    /*查询用户参数*/
+    function queryParams(params) {
+        var temp = { //这里的键的名字和控制器的变量名必须一致，这边改动，控制器也需要改成一样的
+            limit : params.limit, //页面大小
+            offset : params.offset, //页码
+            status : userStatus
+        };
+        return temp;
+    }
+
+    /*查询角色参数*/
+    function queryRoleParams(params){
+        userIdChecked = Core.selectSingleData("#table").userId;
+        var temp = {
+            userId :userIdChecked
+        };
+        return temp;
+    }
+
+    /*处理角色数据*/
+    function handleRoleData(res){
+        selectRoleIds = res.hasRoles;
+        return res.rows;
+    }
+
+    $(function () {
+        $("#btn_add").click(function(){
+            Core.clearError("#userForm");
+        });
+        $("#btn_edit").click(function(){
+            var result = Core.selectSingleData("#table");
+            if(result != false){
+                Core.load("#userOpenWindow","/user/detail?opertype=edit&userId="+result.userId,function(){
+                    $("#userDetailModal").modal("show");
+                });
+            }
+        });
+        $("#btn_detail").click(function(){
+            var result = Core.selectSingleData("#table");
+            if(result != false){
+                Core.load("#userOpenWindow","/user/detail?opertype=detail&userId="+result.userId,function(){
+                    $("#userDetailModal").modal("show");
+                });
+            }
+        });
+        $("#btn_delete").click(function(){
+            var checkedRows= Core.selectMutiData("#table");
+            if(checkedRows){
+                userIdStr="";
+                $.each(checkedRows, function (i, item) {
+                    userIdStr+=(item.userId+",");
+                })
+                userIdStr=userIdStr.substring(0,userIdStr.length-1);
+                Core.postAjax("/user/delete",{"userIdStr":userIdStr},function (data) {
+                    if(data.status=="success"){
+                        layer.msg("删除成功！");
+                        Core.refreshTable("#table");
+                    }else{
+                        layer.msg(data.msg);
+                    }
+                },"get")
+            }
+        });
+        $("#btn_reuse").click(function(){
+            var checkedRows= Core.selectMutiData("#rubbish-table");
+            if(checkedRows){
+                userIdStr="";
+                $.each(checkedRows, function (i, item) {
+                    userIdStr+=(item.userId+",");
+                })
+                userIdStr=userIdStr.substring(0,userIdStr.length-1);
+                Core.postAjax("/user/reuse",{"userIdStr":userIdStr},function (data) {
+                    if(data.status=="success"){
+                        layer.msg("启用成功！");
+                        Core.refreshTable("#rubbish-table");
+                    }else{
+                        layer.msg(data.msg);
+                    }
+                },"get")
+            }
+        });
+        /*分配角色*/
+        $("#btn_assign_role").click(function(){
+            var result = Core.selectSingleData("#table");
+            if(result){
+                $("#assignRoleModal").modal("show");
+                if(loadRoleCount==0){
+                    var roleColumns=[
+                        {checkbox: true },
+                        {
+                            field: 'roleId',
+                            title: '角色ID',
+                            align : "center"
+                        }, {
+                            field: 'name',
+                            title: '角色名称',
+                            align : "center"
+                        }, {
+                            field: 'description',
+                            title: '角色描述',
+                            align : "center"
+                        },
+                        {
+                            field: 'status',
+                            title: '角色状态',
+                            align : "center",
+                            formatter:function(value,row, index){
+                                return row.status == '1' ? "有效" : "删除";
+                            }
+                        }];
+                    var roleOptions={
+                        id:"#assignRoleTable",
+                        url: "/user/assign/role/list",
+                        columns:roleColumns,
+                        pagination : false,
+                        queryParams : queryRoleParams,
+                        onLoadSuccess: function(){  //加载成功时执行
+                            loadRoleCount=1;
+                            Core.checkTableBy("#assignRoleTable",{field:"roleId", values:selectRoleIds});
+                        },
+                        responseHandler : handleRoleData,
+                    }
+                    Core.initTable(roleOptions);
+                }
+                if(loadRoleCount==1){
+                    Core.refreshTable("#assignRoleTable");
+                }
+            }
+        });
+        /*保存用戶*/
+        $("#saveUser").click(function(){
+            if(doValidForm(userForm)){
+                Core.mask("#saveUser");
+                Core.postAjax("/user/add",$("#userForm").serialize(),function (data) {
+                    Core.unmask("#saveUser");
+                    if(data.status=="success"){
+                        layer.msg("保存成功！");
+                        $("#userModal").modal("hide");
+                        $("#userForm")[0].reset();
+                        Core.refreshTable("#table")
+                    }else{
+                        layer.msg(data.msg);
+                    }
+                })
+            };
+        });
+        /*分配角色保存*/
+        $("#saveAssign").click(function () {
+            var checkedRows= Core.selectMutiData("#assignRoleTable");
+            if(checkedRows){
+                Core.mask("#saveAssign");
+                roleIdStr="";
+                $.each(checkedRows, function (i, item) {
+                    roleIdStr+=(item.roleId+",");
+                })
+                roleIdStr=roleIdStr.substring(0,roleIdStr.length-1);
+                Core.postAjax('/user/assign/role',{userId:userIdChecked,roleIdStr:roleIdStr},function (data) {
+                    Core.unmask("#saveAssign");
+                    if(data.status=="success"){
+                        layer.msg("分配成功！");
+                        $("#assignRoleModal").modal("hide");
+                    }else{
+                        layer.msg(data.msg);
+                    }
+                })
+            }
+        })
+    });
+
+</script>
+</html>
