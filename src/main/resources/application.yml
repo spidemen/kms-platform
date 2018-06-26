@@ -49,5 +49,3 @@ pagehelper:
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
-const:
-  static-server: http://p2blsey2s.bkt.clouddn.com
