@@ -142,4 +142,10 @@ public class SystemController{
         return permissionListList;
     }
 
+    /*图标*/
+    @GetMapping(value = "/icons")
+    public String getIcons(){
+        return "ui/icons";
+    }
+
 }

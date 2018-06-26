@@ -75,7 +75,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public List<Permission> selectSubPermsByPermissionId(String permissionId) {
+    public int selectSubPermsByPermissionId(String permissionId) {
         return permissionMapper.selectSubPermsByPermissionId(permissionId);
     }
 }

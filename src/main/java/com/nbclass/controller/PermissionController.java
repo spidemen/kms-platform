@@ -77,8 +77,8 @@ public class PermissionController{
     public Map<String, Object> deletePermission(String permissionId){
         try {
             Map<String, Object> jsonMap = new HashMap<String, Object>();
-            List<Permission> subPermissionList = permissionService.selectSubPermsByPermissionId(permissionId);
-            if(subPermissionList.size()>0){
+            int subPermsByPermissionIdCount = permissionService.selectSubPermsByPermissionId(permissionId);
+            if(subPermsByPermissionIdCount>0){
                 return ResultUtil.error("改资源存在下级资源，无法删除！");
             }
             int a = permissionService.updateStatus(permissionId,CoreConst.STATUS_INVALID);

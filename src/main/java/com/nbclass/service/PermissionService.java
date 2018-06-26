@@ -27,5 +27,5 @@ public interface PermissionService {
 
     int updateByPermissionId(Permission permission);
 
-    List<Permission> selectSubPermsByPermissionId(String permissionId);
+    int selectSubPermsByPermissionId(String permissionId);
 }

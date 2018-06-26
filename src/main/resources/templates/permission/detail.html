@@ -1,4 +1,4 @@
-    <form class="form-horizontal" id="permissionDetailForm" method = 'post' th:action="@{/permission/edit}">
+    <form class="form-horizontal" id="permissionDetailForm">
         <input class="hidden" name="permissionId" th:value="${permission.permissionId}">
         <div class="box-body">
             <div class="form-group">
@@ -72,22 +72,6 @@
         }
         $(function () {
             $("#saveDetailpermission").on('click', function () {
-                var options = {
-                    type : "POST",
-                    success: function(data){
-                        Core.unmask("#saveDetailpermission");
-                        if(data.status=="success"){
-                            layer.msg("保存成功！");
-                            $("#permissionDetailModal").modal("hide");
-                            Menu.table.refresh();
-                        }else{
-                            layer.msg(data.msg);
-                        }
-                    },
-                    error: function (e) {
-                        layer.msg("未知错误！");
-                    }
-                };
                 if(doValidForm(permissionDetailForm)){
                     if(detailMenuCheckedType!=null){
                         if((detailMenuType=="0"||detailMenuType=="1")&&detailMenuCheckedType!=0){
@@ -99,7 +83,16 @@
                         }
                     }
                     Core.mask("#saveDetailpermission");
-                    $("#permissionDetailForm").ajaxSubmit(options);
+                    Core.postAjax("/permission/edit",$("#permissionDetailForm").serialize(),function (data) {
+                        Core.unmask("#saveDetailpermission");
+                        if(data.status=="success"){
+                            layer.msg("保存成功！");
+                            $("#permissionDetailModal").modal("hide");
+                            Menu.table.refresh();
+                        }else{
+                            layer.msg(data.msg);
+                        }
+                    })
                 }
             })
         });

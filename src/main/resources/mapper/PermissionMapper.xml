@@ -79,8 +79,8 @@
     permission_id = #{permissionId}
   </update>
 
-  <select id="selectSubPermsByPermissionId" parameterType="string" resultMap="BaseResultMap">
-    SELECT  b.permission_id,b.name FROM permission a  LEFT JOIN permission b on a.id = b.parent_id and b.status=1 WHERE a.permission_id = #{permissionId}
+  <select id="selectSubPermsByPermissionId" parameterType="string" resultType="integer">
+    SELECT  count(b.id) FROM permission a  LEFT JOIN permission b on a.id = b.parent_id and b.status=1 WHERE a.permission_id = #{permissionId}
   </select>
 
 </mapper>
