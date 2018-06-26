@@ -5,8 +5,10 @@ import com.github.pagehelper.PageInfo;
 import com.nbclass.annotation.BussinessLog;
 import com.nbclass.model.Permission;
 import com.nbclass.model.Role;
+import com.nbclass.model.User;
 import com.nbclass.service.PermissionService;
 import com.nbclass.service.RoleService;
+import com.nbclass.shiro.MyShiroRealm;
 import com.nbclass.shiro.ShiroService;
 import com.nbclass.util.ResultUtil;
 import com.nbclass.vo.PermissionTreeListVo;
@@ -29,6 +31,8 @@ public class RoleController{
     private PermissionService permissionService;
     @Autowired
     private ShiroService shiroService;
+    @Autowired
+    private MyShiroRealm myShiroRealm;
 
     /*角色列表入口*/
     @BussinessLog(value="查看角色列表")
@@ -172,7 +176,14 @@ public class RoleController{
         }
         Map<String,Object> jsonMap = roleService.addAssignPermission(roleId,permissionIdsList);
         /*重新加载角色下所有用户权限*/
-        shiroService.reloadAuthorizingByRoleId(roleId);
+        List<User> userList = roleService.findByRoleId(roleId);
+        if(userList.size()>0){
+            List<String> userIds = new ArrayList<>();
+            for(User user : userList){
+                userIds.add(user.getUserId());
+            }
+            myShiroRealm.clearAuthorizationByUserId(userIds);
+        }
         return jsonMap;
     }
 

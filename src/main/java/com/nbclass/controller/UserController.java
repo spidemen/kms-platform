@@ -25,11 +25,13 @@ import java.util.*;
 public class UserController {
 
     @Autowired
+    private MyShiroRealm myShiroRealm;
+    @Autowired
     private UserService userService;
     @Autowired
     private RoleService roleService;
     @Autowired
-    private ShiroService shiroService;
+    private MyShiroRealm shiroRealm;
 
     /*用户列表入口*/
     @BussinessLog(value="查看用户列表")
@@ -163,7 +165,10 @@ public class UserController {
         String[] roleIds = roleIdStr.split(",");
         List<String> roleIdsList = Arrays.asList(roleIds);
         Map<String,Object> jsonMap = userService.addAssignRole(userId,roleIdsList);
-        shiroService.reloadAuthorizingByUserId(userService.selectByUserId(userId));
+
+        List<String> userIds = new ArrayList<>();
+        userIds.add(userId);
+        myShiroRealm.clearAuthorizationByUserId(userIds);
         return jsonMap;
     }
 
@@ -185,10 +190,10 @@ public class UserController {
             PasswordHelper.encryptPassword(newUser);
             userService.updateUserByPrimaryKey(newUser);
             //*清除登录缓存*//
-            RealmSecurityManager rsm = (RealmSecurityManager) SecurityUtils.getSecurityManager();
-            MyShiroRealm shiroRealm = (MyShiroRealm) rsm.getRealms().iterator().next();
-            shiroRealm.removeCachedAuthenticationInfo((User) SecurityUtils.getSubject().getPrincipal());
-            SecurityUtils.getSubject().logout();
+            List<String> userIds = new ArrayList<>();
+            userIds.add(loginUser.getUserId());
+            shiroRealm.removeCachedAuthenticationInfo(userIds);
+            /*SecurityUtils.getSubject().logout();*/
         }else{
             return ResultUtil.error("您输入的旧密码有误");
         }

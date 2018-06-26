@@ -97,37 +97,4 @@ public class ShiroService {
             }
         }
     }
-
-    /**
-     * 重新加载用户的权限
-     *
-     * @param user
-     */
-    public void reloadAuthorizingByUserId(User user) {
-        RealmSecurityManager rsm = (RealmSecurityManager) SecurityUtils.getSecurityManager();
-        MyShiroRealm shiroRealm = (MyShiroRealm) rsm.getRealms().iterator().next();
-        Subject subject = SecurityUtils.getSubject();
-       /* String realmName = subject.getPrincipals().getRealmNames().iterator().next();
-        SimplePrincipalCollection principals = new SimplePrincipalCollection(user, realmName);
-        subject.runAs(principals);*/
-        shiroRealm.getAuthorizationCache().remove(subject.getPrincipals());
-        /*subject.releaseRunAs();*/
-
-    }
-
-    /**
-     * 重新加载用户的权限
-     *
-     * @param roleId
-     */
-    public void reloadAuthorizingByRoleId(String roleId) {
-        List<User> userList = roleService.findByRoleId(roleId);
-        if (CollectionUtils.isEmpty(userList)) {
-            return;
-        }
-        for (User user : userList) {
-            reloadAuthorizingByUserId(user);
-        }
-    }
-
 }

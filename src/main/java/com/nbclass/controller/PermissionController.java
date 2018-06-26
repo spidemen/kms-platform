@@ -3,6 +3,7 @@ package com.nbclass.controller;
 import com.nbclass.annotation.BussinessLog;
 import com.nbclass.model.Permission;
 import com.nbclass.service.PermissionService;
+import com.nbclass.shiro.MyShiroRealm;
 import com.nbclass.shiro.ShiroService;
 import com.nbclass.util.CoreConst;
 import com.nbclass.util.ResultUtil;

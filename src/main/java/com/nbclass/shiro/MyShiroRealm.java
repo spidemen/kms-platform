@@ -73,20 +73,41 @@ public class MyShiroRealm extends AuthorizingRealm {
     }
 
     /*清除认证信息*/
-    public void removeCachedAuthenticationInfo(User user) {
-        SimplePrincipalCollection pc = new SimplePrincipalCollection();
-        pc.add(user, super.getName());
-        super.clearCachedAuthenticationInfo(pc);
+    public void removeCachedAuthenticationInfo(List<String> userIds) {
+        if(null == userIds || userIds.size() == 0)	{
+            return ;
+        }
+        List<SimplePrincipalCollection> list = getSpcListByUserIds(userIds);
+        RealmSecurityManager securityManager =
+                (RealmSecurityManager) SecurityUtils.getSecurityManager();
+        MyShiroRealm realm = (MyShiroRealm)securityManager.getRealms().iterator().next();
+        for (SimplePrincipalCollection simplePrincipalCollection : list) {
+            realm.clearCachedAuthenticationInfo(simplePrincipalCollection);
+        }
     }
 
     /**
      * 根据userId 清除当前session存在的用户的权限缓存
      * @param userIds 已经修改了权限的userId
      */
-    public void clearUserAuthByUserId(List<String> userIds){
+    public void clearAuthorizationByUserId(List<String> userIds){
         if(null == userIds || userIds.size() == 0)	{
             return ;
         }
+        List<SimplePrincipalCollection> list = getSpcListByUserIds(userIds);
+        RealmSecurityManager securityManager =
+                (RealmSecurityManager) SecurityUtils.getSecurityManager();
+        MyShiroRealm realm = (MyShiroRealm)securityManager.getRealms().iterator().next();
+        for (SimplePrincipalCollection simplePrincipalCollection : list) {
+            realm.clearCachedAuthorizationInfo(simplePrincipalCollection);
+        }
+    }
+
+    /**
+     * 根据用户id获取所有spc
+     * @param userIds 已经修改了权限的userId
+     */
+    private  List<SimplePrincipalCollection> getSpcListByUserIds(List<String> userIds){
         //获取所有session
         Collection<Session> sessions = redisSessionDAO.getActiveSessions();
         //定义返回
@@ -109,11 +130,6 @@ public class MyShiroRealm extends AuthorizingRealm {
                 }
             }
         }
-        RealmSecurityManager securityManager =
-                (RealmSecurityManager) SecurityUtils.getSecurityManager();
-        MyShiroRealm realm = (MyShiroRealm)securityManager.getRealms().iterator().next();
-        for (SimplePrincipalCollection simplePrincipalCollection : list) {
-            realm.clearCachedAuthorizationInfo(simplePrincipalCollection);
-        }
+        return list;
     }
 }
