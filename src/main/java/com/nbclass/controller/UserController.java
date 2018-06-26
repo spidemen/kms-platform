@@ -194,7 +194,7 @@ public class UserController {
             List<String> userIds = new ArrayList<>();
             userIds.add(loginUser.getUserId());
             shiroRealm.removeCachedAuthenticationInfo(userIds);
-            /*SecurityUtils.getSubject().logout();*/
+            SecurityUtils.getSubject().logout();
         }else{
             return ResultUtil.error("您输入的旧密码有误");
         }
