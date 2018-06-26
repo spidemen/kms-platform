@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.nbclass</groupId>
-	<artifactId>springboot</artifactId>
+	<artifactId>zb-shiro</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>springboot</name>
+	<name>zb-shiro</name>
 	<description>www.nbclass.com</description>
 
 	<parent>
