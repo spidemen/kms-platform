@@ -172,7 +172,7 @@ public class UserController {
         return jsonMap;
     }
 
-    /*修改密码-------此处有点问题*/
+    /*修改密码*/
     @BussinessLog(value="修改密码")
     @RequestMapping(value = "/changePassword",method = RequestMethod.POST)
     @ResponseBody
@@ -181,7 +181,7 @@ public class UserController {
         if(!changePasswordVo.getNewPassword().equals(changePasswordVo.getConfirmNewPassword())){
             return ResultUtil.error("两次密码输入不一致");
         }
-        User loginUser = ((User) SecurityUtils.getSubject().getPrincipal());
+        User loginUser = userService.selectByUserId(((User) SecurityUtils.getSubject().getPrincipal()).getUserId());
         User newUser = CopyUtil.getCopy(loginUser,User.class);
         String sysOldPassword = loginUser.getPassword();
         newUser.setPassword(changePasswordVo.getOldPassword());
@@ -194,7 +194,7 @@ public class UserController {
             List<String> userIds = new ArrayList<>();
             userIds.add(loginUser.getUserId());
             shiroRealm.removeCachedAuthenticationInfo(userIds);
-            SecurityUtils.getSubject().logout();
+            /*SecurityUtils.getSubject().logout();*/
         }else{
             return ResultUtil.error("您输入的旧密码有误");
         }

@@ -124,12 +124,7 @@
                         Core.unmask("#savePassword")
                         if(data.status=="success"){
                             $("#passwordModal").modal("hide");
-                            layer.msg('密码修改成功!', {
-                                offset:'30%',
-                                time:800
-                            }, function(){
-                                window.location.href="/login"
-                            });
+                            layer.msg('密码修改成功!');
                         }else{
                             layer.msg(data.msg);
                         }
