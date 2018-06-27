@@ -1,7 +1,6 @@
 package com.nbclass.controller;
 
 import com.google.code.kaptcha.Constants;
-import com.nbclass.annotation.BussinessLog;
 import com.nbclass.model.Permission;
 import com.nbclass.model.User;
 import com.nbclass.service.PermissionService;
@@ -16,15 +15,12 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

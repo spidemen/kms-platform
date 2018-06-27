@@ -2,7 +2,6 @@ package com.nbclass.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.nbclass.annotation.BussinessLog;
 import com.nbclass.model.Permission;
 import com.nbclass.model.Role;
 import com.nbclass.model.User;
@@ -19,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.*;
 
 @Controller
@@ -35,7 +35,6 @@ public class RoleController{
     private MyShiroRealm myShiroRealm;
 
     /*角色列表入口*/
-    @BussinessLog(value="查看角色列表")
     @GetMapping("/list")
     public String roleList() {
         return "role/list";
@@ -65,7 +64,6 @@ public class RoleController{
     }
 
     /*新增角色*/
-    @BussinessLog(value="新增角色")
     @PostMapping("/add")
     @ResponseBody
     public Map<String, Object> addRole(Role role) {
@@ -83,7 +81,6 @@ public class RoleController{
     }
 
     /*删除角色*/
-    @BussinessLog(value="删除角色")
     @GetMapping("/delete")
     @ResponseBody
     public Map<String, Object> deleteRole(String roleIdStr) {
@@ -98,7 +95,6 @@ public class RoleController{
     }
 
     /*启用角色*/
-    @BussinessLog(value="启用角色")
     @GetMapping("/reuse")
     @ResponseBody
     public Map<String, Object> reuseRole(String roleIdStr) {
@@ -114,7 +110,6 @@ public class RoleController{
     }
 
     /*角色详情*/
-    @BussinessLog(value="查看角色详情")
     @GetMapping("/detail")
     public String detail(Model model, Integer id, String opertype) {
         Role role = roleService.findById(id);
@@ -124,7 +119,6 @@ public class RoleController{
     }
 
     /*编辑角色*/
-    @BussinessLog(value="编辑角色")
     @PostMapping("/edit")
     @ResponseBody
     public Map<String, Object> editRole(@ModelAttribute("role") Role role) {
@@ -138,7 +132,6 @@ public class RoleController{
     }
 
     /*分配权限列表查询*/
-    @BussinessLog(value="查看分配权限列表")
     @PostMapping("/assign/permission/list")
     @ResponseBody
     public List<PermissionTreeListVo> assignRole(String roleId){
@@ -164,7 +157,6 @@ public class RoleController{
     }
 
 
-    @BussinessLog(value="保存分配权限")
     /*分配权限*/
     @PostMapping("/assign/permission")
     @ResponseBody

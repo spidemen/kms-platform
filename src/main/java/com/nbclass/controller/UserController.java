@@ -2,17 +2,14 @@ package com.nbclass.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.nbclass.annotation.BussinessLog;
 import com.nbclass.model.Role;
 import com.nbclass.model.User;
 import com.nbclass.service.RoleService;
 import com.nbclass.service.UserService;
 import com.nbclass.shiro.MyShiroRealm;
-import com.nbclass.shiro.ShiroService;
 import com.nbclass.util.*;
 import com.nbclass.vo.ChangePasswordVo;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.mgt.RealmSecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +31,6 @@ public class UserController {
     private MyShiroRealm shiroRealm;
 
     /*用户列表入口*/
-    @BussinessLog(value="查看用户列表")
     @GetMapping("/list")
     public String userList(){
         return "user/list";
@@ -58,7 +54,6 @@ public class UserController {
     }
 
     /*新增用户*/
-    @BussinessLog(value="新增用户")
     @PostMapping("/add")
     @ResponseBody
     public Map<String,Object> add(User userForm, String confirmPassword){
@@ -90,7 +85,6 @@ public class UserController {
     }
 
     /*用户详情*/
-    @BussinessLog(value="查看用户详情")
     @GetMapping("/detail")
     public String userDetail(Model model, String userId, String opertype){
         User user = userService.selectByUserId(userId);
@@ -100,7 +94,6 @@ public class UserController {
     }
 
     /*编辑用户*/
-    @BussinessLog(value="编辑用户")
     @PostMapping("/edit")
     @ResponseBody
     public Map<String,Object> editUser(User userForm){
@@ -113,7 +106,6 @@ public class UserController {
     }
 
     /*删除用户*/
-    @BussinessLog(value="删除用户")
     @GetMapping("/delete")
     @ResponseBody
     public Map<String, Object> deleteUser(String userIdStr) {
@@ -129,7 +121,6 @@ public class UserController {
     }
 
     /*启用*/
-    @BussinessLog(value="启用用户")
     @GetMapping("/reuse")
     @ResponseBody
     public Map<String, Object> reuseUser(String userIdStr) {
@@ -145,7 +136,6 @@ public class UserController {
     }
 
     /*分配角色列表查询*/
-    @BussinessLog(value="查询分配角色列表")
     @PostMapping("/assign/role/list")
     @ResponseBody
     public Map<String,Object> assignRoleList(String userId){
@@ -158,7 +148,6 @@ public class UserController {
     }
 
     /*保存分配角色*/
-    @BussinessLog(value="保存分配角色")
     @PostMapping("/assign/role")
     @ResponseBody
     public Map<String,Object> assignRole(String userId,String roleIdStr){
@@ -173,11 +162,9 @@ public class UserController {
     }
 
     /*修改密码*/
-    @BussinessLog(value="修改密码")
     @RequestMapping(value = "/changePassword",method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> changePassword(ChangePasswordVo changePasswordVo) {
-        Map<String, String> result = new HashMap<String, String>();
         if(!changePasswordVo.getNewPassword().equals(changePasswordVo.getConfirmNewPassword())){
             return ResultUtil.error("两次密码输入不一致");
         }

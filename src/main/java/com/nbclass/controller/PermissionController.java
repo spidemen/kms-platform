@@ -1,9 +1,7 @@
 package com.nbclass.controller;
 
-import com.nbclass.annotation.BussinessLog;
 import com.nbclass.model.Permission;
 import com.nbclass.service.PermissionService;
-import com.nbclass.shiro.MyShiroRealm;
 import com.nbclass.shiro.ShiroService;
 import com.nbclass.util.CoreConst;
 import com.nbclass.util.ResultUtil;
@@ -32,7 +30,6 @@ public class PermissionController{
     private ShiroService shiroService;
 
     /*权限列表入口*/
-    @BussinessLog(value="查看权限列表")
     @GetMapping("/list")
     public String permissionList(){
         return "permission/list";
@@ -52,7 +49,6 @@ public class PermissionController{
     }
 
     /*添加权限*/
-    @BussinessLog(value="添加权限")
     @ResponseBody
     @PostMapping("/add")
     public Map<String, Object> addPermission(Permission permission){
@@ -72,7 +68,6 @@ public class PermissionController{
     }
 
     /*删除权限*/
-    @BussinessLog(value="删除权限")
     @ResponseBody
     @PostMapping("/delete")
     public Map<String, Object> deletePermission(String permissionId){
@@ -96,7 +91,6 @@ public class PermissionController{
     }
 
     /*权限详情*/
-    @BussinessLog(value="查看权限详情")
     @GetMapping("/detail")
     public String detail(Model model, String permissionId, String opertype) {
         Permission permission = permissionService.findByPermissionId(permissionId);
@@ -114,7 +108,6 @@ public class PermissionController{
     }
 
     /*编辑权限*/
-    @BussinessLog(value="编辑权限")
     @ResponseBody
     @PostMapping("/edit")
     public Map<String, Object> editPermission(@ModelAttribute("permission")Permission permission){
