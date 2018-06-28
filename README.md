@@ -52,5 +52,5 @@ _管理员_： 账号：admin 密码：123456
 ![资源管理](https://gitee.com/supperzh/zb-shiro/raw/master/docs/img/permissionlist.png?v=1.0)
 
 ####其他开源项目
-[zplayer音乐播放器]（https://gitee.com/supperzh/zplayer）
+![zplayer音乐播放器]（https://gitee.com/supperzh/zplayer）
 
