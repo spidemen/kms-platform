@@ -1,7 +1,7 @@
 # zb-shiro
 
 #### 项目介绍
-Springboot + shiro权限管理。最精简的shiro上手项目。
+Springboot + shiro权限管理。最精简的shiro上手项目。可以加群130512958交流技术。喜欢本项目，可以多多star，谢谢！
 
 #### 开发环境
 
