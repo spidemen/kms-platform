@@ -47,11 +47,11 @@ _管理员_： 账号：admin 密码：123456
 
 #### 图片预览
 
-![首页](https://gitee.com/supperzh/zb-shiro/blob/master/docs/img/workdest.png)
-![用户管理](https://gitee.com/supperzh/zb-shiro/blob/master/docs/img/userlist.png)
-![角色管理](https://gitee.com/supperzh/zb-shiro/blob/master/docs/img/rolelist.png)
-![角色分配资源](https://gitee.com/supperzh/zb-shiro/blob/master/docs/img/assignpermission.png)
-![资源管理(https://gitee.com/supperzh/zb-shiro/blob/master/docs/img/permissionlist.png)
+![首页](https://gitee.com/supperzh/zb-shiro/blob/master/docs/img/workdest.png?v=1.0)
+![用户管理](https://gitee.com/supperzh/zb-shiro/blob/master/docs/img/userlist.png?v=1.0)
+![角色管理](https://gitee.com/supperzh/zb-shiro/blob/master/docs/img/rolelist.png?v=1.0)
+![角色分配资源](https://gitee.com/supperzh/zb-shiro/blob/master/docs/img/assignpermission.png?v=1.0)
+![资源管理(https://gitee.com/supperzh/zb-shiro/blob/master/docs/img/permissionlist.png?v=1.0)
 
 
 **Druid监控**
