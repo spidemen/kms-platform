@@ -1,7 +1,7 @@
 # zb-shiro
 
 #### 项目介绍
-Springboot + shiro权限管理。最精简的shiro上手项目。可以加[QQ群130512958](<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=c754d8f5364e5456c9aec40f660df6d14428adf0ef5a5ef72e43d4926322c1c0"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="zb框架交流群" title="zb框架交流群"></a>)交流技术！
+Springboot + shiro权限管理。最精简的shiro上手项目。可以加[QQ群130512958](<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=bccb423cae4d82b17f8831d0b0b7dce5ee2a8436f48539f41ced39fdad2c5c77"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="╰AllureゝLoveつ" title="╰AllureゝLoveつ"></a>)交流技术！
 
 **如果喜欢，请多多分享！！多多Star！！**
 
