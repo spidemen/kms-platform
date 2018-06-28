@@ -3,6 +3,8 @@
 #### 项目介绍
 Springboot + shiro权限管理。最精简的shiro上手项目。可以加[QQ群130512958](http://shang.qq.com/wpa/qunwpa?idkey=20b2a77fff013f0b11676e84c575b7f1eacc2f03c2eb1c5bc5aaa8a9a1916d0c)交流技术！
 
+项目预览：admin.nbclass.com
+
 **如果喜欢，请多多分享！！多多Star！！**
 
 ![JDK](https://img.shields.io/badge/JDK-1.8-green.svg)
