@@ -38,6 +38,10 @@ _管理员_： 账号：admin 密码：123456
 用户名：admin 密码：123456
 
 
+#### 其他开源项目
+
+[zplayer音乐播放器](https://gitee.com/supperzh/zplayer)
+
 #### 参与贡献
 
 1. Fork 本项目
@@ -53,7 +57,4 @@ _管理员_： 账号：admin 密码：123456
 ![角色分配资源](https://gitee.com/supperzh/zb-shiro/raw/master/docs/img/assignpermission.png?v=1.0)
 ![资源管理](https://gitee.com/supperzh/zb-shiro/raw/master/docs/img/permissionlist.png?v=1.0)
 
-#### 其他开源项目
-
-[zplayer音乐播放器](https://gitee.com/supperzh/zplayer)
 
