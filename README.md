@@ -1,17 +1,15 @@
 # zb-shiro
 
 #### 项目介绍
-Springboot + shiro权限管理。最精简的shiro上手项目。可以加群130512958交流技术。喜欢本项目，可以多多star，谢谢！
+Springboot + shiro权限管理。最精简的shiro上手项目。可以加[QQ群130512958](http://shang.qq.com/wpa/qunwpa?idkey=c754d8f5364e5456c9aec40f660df6d14428adf0ef5a5ef72e43d4926322c1c0)交流技术！
 
-#### 开发环境
+**如果喜欢，请多多分享！！多多Star！！**
 
-| 工具    | 版本或描述                |    
-| ----- | -------------------- |    
-| OS    | Windows 7            |    
-| JDK   | 1.8                 |    
-| IDE   | IntelliJ IDEA 2017.3 |    
-| Maven | 3.3.9                |    
-| MySQL | 5.6.24                |   
+![JDK](https://img.shields.io/badge/JDK-1.8-green.svg)
+![Maven](https://img.shields.io/badge/Maven-3.3.9-green.svg)
+![MySQL](https://img.shields.io/badge/MySQL-5.6.24-green.svg)
+![Redis](https://img.shields.io/badge/Redis-3.0.503-green.svg)
+[![license](https://img.shields.io/badge/license-apacheV2.0-yellow.svg)](https://gitee.com/supperzh/zb-shiro/blob/master/LICENSE)
 
 #### 使用说明
 
@@ -53,5 +51,3 @@ _管理员_： 账号：admin 密码：123456
 ![角色分配资源](https://gitee.com/supperzh/zb-shiro/raw/master/docs/img/assignpermission.png?v=1.0)
 ![资源管理](https://gitee.com/supperzh/zb-shiro/raw/master/docs/img/permissionlist.png?v=1.0)
 
-#### 开源协议 
-[apache.license.v2.0](https://gitee.com/supperzh/zb-shiro/blob/master/LICENSE)
