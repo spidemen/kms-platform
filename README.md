@@ -10,7 +10,7 @@ Springboot + shiro权限管理。最精简的shiro上手项目。可以加群130
 | OS    | Windows 7            |    
 | JDK   | 1.8                 |    
 | IDE   | IntelliJ IDEA 2017.3 |    
-| Maven | 3.3.1                |    
+| Maven | 3.3.9                |    
 | MySQL | 5.6.24                |   
 
 #### 使用说明
