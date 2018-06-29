@@ -1,25 +1,46 @@
 # zb-shiro
 
 #### 项目介绍
-{**以下是码云平台说明，您可以替换为您的项目简介**
-码云是开源中国推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用码云实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
+Springboot + shiro权限管理。最精简的shiro上手项目。可以加[QQ群130512958](http://shang.qq.com/wpa/qunwpa?idkey=20b2a77fff013f0b11676e84c575b7f1eacc2f03c2eb1c5bc5aaa8a9a1916d0c)交流技术！
 
-#### 软件架构
-软件架构说明
+项目预览：[admin.nbclass.com](http://admin.nbclass.com)
 
+**如果喜欢，请多多分享！！多多Star！！**
 
-#### 安装教程
-
-1. xxxx
-2. xxxx
-3. xxxx
+![JDK](https://img.shields.io/badge/JDK-1.8-green.svg)
+![Maven](https://img.shields.io/badge/Maven-3.3.9-green.svg)
+![MySQL](https://img.shields.io/badge/MySQL-5.6.24-green.svg)
+![Redis](https://img.shields.io/badge/Redis-3.0.503-green.svg)
+[![license](https://img.shields.io/badge/license-apacheV2.0-yellow.svg)](https://gitee.com/supperzh/zb-shiro/blob/master/LICENSE)
 
 #### 使用说明
 
-1. xxxx
-2. xxxx
-3. xxxx
+1. 使用IDE导入本项目
+2. 新建数据库`CREATE DATABASE zb-shiro;`
+3. 导入数据库`docs/db/shiro.sql`
+4. 修改(`resources/application.yml`)配置文件
+   1. 数据库链接属性(可搜索`datasource`或定位到L.15) 
+   2. redis配置(可搜索`redis`或定位到L.28)
+5. 运行项目(三种方式)
+   1. 项目根目录下执行`mvn -X clean package -Dmaven.test.skip=true`编译打包，然后执行`java -jar zb-shiro/target/zb-shiro.jar`
+   2. 项目根目录下执行`mvn springboot:run`
+   3. 直接运行`ShiroBootApplication.java`
+6. 浏览器访问`http://localhost:8081`
+
+**用户密码**
+
+_管理员_： 账号：admin 密码：123456 
+
+（测试账号直接使用系统功能注册即可）
+
+**Druid监控**
+
+用户名：admin 密码：123456
+
+
+#### 其他开源项目
+
+[zplayer音乐播放器](https://gitee.com/supperzh/zplayer)
 
 #### 参与贡献
 
@@ -28,12 +49,12 @@
 3. 提交代码
 4. 新建 Pull Request
 
+#### 图片预览
 
-#### 码云特技
+![首页](https://gitee.com/supperzh/zb-shiro/raw/master/docs/img/workdest.png?v=1.0)
+![用户管理](https://gitee.com/supperzh/zb-shiro/raw/master/docs/img/userlist.png?v=1.0)
+![角色管理](https://gitee.com/supperzh/zb-shiro/raw/master/docs/img/rolelist.png?v=1.0)
+![角色分配资源](https://gitee.com/supperzh/zb-shiro/raw/master/docs/img/assignpermission.png?v=1.0)
+![资源管理](https://gitee.com/supperzh/zb-shiro/raw/master/docs/img/permissionlist.png?v=1.0)
 
-1. 使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2. 码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3. 你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4. [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5. 码云官方提供的使用手册 [http://git.mydoc.io/](http://git.mydoc.io/)
-6. 码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+
