@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : local
-Source Server Version : 50624
-Source Host           : localhost:3306
-Source Database       : shiro_boot
+Source Server         : 106.14.158.244
+Source Server Version : 50638
+Source Host           : 106.14.158.244:3306
+Source Database       : zb-admin
 
 Target Server Type    : MYSQL
-Target Server Version : 50624
+Target Server Version : 50638
 File Encoding         : 65001
 
-Date: 2018-05-24 15:12:53
+Date: 2018-07-06 15:26:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,7 +33,7 @@ CREATE TABLE `permission` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of permission
@@ -61,6 +61,10 @@ INSERT INTO `permission` VALUES ('99', '20106', '分配角色-角色列表', '�
 INSERT INTO `permission` VALUES ('100', '20107', '启用用户', '启用用户', '/user/reuse', '3', '2', '0', null, '1', '2017-10-09 12:49:50', '2018-02-27 10:53:14');
 INSERT INTO `permission` VALUES ('101', '20205', '启用', '启用角色', '/role/reuse', '9', '2', '0', null, '1', '2017-10-09 17:30:56', '2018-02-27 10:53:14');
 INSERT INTO `permission` VALUES ('102', '20207', '分配权限-列表', '分配权限-列表', '/role/assign/permission/list', '9', '2', '0', null, '1', '2017-10-10 15:31:36', '2018-02-27 10:53:14');
+INSERT INTO `permission` VALUES ('128', '1000001780642338', '运维管理', '运维管理', '', '0', '0', '3', 'fa fa-th-list', '1', '2018-07-06 15:19:26', '2018-07-06 15:19:26');
+INSERT INTO `permission` VALUES ('129', '1000000856521304', '数据监控', '数据监控', '/database/monitoring', '128', '1', '1', 'fa fa-circle-o', '1', '2018-07-06 15:19:55', '2018-07-06 15:19:55');
+INSERT INTO `permission` VALUES ('130', '1000001530827911', '系统工具', '系统工具', '', '0', '0', '4', 'fa fa-th-list', '1', '2018-07-06 15:20:38', '2018-07-06 15:20:38');
+INSERT INTO `permission` VALUES ('131', '1000001391883508', '图标工具', '图标工具', '/icons', '130', '1', '1', 'fa fa-circle-o', '1', '2018-07-06 15:21:00', '2018-07-06 15:21:00');
 
 -- ----------------------------
 -- Table structure for `role`
@@ -94,34 +98,11 @@ CREATE TABLE `role_permission` (
   `role_id` varchar(20) NOT NULL COMMENT '角色id',
   `permission_id` varchar(20) NOT NULL COMMENT '权限id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1486 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1513 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of role_permission
 -- ----------------------------
-INSERT INTO `role_permission` VALUES ('842', '1', '1');
-INSERT INTO `role_permission` VALUES ('843', '1', '2');
-INSERT INTO `role_permission` VALUES ('844', '1', '201');
-INSERT INTO `role_permission` VALUES ('845', '1', '20101');
-INSERT INTO `role_permission` VALUES ('846', '1', '20102');
-INSERT INTO `role_permission` VALUES ('847', '1', '20103');
-INSERT INTO `role_permission` VALUES ('848', '1', '20104');
-INSERT INTO `role_permission` VALUES ('849', '1', '20105');
-INSERT INTO `role_permission` VALUES ('850', '1', '20106');
-INSERT INTO `role_permission` VALUES ('851', '1', '20107');
-INSERT INTO `role_permission` VALUES ('852', '1', '202');
-INSERT INTO `role_permission` VALUES ('853', '1', '20201');
-INSERT INTO `role_permission` VALUES ('854', '1', '20202');
-INSERT INTO `role_permission` VALUES ('855', '1', '20203');
-INSERT INTO `role_permission` VALUES ('856', '1', '20204');
-INSERT INTO `role_permission` VALUES ('857', '1', '20206');
-INSERT INTO `role_permission` VALUES ('858', '1', '20205');
-INSERT INTO `role_permission` VALUES ('859', '1', '20207');
-INSERT INTO `role_permission` VALUES ('860', '1', '203');
-INSERT INTO `role_permission` VALUES ('861', '1', '20301');
-INSERT INTO `role_permission` VALUES ('862', '1', '20302');
-INSERT INTO `role_permission` VALUES ('863', '1', '20303');
-INSERT INTO `role_permission` VALUES ('864', '1', '20304');
 INSERT INTO `role_permission` VALUES ('1469', '3', '1');
 INSERT INTO `role_permission` VALUES ('1470', '3', '2');
 INSERT INTO `role_permission` VALUES ('1471', '3', '201');
@@ -130,6 +111,33 @@ INSERT INTO `role_permission` VALUES ('1473', '3', '202');
 INSERT INTO `role_permission` VALUES ('1474', '3', '20204');
 INSERT INTO `role_permission` VALUES ('1475', '3', '203');
 INSERT INTO `role_permission` VALUES ('1476', '3', '20304');
+INSERT INTO `role_permission` VALUES ('1486', '1', '1');
+INSERT INTO `role_permission` VALUES ('1487', '1', '2');
+INSERT INTO `role_permission` VALUES ('1488', '1', '201');
+INSERT INTO `role_permission` VALUES ('1489', '1', '20101');
+INSERT INTO `role_permission` VALUES ('1490', '1', '20102');
+INSERT INTO `role_permission` VALUES ('1491', '1', '20103');
+INSERT INTO `role_permission` VALUES ('1492', '1', '20104');
+INSERT INTO `role_permission` VALUES ('1493', '1', '20105');
+INSERT INTO `role_permission` VALUES ('1494', '1', '20106');
+INSERT INTO `role_permission` VALUES ('1495', '1', '20107');
+INSERT INTO `role_permission` VALUES ('1496', '1', '202');
+INSERT INTO `role_permission` VALUES ('1497', '1', '20201');
+INSERT INTO `role_permission` VALUES ('1498', '1', '20202');
+INSERT INTO `role_permission` VALUES ('1499', '1', '20203');
+INSERT INTO `role_permission` VALUES ('1500', '1', '20204');
+INSERT INTO `role_permission` VALUES ('1501', '1', '20206');
+INSERT INTO `role_permission` VALUES ('1502', '1', '20205');
+INSERT INTO `role_permission` VALUES ('1503', '1', '20207');
+INSERT INTO `role_permission` VALUES ('1504', '1', '203');
+INSERT INTO `role_permission` VALUES ('1505', '1', '20301');
+INSERT INTO `role_permission` VALUES ('1506', '1', '20302');
+INSERT INTO `role_permission` VALUES ('1507', '1', '20303');
+INSERT INTO `role_permission` VALUES ('1508', '1', '20304');
+INSERT INTO `role_permission` VALUES ('1509', '1', '1000001780642338');
+INSERT INTO `role_permission` VALUES ('1510', '1', '1000000856521304');
+INSERT INTO `role_permission` VALUES ('1511', '1', '1000001530827911');
+INSERT INTO `role_permission` VALUES ('1512', '1', '1000001391883508');
 
 -- ----------------------------
 -- Table structure for `user`
@@ -155,7 +163,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', '1', 'admin', '872359cc44c637cc73b7cd55c06d95e4', '8cd50474d2a3c1e88298e91df8bf6f1c', null, null, null, null, '1', '2018-05-23 21:22:06', '2018-05-23 21:22:06', '2018-05-23 21:22:06');
+INSERT INTO `user` VALUES ('1', '1', 'admin', '872359cc44c637cc73b7cd55c06d95e4', '8cd50474d2a3c1e88298e91df8bf6f1c', null, null, null, null, '1', '2018-05-23 21:22:06', '2018-05-23 21:22:06', '2018-07-06 15:29:01');
 
 -- ----------------------------
 -- Table structure for `user_role`

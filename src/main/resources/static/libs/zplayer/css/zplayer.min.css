@@ -437,6 +437,10 @@
     cursor: pointer!important;
 }
 
+.zplayer .lrc-hide{
+	opacity: 0.5;
+}
+
 .zplayer-withlrc .zlrc {
     display: block;
 }
