@@ -12,7 +12,7 @@ Springboot + shiro权限管理。最精简的shiro上手项目。可以加QQ群1
 ![Maven](https://img.shields.io/badge/Maven-3.3.9-green.svg)
 ![MySQL](https://img.shields.io/badge/MySQL-5.6.24-green.svg)
 ![Redis](https://img.shields.io/badge/Redis-3.0.503-green.svg)
-[![license](https://img.shields.io/badge/license-apacheV2.0-yellow.svg)](https://gitee.com/supperzh/zb-shiro/blob/master/LICENSE)
+[![license](https://img.shields.io/badge/license-MIT-yellow.svg)](https://gitee.com/supperzh/zb-shiro/blob/master/LICENSE)
 
 #### 使用说明
 
