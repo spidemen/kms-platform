@@ -1,5 +1,5 @@
 @font-face {
-    font-family: icon;
+    font-family: zicon;
     src: url(../fonts/icon.eot);
     src: url(../fonts/icon.eot?#iefix) format("embedded-opentype"),
     url(../fonts/icon.woff) format("woff"),
@@ -7,9 +7,9 @@
     url(../fonts/icon.svg#uxzfont) format("svg");
 }
 
-.icon {
+.z-icon {
     display: inline-block;
-    font: normal normal normal 14px/1 icon;
+    font: normal normal normal 14px/1 zicon;
     font-size: inherit;
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
@@ -17,131 +17,131 @@
 }
 
 
-.icon-music:before {
+.z-icon-music:before {
   content: "\f001";
 }
 
-.icon-search:before {
+.z-icon-search:before {
   content: "\f002";
 }
 
-.icon-remove:before {
+.z-icon-remove:before {
   content: "\f00d";
 }
 
-.icon-trash:before {
+.z-icon-trash:before {
   content: "\f014";
 }
 
-.icon-repeat:before {
+.z-icon-repeat:before {
   content: "\f01e";
 }
 
-.icon-refresh:before {
+.z-icon-refresh:before {
   content: "\f021";
 }
 
-.icon-list-alt:before {
+.z-icon-list-alt:before {
   content: "\f022";
 }
 
-.icon-volume-off:before {
+.z-icon-volume-off:before {
   content: "\f026";
 }
 
-.icon-volume-down:before {
+.z-icon-volume-down:before {
   content: "\f027";
 }
 
-.icon-volume-up:before {
+.z-icon-volume-up:before {
   content: "\f028";
 }
 
-.icon-step-backward:before {
+.z-icon-step-backward:before {
   content: "\f048";
 }
 
-.icon-fast-backward:before {
+.z-icon-fast-backward:before {
   content: "\f049";
 }
 
-.icon-backward:before {
+.z-icon-backward:before {
   content: "\f04a";
 }
 
-.icon-play:before {
+.z-icon-play:before {
   content: "\f04b";
 }
 
-.icon-pause:before {
+.z-icon-pause:before {
   content: "\f04c";
 }
 
-.icon-stop:before {
+.z-icon-stop:before {
   content: "\f04d";
 }
 
-.icon-forward:before {
+.z-icon-forward:before {
   content: "\f04e";
 }
 
-.icon-fast-forward:before {
+.z-icon-fast-forward:before {
   content: "\f050";
 }
 
-.icon-step-forward:before {
+.z-icon-step-forward:before {
   content: "\f051";
 }
 
-.icon-chevron-left:before {
+.z-icon-chevron-left:before {
   content: "\f053";
 }
 
-.icon-chevron-right:before {
+.z-icon-chevron-right:before {
   content: "\f054";
 }
 
-.icon-remove-sign:before {
+.z-icon-remove-sign:before {
   content: "\f057";
 }
 
-.icon-ok-sign:before {
+.z-icon-ok-sign:before {
   content: "\f058";
 }
 
-.icon-arrow-left:before {
+.z-icon-arrow-left:before {
   content: "\f060";
 }
 
-.icon-arrow-right:before {
+.z-icon-arrow-right:before {
   content: "\f061";
 }
 
-.icon-share-alt:before {
+.z-icon-share-alt:before {
   content: "\f064";
 }
 
-.icon-exclamation-sign:before {
+.z-icon-exclamation-sign:before {
   content: "\f06a";
 }
 
-.icon-random:before {
+.z-icon-random:before {
   content: "\f074";
 }
 
-.icon-retweet:before {
+.z-icon-retweet:before {
   content: "\f079";
 }
 
-.icon-reorder:before {
+.z-icon-reorder:before {
   content: "\f0c9";
 }
 
-.icon-long-arrow-left:before {
+.z-icon-long-arrow-left:before {
   content: "\f177";
 }
 
-.icon-long-arrow-right:before {
+.z-icon-long-arrow-right:before {
   content: "\f178";
 }
 
@@ -356,7 +356,7 @@
     font-size: 12px;
 }
 
-.zplayer .zplayer-info .zplayer-controller .zplayer-time .icon {
+.zplayer .zplayer-info .zplayer-controller .zplayer-time .z-icon {
     margin-left: 12px;
     width: 14px;
     font-size: 14px;
