@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : local
-Source Server Version : 50624
+Source Server         : localhost
+Source Server Version : 50635
 Source Host           : localhost:3306
 Source Database       : zb-shiro
 
 Target Server Type    : MYSQL
-Target Server Version : 50624
+Target Server Version : 50635
 File Encoding         : 65001
 
-Date: 2018-07-10 22:21:05
+Date: 2018-07-11 01:53:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,7 +33,7 @@ CREATE TABLE `permission` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=133 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of permission
@@ -66,6 +66,7 @@ INSERT INTO `permission` VALUES ('129', '1000000856521304', '数据监控', '数
 INSERT INTO `permission` VALUES ('130', '1000001530827911', '系统工具', '系统工具', '', '0', '0', '4', 'fa fa-th-list', '1', '2018-07-06 15:20:38', '2018-07-06 15:20:38');
 INSERT INTO `permission` VALUES ('131', '1000001391883508', '图标工具', '图标工具', '/icons', '130', '1', '1', 'fa fa-circle-o', '1', '2018-07-06 15:21:00', '2018-07-06 15:21:00');
 INSERT INTO `permission` VALUES ('132', '1000001205659046', '批量删除', '批量删除角色', '/role/batch/delete', '9', '2', '0', '', '1', '2018-07-10 22:20:43', '2018-07-10 22:20:43');
+INSERT INTO `permission` VALUES ('133', '1000001006835058', '批量删除', '批量删除用户', '/user/batch/delete', '3', '2', '0', '', '1', '2018-07-11 01:53:09', '2018-07-11 01:53:09');
 
 -- ----------------------------
 -- Table structure for `role`
@@ -99,7 +100,7 @@ CREATE TABLE `role_permission` (
   `role_id` varchar(20) NOT NULL COMMENT '角色id',
   `permission_id` varchar(20) NOT NULL COMMENT '权限id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1541 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1570 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of role_permission
@@ -112,34 +113,35 @@ INSERT INTO `role_permission` VALUES ('1473', '3', '202');
 INSERT INTO `role_permission` VALUES ('1474', '3', '20204');
 INSERT INTO `role_permission` VALUES ('1475', '3', '203');
 INSERT INTO `role_permission` VALUES ('1476', '3', '20304');
-INSERT INTO `role_permission` VALUES ('1513', '1', '1');
-INSERT INTO `role_permission` VALUES ('1514', '1', '2');
-INSERT INTO `role_permission` VALUES ('1515', '1', '201');
-INSERT INTO `role_permission` VALUES ('1516', '1', '20101');
-INSERT INTO `role_permission` VALUES ('1517', '1', '20102');
-INSERT INTO `role_permission` VALUES ('1518', '1', '20103');
-INSERT INTO `role_permission` VALUES ('1519', '1', '20104');
-INSERT INTO `role_permission` VALUES ('1520', '1', '20105');
-INSERT INTO `role_permission` VALUES ('1521', '1', '20106');
-INSERT INTO `role_permission` VALUES ('1522', '1', '20107');
-INSERT INTO `role_permission` VALUES ('1523', '1', '202');
-INSERT INTO `role_permission` VALUES ('1524', '1', '20201');
-INSERT INTO `role_permission` VALUES ('1525', '1', '20202');
-INSERT INTO `role_permission` VALUES ('1526', '1', '20203');
-INSERT INTO `role_permission` VALUES ('1527', '1', '20204');
-INSERT INTO `role_permission` VALUES ('1528', '1', '20206');
-INSERT INTO `role_permission` VALUES ('1529', '1', '20205');
-INSERT INTO `role_permission` VALUES ('1530', '1', '20207');
-INSERT INTO `role_permission` VALUES ('1531', '1', '1000001205659046');
-INSERT INTO `role_permission` VALUES ('1532', '1', '203');
-INSERT INTO `role_permission` VALUES ('1533', '1', '20301');
-INSERT INTO `role_permission` VALUES ('1534', '1', '20302');
-INSERT INTO `role_permission` VALUES ('1535', '1', '20303');
-INSERT INTO `role_permission` VALUES ('1536', '1', '20304');
-INSERT INTO `role_permission` VALUES ('1537', '1', '1000001780642338');
-INSERT INTO `role_permission` VALUES ('1538', '1', '1000000856521304');
-INSERT INTO `role_permission` VALUES ('1539', '1', '1000001530827911');
-INSERT INTO `role_permission` VALUES ('1540', '1', '1000001391883508');
+INSERT INTO `role_permission` VALUES ('1541', '1', '1');
+INSERT INTO `role_permission` VALUES ('1542', '1', '2');
+INSERT INTO `role_permission` VALUES ('1543', '1', '201');
+INSERT INTO `role_permission` VALUES ('1544', '1', '20101');
+INSERT INTO `role_permission` VALUES ('1545', '1', '20102');
+INSERT INTO `role_permission` VALUES ('1546', '1', '20103');
+INSERT INTO `role_permission` VALUES ('1547', '1', '20104');
+INSERT INTO `role_permission` VALUES ('1548', '1', '20105');
+INSERT INTO `role_permission` VALUES ('1549', '1', '20106');
+INSERT INTO `role_permission` VALUES ('1550', '1', '20107');
+INSERT INTO `role_permission` VALUES ('1551', '1', '1000001006835058');
+INSERT INTO `role_permission` VALUES ('1552', '1', '202');
+INSERT INTO `role_permission` VALUES ('1553', '1', '20201');
+INSERT INTO `role_permission` VALUES ('1554', '1', '20202');
+INSERT INTO `role_permission` VALUES ('1555', '1', '20203');
+INSERT INTO `role_permission` VALUES ('1556', '1', '20204');
+INSERT INTO `role_permission` VALUES ('1557', '1', '20206');
+INSERT INTO `role_permission` VALUES ('1558', '1', '20205');
+INSERT INTO `role_permission` VALUES ('1559', '1', '20207');
+INSERT INTO `role_permission` VALUES ('1560', '1', '1000001205659046');
+INSERT INTO `role_permission` VALUES ('1561', '1', '203');
+INSERT INTO `role_permission` VALUES ('1562', '1', '20301');
+INSERT INTO `role_permission` VALUES ('1563', '1', '20302');
+INSERT INTO `role_permission` VALUES ('1564', '1', '20303');
+INSERT INTO `role_permission` VALUES ('1565', '1', '20304');
+INSERT INTO `role_permission` VALUES ('1566', '1', '1000001780642338');
+INSERT INTO `role_permission` VALUES ('1567', '1', '1000000856521304');
+INSERT INTO `role_permission` VALUES ('1568', '1', '1000001530827911');
+INSERT INTO `role_permission` VALUES ('1569', '1', '1000001391883508');
 
 -- ----------------------------
 -- Table structure for `user`
