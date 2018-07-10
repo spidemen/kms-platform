@@ -39,7 +39,7 @@ public class PermissionController{
     /*权限列表数据*/
     @PostMapping("/list")
     @ResponseBody
-    public List<Permission>  loadPermissions(HttpServletRequest request, HttpServletResponse response,String flag){
+    public List<Permission>  loadPermissions(String flag){
         List<Permission> permissionListList = new ArrayList<Permission>();
         if(StringUtils.isBlank(flag) || MENU_FLAG[0].equals(flag)){
             permissionListList = permissionService.selectAll(CoreConst.STATUS_VALID);

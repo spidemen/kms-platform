@@ -161,6 +161,7 @@ body .demo-class .layui-layer-btn .layui-layer-btn1{background:#f1f1f1;}
 }
 
 .grid-table-toolbar{
+    margin-top: 10px;
     margin-bottom: 10px;
 }
 
@@ -310,6 +311,13 @@ body .demo-class .layui-layer-btn .layui-layer-btn1{background:#f1f1f1;}
 .table-btn.table-btn-danger:hover{
     color: #d73925;
     border: 1px solid #d73925;
+}
+
+.treegrid-tbody tr :first-child.table-btn-info{
+    border-left: 1px solid #00c0ef!important;
+}
+.treegrid-tbody tr :first-child.table-btn-danger{
+    border-left: 1px solid #dd4b39!important;
 }
 
 @media (max-width: 767px){
