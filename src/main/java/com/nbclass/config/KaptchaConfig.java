@@ -16,7 +16,7 @@ public class KaptchaConfig {
         Properties properties = new Properties();  
         properties.setProperty("kaptcha.border", "no");
         properties.setProperty("kaptcha.border.color", "105,179,90");
-        properties.setProperty("kaptcha.textproducer.font.color", "blue");
+        properties.setProperty("kaptcha.textproducer.font.color", "black");
         properties.setProperty("kaptcha.image.width", "125");
         properties.setProperty("kaptcha.image.height", "45");
         properties.setProperty("kaptcha.textproducer.font.size", "35");
