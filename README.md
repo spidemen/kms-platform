@@ -12,7 +12,7 @@ Springboot + shiro权限管理。最精简的shiro上手项目。可以加QQ群1
 ![Maven](https://img.shields.io/badge/Maven-3.3.9-green.svg)
 ![MySQL](https://img.shields.io/badge/MySQL-5.6.24-green.svg)
 ![Redis](https://img.shields.io/badge/Redis-3.0.503-green.svg)
-[![license](https://img.shields.io/badge/license-apacheV2.0-yellow.svg)](https://gitee.com/supperzh/zb-shiro/blob/master/LICENSE)
+[![license](https://img.shields.io/badge/license-MIT-yellow.svg)](https://gitee.com/supperzh/zb-shiro/blob/master/LICENSE)
 
 #### 使用说明
 
@@ -31,11 +31,13 @@ Springboot + shiro权限管理。最精简的shiro上手项目。可以加QQ群1
 **用户密码**
 
 _管理员_： 账号：admin 密码：123456<br/>
-（别乱搞这个账号权限。每天初始化sql脚本一次。测试权限的可以先注册个账号。然后用admin账号给注册账号分配权限测试！） 
+_普通用户_： 账号：test 密码：123456<br/>
+（测试账号也可以直接使用系统功能注册）
+
+注：演示系统每一小时会初始化一次sql数据。
 
 如无法及时体验系统，请群里联系我。
 
-（测试账号直接使用系统功能注册即可）
 
 **Druid监控**
 
