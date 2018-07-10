@@ -30,12 +30,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public int register(User user) {
         int a = userMapper.insert(user);
-        if(a>0){
-            UserRole userRole = new UserRole();
-            userRole.setUserId(user.getUserId());
-            userRole.setRoleId(CoreConst.sys_common_role_id);
-            userRoleMapper.insert(userRole);
-        }
         return a;
     }
 
@@ -71,7 +65,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Map<String,Object> addAssignRole(String userId, List<String> roleIds) {
-        Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
             UserRole userRole = new UserRole();
             userRole.setUserId(userId);

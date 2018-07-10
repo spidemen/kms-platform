@@ -24,6 +24,7 @@ import java.util.Map;
 @RequestMapping("/permission")
 public class PermissionController{
     private static final Logger logger = LoggerFactory.getLogger(PermissionController.class);
+    private static final String[] MENU_FLAG ={"1","2"};/*1:全部资源，2：菜单资源*/
     @Autowired
     private PermissionService permissionService;
     @Autowired
@@ -40,9 +41,9 @@ public class PermissionController{
     @ResponseBody
     public List<Permission>  loadPermissions(HttpServletRequest request, HttpServletResponse response,String flag){
         List<Permission> permissionListList = new ArrayList<Permission>();
-        if(StringUtils.isBlank(flag) || "1".equals(flag)){
+        if(StringUtils.isBlank(flag) || MENU_FLAG[0].equals(flag)){
             permissionListList = permissionService.selectAll(CoreConst.STATUS_VALID);
-        }else if("2".equals(flag)){
+        }else if(MENU_FLAG[1].equals(flag)){
             permissionListList = permissionService.selectAllMenuName(CoreConst.STATUS_VALID);
         }
         return permissionListList;
@@ -53,7 +54,6 @@ public class PermissionController{
     @PostMapping("/add")
     public Map<String, Object> addPermission(Permission permission){
         try {
-            Map<String, Object> jsonMap = new HashMap<String, Object>();
             int a = permissionService.insert(permission);
             if (a > 0) {
                 shiroService.updatePermission();
@@ -72,7 +72,6 @@ public class PermissionController{
     @PostMapping("/delete")
     public Map<String, Object> deletePermission(String permissionId){
         try {
-            Map<String, Object> jsonMap = new HashMap<String, Object>();
             int subPermsByPermissionIdCount = permissionService.selectSubPermsByPermissionId(permissionId);
             if(subPermsByPermissionIdCount>0){
                 return ResultUtil.error("改资源存在下级资源，无法删除！");
@@ -95,8 +94,8 @@ public class PermissionController{
     public String detail(Model model, String permissionId, String opertype) {
         Permission permission = permissionService.findByPermissionId(permissionId);
         if(null!=permission){
-            if(permission.getParentId().equals(CoreConst.top_menu_id)){
-                model.addAttribute("parentName", CoreConst.top_menu_name);
+            if(permission.getParentId().equals(CoreConst.TOP_MENU_ID)){
+                model.addAttribute("parentName", CoreConst.TOP_MENU_NAME);
             }else{
                 Permission parent = permissionService.findById(permission.getParentId());
                 model.addAttribute("parentName", parent.getName());
@@ -111,7 +110,6 @@ public class PermissionController{
     @ResponseBody
     @PostMapping("/edit")
     public Map<String, Object> editPermission(@ModelAttribute("permission")Permission permission){
-        Map<String, Object> jsonMap = new HashMap<String, Object>();
         int a = permissionService.updateByPermissionId(permission);
         if (a > 0) {
             shiroService.updatePermission();

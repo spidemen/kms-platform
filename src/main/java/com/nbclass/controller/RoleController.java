@@ -99,7 +99,6 @@ public class RoleController{
     @ResponseBody
     public Map<String, Object> reuseRole(String roleIdStr) {
         String[] roleIds = roleIdStr.split(",");
-        Map<String, Object> jsonMap = new HashMap<String, Object>();
         List<String> roleIdsList = Arrays.asList(roleIds);
         int a = roleService.updateStatusBatch(roleIdsList,1);
         if (a > 0) {
@@ -122,7 +121,6 @@ public class RoleController{
     @PostMapping("/edit")
     @ResponseBody
     public Map<String, Object> editRole(@ModelAttribute("role") Role role) {
-        Map<String, Object> jsonMap = new HashMap<String, Object>();
         int a = roleService.updateByRoleId(role);
         if (a > 0) {
             return ResultUtil.success();

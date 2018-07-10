@@ -18,9 +18,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 @Controller
-public class kaptchaController {
+public class KaptchaController {
 
-    private static final Logger logger = LoggerFactory.getLogger(kaptchaController.class);
+    private static final Logger logger = LoggerFactory.getLogger(KaptchaController.class);
 
     private Producer captchaProducer = null;
 

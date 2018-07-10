@@ -81,7 +81,6 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Map<String, Object> addAssignPermission(String roleId, List<String> permissionIds) {
-        Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
             RolePermission rolePermission = new RolePermission();
             rolePermission.setRoleId(roleId);

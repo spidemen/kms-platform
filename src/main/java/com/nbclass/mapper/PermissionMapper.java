@@ -9,6 +9,9 @@ import java.util.Set;
 
 public interface PermissionMapper extends MyMapper<Permission> {
 
+    /*
+     *查询全部权限
+     */
     List<Permission> selectAllPerms(Integer status);
 
     List<Permission> selectAllMenuName(Integer status);

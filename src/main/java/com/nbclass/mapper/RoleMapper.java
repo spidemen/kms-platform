@@ -10,7 +10,6 @@ import java.util.Set;
 public interface RoleMapper extends MyMapper<Role> {
     Set<String> findRoleByUserId(String userId);
 
-    //批量修改状态
     public int updateStatusBatch(Map<String, Object> params);
 
     int updateByRoleId(Map<String, Object> params);

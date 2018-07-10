@@ -110,7 +110,6 @@ public class UserController {
     @ResponseBody
     public Map<String, Object> deleteUser(String userIdStr) {
         String[] userIds = userIdStr.split(",");
-        Map<String, Object> jsonMap = new HashMap<String, Object>();
         List<String> userIdsList = Arrays.asList(userIds);
         int a = userService.updateStatusBatch(userIdsList,2);
         if (a > 0) {
@@ -125,7 +124,6 @@ public class UserController {
     @ResponseBody
     public Map<String, Object> reuseUser(String userIdStr) {
         String[] userIds = userIdStr.split(",");
-        Map<String, Object> jsonMap = new HashMap<String, Object>();
         List<String> userIdsList = Arrays.asList(userIds);
         int a = userService.updateStatusBatch(userIdsList,1);
         if (a > 0) {

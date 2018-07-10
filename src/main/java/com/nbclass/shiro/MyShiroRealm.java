@@ -4,6 +4,7 @@ import com.nbclass.model.User;
 import com.nbclass.service.PermissionService;
 import com.nbclass.service.RoleService;
 import com.nbclass.service.UserService;
+import com.nbclass.util.CoreConst;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationException;
@@ -56,14 +57,15 @@ public class MyShiroRealm extends AuthorizingRealm {
         if(user==null) {
             throw new UnknownAccountException();
         }
-        if (2==user.getStatus()) {
-            throw new LockedAccountException(); // 帐号锁定
+        if (CoreConst.STATUS_INVALID.equals(user.getStatus())) {
+            // 帐号锁定
+            throw new LockedAccountException();
         }
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
-                user, //用户
-                user.getPassword(), //密码
+                user,
+                user.getPassword(),
                 ByteSource.Util.bytes(user.getCredentialsSalt()),
-                getName()  //realm name
+                getName()
         );
         // 当验证都通过后，把用户信息放在session里
         Session session = SecurityUtils.getSubject().getSession();
@@ -72,7 +74,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         return authenticationInfo;
     }
 
-    /*清除认证信息*/
+    /**清除认证信息*/
     public void removeCachedAuthenticationInfo(List<String> userIds) {
         if(null == userIds || userIds.size() == 0)	{
             return ;

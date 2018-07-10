@@ -54,8 +54,8 @@ public class SystemController{
     @ResponseBody
     public Map<String, Object> register(HttpServletRequest request, User registerUser, String confirmPassword, String verification){
         //判断验证码
-        String right_code = (String) request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
-        if (StringUtils.isNotBlank(verification) && StringUtils.isNotBlank(right_code) && verification.equals(right_code)) {
+        String rightCode = (String) request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+        if (StringUtils.isNotBlank(verification) && StringUtils.isNotBlank(rightCode) && verification.equals(rightCode)) {
             //验证码通过
         } else {
             return ResultUtil.error("验证码错误！");
@@ -100,8 +100,8 @@ public class SystemController{
     public Map<String, Object> login(HttpServletRequest request, String username, String password, String verification,
                                      @RequestParam(value = "rememberMe", defaultValue = "0") Integer rememberMe){
         //判断验证码
-        String right_code = (String) request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
-        if (StringUtils.isNotBlank(verification) && StringUtils.isNotBlank(right_code) && verification.equals(right_code)) {
+        String rightCode = (String) request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+        if (StringUtils.isNotBlank(verification) && StringUtils.isNotBlank(rightCode) && verification.equals(rightCode)) {
             //验证码通过
         } else {
             return ResultUtil.error("验证码错误！");

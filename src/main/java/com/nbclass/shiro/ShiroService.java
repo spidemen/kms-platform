@@ -28,10 +28,6 @@ public class ShiroService {
     private ShiroFilterFactoryBean shiroFilterFactoryBean;
     @Autowired
     private PermissionService permissionService;
-    @Autowired
-    private RoleService roleService;
-  /*  @Autowired
-    private RedisSessionDAO redisSessionDAO;*/
     /**
      * 初始化权限
      */

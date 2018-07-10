@@ -4,6 +4,8 @@ import java.util.UUID;
 
 public class UUIDUtil {
 
+    private static final int SHORT_LENGTH = 8;
+
     public static String uuid() {
         String str = UUID.randomUUID().toString();
         String temp = str.replace("-","");
@@ -11,9 +13,10 @@ public class UUIDUtil {
     }
 
     public static String getUniqueIdByUUId() {
-        int machineId = 1;//最大支持1-9个集群机器部署
+        //最大支持1-9个集群机器部署
+        int machineId = 1;
         int hashCodeV = UUID.randomUUID().toString().hashCode();
-        if(hashCodeV < 0) {//有可能是负数
+        if(hashCodeV < 0) {
             hashCodeV = - hashCodeV;
         }
         // 0 代表前面补充0
@@ -23,7 +26,6 @@ public class UUIDUtil {
     }
     public static void main(String[] args) {
         System.out.println(getUniqueIdByUUId());
-        System.out.println(generateShortUuid());
         System.out.println(uuid());
     }
 
@@ -40,7 +42,7 @@ public class UUIDUtil {
     public static String generateShortUuid() {
         StringBuffer shortBuffer = new StringBuffer();
         String uuid = UUID.randomUUID().toString().replace("-", "");
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < SHORT_LENGTH; i++) {
             String str = uuid.substring(i * 4, i * 4 + 4);
             int x = Integer.parseInt(str, 16);
             shortBuffer.append(chars[x % 0x3E]);

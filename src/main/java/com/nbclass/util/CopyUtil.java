@@ -16,7 +16,7 @@ public class CopyUtil {
      * @param source 源
      * @param dest   目标
      */
-    public static void Copy(Object source, Object dest) {
+    public static void copy(Object source, Object dest) {
         try {
             if (source == null || dest == null) {
                 return;
@@ -48,7 +48,7 @@ public class CopyUtil {
      * @param source 源
      * @param dest   目标
      */
-    public static void CopyNotNull(Object source, Object dest) {
+    public static void copyNotNull(Object source, Object dest) {
         try {
             if (source == null || dest == null) {
                 return;
@@ -88,7 +88,7 @@ public class CopyUtil {
         T dest = null;
         try {
             dest = clazz.newInstance();
-            Copy(source, dest);
+            copy(source, dest);
         } catch (Exception e) {
             e.printStackTrace();
             logger.info("对象复制错误:" + e.getMessage());
@@ -124,7 +124,7 @@ public class CopyUtil {
         for (Object source : sources) {
             try {
                 T dest = clazz.newInstance();
-                Copy(source, dest);
+                copy(source, dest);
                 clazzs.add(dest);
             } catch (InstantiationException e) {
                 e.printStackTrace();
