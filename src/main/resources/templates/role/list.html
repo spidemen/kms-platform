@@ -10,13 +10,13 @@
     <div class="jax-box">
         <form id="formSearch" class="form-horizontal">
             <div class="form-group">
-                <div class="col-md-5 col-sm-6">
+                <div class="col-md-5 col-xs-8">
                     <label class="control-label  col-xs-4" for="roleName">角色名称:</label>
                     <div class="col-xs-8">
                         <input type="text" class="form-control" id="roleName">
                     </div>
                 </div>
-                <div class="col-md-5 col-sm-6 " style="text-align:left;">
+                <div class="col-md-5 col-xs-4 " style="text-align:left;">
                     <button type="button" id="btn_query" class="btn btn-primary">查询</button>
                 </div>
 
@@ -151,10 +151,10 @@
             align : "center",
             formatter : function(value,
                                  row, index) {
-                var edit = editFlag ?  '<a class="table-btn table-btn-info" href="javascript:void(0)" onclick="edit('+row.id+')">编辑</a>' : '';
-                var assign = assignPermsFlag ? '<a class="table-btn table-btn-info"  href="javascript:void(0)" onclick="assignRoleList('+row.roleId+')">分配权限</a>':'';
-                var del = deleteFlag ?  '<a  class="table-btn table-btn-danger" href="javascript:void(0)" onclick="deleteRole('+row.roleId+')">删除</a>' : '';
-                return edit+assign+del;
+                var edit = editFlag=="true"  ?  '<a class="table-btn table-btn-info" href="javascript:void(0)" onclick="editRole('+row.id+')">编辑</a>' : '';
+                var assign = assignPermsFlag=="true"  ? '<a class="table-btn table-btn-info"  href="javascript:void(0)" onclick="assignPermsList('+row.roleId+')">分配权限</a>':'';
+                var del = deleteFlag=="true"  ?  '<a  class="table-btn table-btn-danger" href="javascript:void(0)" onclick="deleteRole('+row.roleId+')">删除</a>' : '';
+                return edit + assign + del;
             }
         } ];
     var options={
@@ -182,6 +182,7 @@
     };
 
     $(function () {
+        /*查询*/
         $("#btn_query").click(function(){
             Core.refreshTable("#table");
         });
@@ -263,7 +264,7 @@
         return temp;
     }
     /*编辑*/
-    function edit(id) {
+    function editRole(id) {
         Core.load("#roleOpenWindow","/role/detail?opertype=edit&id="+id, function(){
             $("#roleDetailModal").modal("show");
         });
@@ -282,7 +283,7 @@
         })
     }
     /*分配权限-列表查询*/
-    function assignRoleList(id) {
+    function assignPermsList(id) {
         roleId=id;
         Core.postAjax("/role/assign/permission/list",{"roleId":roleId},function(data){
             var zNodes=data;

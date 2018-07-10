@@ -178,10 +178,6 @@ body .demo-class .layui-layer-btn .layui-layer-btn1{background:#f1f1f1;}
 .jax-nav-tabs{
     background-color: #f9f9f9;
 }
-/*树形表格居中展示*/
-/*.treegrid-tbody tr td {
-    text-align: center;
-}*/
 /*菜单*/
 .sidebar-menu li.li-close>a>.fa-angle-left, .sidebar-menu li.li-close>a>.pull-right-container>.fa-angle-left {
     -webkit-transform: rotate(0deg);
@@ -190,6 +186,12 @@ body .demo-class .layui-layer-btn .layui-layer-btn1{background:#f1f1f1;}
     transform: rotate(0deg);
 }
 
+.sidebar-menu li a{
+    -webkit-transition: all 0.2s ;
+    -ms-transition: all 0.2s ;
+    -o-transition: all 0.2s ;
+    transition: all 0.2s;
+}
 .sidebar-menu li.li-open>a>.fa-angle-left, .sidebar-menu li.li-open>a>.pull-right-container>.fa-angle-left {
     -webkit-transform: rotate(-90deg);
     -ms-transform: rotate(-90deg);

@@ -39,10 +39,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> selectAllUsers(Map<String, Object> params) {
-        User user = new User();
-        user.setStatus((Integer) params.get("status"));
-        return userMapper.select(user);
+    public List<User> selectUsers(User user) {
+        return userMapper.selectUsers(user);
     }
 
     @Override

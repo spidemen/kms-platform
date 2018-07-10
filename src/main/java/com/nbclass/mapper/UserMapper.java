@@ -31,6 +31,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserMapper extends MyMapper<User> {
+
+    List<User> selectUsers(User user);
+
     User selectByUsername(String username);
 
     User selectByUserId(String userId);

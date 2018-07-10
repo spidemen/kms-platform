@@ -14,7 +14,7 @@ public interface UserService {
 
     void updateLastLoginTime(User loginUser);
 
-    List<User> selectAllUsers(Map<String, Object> params);
+    List<User> selectUsers(User user);
 
     User selectByUserId(String userId);
 

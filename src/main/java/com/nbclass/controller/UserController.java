@@ -41,16 +41,9 @@ public class UserController {
     /**用户列表数据*/
     @PostMapping("/list")
     @ResponseBody
-    public PageResultVo loadUsers(Integer limit, Integer offset, Integer status){
-        Map<String, Object> params = new HashMap<String, Object>();
-        int pageNo = 0;
-        if (offset != 0) {
-            pageNo = offset / limit;
-        }
-        pageNo += 1;
-        PageHelper.startPage(pageNo, limit);
-        params.put("status",status);
-        List<User> userList = userService.selectAllUsers(params);
+    public PageResultVo loadUsers(User user, Integer limit, Integer offset){
+        PageHelper.startPage(PageUtil.getPageNo(limit, offset),offset);
+        List<User> userList = userService.selectUsers(user);
         PageInfo<User> pages = new PageInfo<>(userList);
         return ResultUtil.table(userList,pages.getTotal());
     }
@@ -101,37 +94,36 @@ public class UserController {
     public ResponseVo editUser(User userForm){
         int a = userService.updateByUserId(userForm);
         if (a > 0) {
-            return ResultUtil.success();
+            return ResultUtil.success("编辑用户成功！");
         } else {
-            return ResultUtil.error("修改失败");
+            return ResultUtil.error("编辑用户失败");
         }
     }
 
     /**删除用户*/
     @GetMapping("/delete")
     @ResponseBody
-    public ResponseVo deleteUser(String userIdStr) {
-        String[] userIds = userIdStr.split(",");
-        List<String> userIdsList = Arrays.asList(userIds);
-        int a = userService.updateStatusBatch(userIdsList,2);
+    public ResponseVo deleteUser(String userId) {
+        List<String> userIdsList = Arrays.asList(userId);
+        int a = userService.updateStatusBatch(userIdsList,CoreConst.STATUS_INVALID);
         if (a > 0) {
-            return ResultUtil.success();
+            return ResultUtil.success("删除用户成功");
         } else {
-            return ResultUtil.error("删除失败");
+            return ResultUtil.error("删除用户失败");
         }
     }
 
-    /**启用*/
-    @GetMapping("/reuse")
+    /**批量删除用户*/
+    @GetMapping("/batch/delete")
     @ResponseBody
-    public ResponseVo reuseUser(String userIdStr) {
+    public ResponseVo batchDeleteUser(String userIdStr) {
         String[] userIds = userIdStr.split(",");
         List<String> userIdsList = Arrays.asList(userIds);
-        int a = userService.updateStatusBatch(userIdsList,1);
+        int a = userService.updateStatusBatch(userIdsList,CoreConst.STATUS_INVALID);
         if (a > 0) {
-            return ResultUtil.success();
+            return ResultUtil.success("删除用户成功");
         } else {
-            return ResultUtil.error("启用失败");
+            return ResultUtil.error("删除用户失败");
         }
     }
 
@@ -185,6 +177,6 @@ public class UserController {
         }else{
             return ResultUtil.error("您输入的旧密码有误");
         }
-        return ResultUtil.success();
+        return ResultUtil.success("修改密码成功");
     }
 }
