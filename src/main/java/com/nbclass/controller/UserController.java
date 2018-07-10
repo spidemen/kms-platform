@@ -9,6 +9,8 @@ import com.nbclass.service.UserService;
 import com.nbclass.shiro.MyShiroRealm;
 import com.nbclass.util.*;
 import com.nbclass.vo.ChangePasswordVo;
+import com.nbclass.vo.base.PageResultVo;
+import com.nbclass.vo.base.ResponseVo;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,16 +32,16 @@ public class UserController {
     @Autowired
     private MyShiroRealm shiroRealm;
 
-    /*用户列表入口*/
+    /**用户列表入口*/
     @GetMapping("/list")
     public String userList(){
         return "user/list";
     }
 
-    /*用户列表数据*/
+    /**用户列表数据*/
     @PostMapping("/list")
     @ResponseBody
-    public Map<String,Object> loadUsers(Integer limit, Integer offset,Integer status){
+    public PageResultVo loadUsers(Integer limit, Integer offset, Integer status){
         Map<String, Object> params = new HashMap<String, Object>();
         int pageNo = 0;
         if (offset != 0) {
@@ -53,10 +55,10 @@ public class UserController {
         return ResultUtil.table(userList,pages.getTotal());
     }
 
-    /*新增用户*/
+    /**新增用户*/
     @PostMapping("/add")
     @ResponseBody
-    public Map<String,Object> add(User userForm, String confirmPassword){
+    public ResponseVo add(User userForm, String confirmPassword){
         String username = userForm.getUsername();
         User user = userService.selectByUsername(username);
         if (null != user) {
@@ -84,7 +86,7 @@ public class UserController {
         }
     }
 
-    /*用户详情*/
+    /**用户详情*/
     @GetMapping("/detail")
     public String userDetail(Model model, String userId, String opertype){
         User user = userService.selectByUserId(userId);
@@ -93,10 +95,10 @@ public class UserController {
         return "user/userDetail";
     }
 
-    /*编辑用户*/
+    /**编辑用户*/
     @PostMapping("/edit")
     @ResponseBody
-    public Map<String,Object> editUser(User userForm){
+    public ResponseVo editUser(User userForm){
         int a = userService.updateByUserId(userForm);
         if (a > 0) {
             return ResultUtil.success();
@@ -105,10 +107,10 @@ public class UserController {
         }
     }
 
-    /*删除用户*/
+    /**删除用户*/
     @GetMapping("/delete")
     @ResponseBody
-    public Map<String, Object> deleteUser(String userIdStr) {
+    public ResponseVo deleteUser(String userIdStr) {
         String[] userIds = userIdStr.split(",");
         List<String> userIdsList = Arrays.asList(userIds);
         int a = userService.updateStatusBatch(userIdsList,2);
@@ -119,10 +121,10 @@ public class UserController {
         }
     }
 
-    /*启用*/
+    /**启用*/
     @GetMapping("/reuse")
     @ResponseBody
-    public Map<String, Object> reuseUser(String userIdStr) {
+    public ResponseVo reuseUser(String userIdStr) {
         String[] userIds = userIdStr.split(",");
         List<String> userIdsList = Arrays.asList(userIds);
         int a = userService.updateStatusBatch(userIdsList,1);
@@ -133,7 +135,7 @@ public class UserController {
         }
     }
 
-    /*分配角色列表查询*/
+    /**分配角色列表查询*/
     @PostMapping("/assign/role/list")
     @ResponseBody
     public Map<String,Object> assignRoleList(String userId){
@@ -145,24 +147,24 @@ public class UserController {
         return jsonMap;
     }
 
-    /*保存分配角色*/
+    /**保存分配角色*/
     @PostMapping("/assign/role")
     @ResponseBody
-    public Map<String,Object> assignRole(String userId,String roleIdStr){
+    public ResponseVo assignRole(String userId, String roleIdStr){
         String[] roleIds = roleIdStr.split(",");
         List<String> roleIdsList = Arrays.asList(roleIds);
-        Map<String,Object> jsonMap = userService.addAssignRole(userId,roleIdsList);
+        ResponseVo responseVo = userService.addAssignRole(userId,roleIdsList);
 
         List<String> userIds = new ArrayList<>();
         userIds.add(userId);
         myShiroRealm.clearAuthorizationByUserId(userIds);
-        return jsonMap;
+        return responseVo;
     }
 
     /*修改密码*/
     @RequestMapping(value = "/changePassword",method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> changePassword(ChangePasswordVo changePasswordVo) {
+    public ResponseVo changePassword(ChangePasswordVo changePasswordVo) {
         if(!changePasswordVo.getNewPassword().equals(changePasswordVo.getConfirmNewPassword())){
             return ResultUtil.error("两次密码输入不一致");
         }

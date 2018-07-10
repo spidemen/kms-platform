@@ -1,75 +1,45 @@
-/**
- * Copyright 2018 人人开源 http://www.renren.io
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- */
-
 package com.nbclass.util;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.nbclass.vo.base.PageResultVo;
+import com.nbclass.vo.base.ResponseVo;
+
+import java.util.List;
 
 /**
  * 返回数据
  */
 public class ResultUtil{
 
-	public static Map<String,Object> success(){
-		Map<String,Object> map=new HashMap<>();
-		map.put("status",CoreConst.SUCCESS);
-		return map;
+	public static ResponseVo success(){
+		return vo(CoreConst.SUCCESS,null,null);
 	}
 
-	public static Map<String,Object> success(String msg){
-		Map<String,Object> map=new HashMap<>();
-		map.put("status",CoreConst.SUCCESS);
-		map.put("msg",msg);
-		return map;
+	public static ResponseVo success(String msg){
+		return vo(CoreConst.SUCCESS, msg,null);
 	}
 
-	public static Map<String,Object> success(String status,String msg){
-		Map<String,Object> map=new HashMap<>();
-		map.put("status",CoreConst.SUCCESS);
-		map.put("msg",msg);
-		return map;
+	public static ResponseVo success(String msg, Object data){
+		return vo(CoreConst.SUCCESS, msg, data);
 	}
 
-	public static Map<String,Object> error(){
-		Map<String,Object> map=new HashMap<>();
-		map.put("status",CoreConst.FAIL);
-		map.put("msg","系统异常，请联系管理员");
-		return map;
+	public static ResponseVo error(){
+		return vo(CoreConst.FAIL,null,null);
 	}
 
-	public static Map<String,Object> error(String msg){
-		Map<String,Object> map=new HashMap<>();
-		map.put("status",CoreConst.FAIL);
-		map.put("msg",msg);
-		return map;
+	public static ResponseVo error(String msg){
+		return vo(CoreConst.FAIL, msg,null);
 	}
 
-	public static Map<String,Object> error(String status,String msg){
-		Map<String,Object> map=new HashMap<>();
-		map.put("status",CoreConst.FAIL);
-		map.put("msg",msg);
-		return map;
+	public static ResponseVo error(String msg, Object data){
+		return vo(CoreConst.FAIL, msg,data);
 	}
 
-	public static Map<String,Object> table(Object data, long total){
-		Map<String,Object> map=new HashMap<>();
-		map.put("rows", data);
-		map.put("total", total);
-		return map;
+	public static PageResultVo table( List<?> list, Long total){
+		return new PageResultVo(list, total);
+	}
+
+	public static ResponseVo vo(String status, String message, Object data) {
+		return new ResponseVo<>(status, message, data);
 	}
 
 

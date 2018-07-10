@@ -5,8 +5,8 @@ import com.nbclass.mapper.UserRoleMapper;
 import com.nbclass.model.User;
 import com.nbclass.model.UserRole;
 import com.nbclass.service.UserService;
-import com.nbclass.util.CoreConst;
 import com.nbclass.util.ResultUtil;
+import com.nbclass.vo.base.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String,Object> addAssignRole(String userId, List<String> roleIds) {
+    public ResponseVo addAssignRole(String userId, List<String> roleIds) {
         try{
             UserRole userRole = new UserRole();
             userRole.setUserId(userId);

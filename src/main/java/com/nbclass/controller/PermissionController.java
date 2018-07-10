@@ -5,6 +5,7 @@ import com.nbclass.service.PermissionService;
 import com.nbclass.shiro.ShiroService;
 import com.nbclass.util.CoreConst;
 import com.nbclass.util.ResultUtil;
+import com.nbclass.vo.base.ResponseVo;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,15 +17,14 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/permission")
 public class PermissionController{
     private static final Logger logger = LoggerFactory.getLogger(PermissionController.class);
-    private static final String[] MENU_FLAG ={"1","2"};/*1:全部资源，2：菜单资源*/
+    //1:全部资源，2：菜单资源
+    private static final String[] MENU_FLAG ={"1","2"};
     @Autowired
     private PermissionService permissionService;
     @Autowired
@@ -52,7 +52,7 @@ public class PermissionController{
     /*添加权限*/
     @ResponseBody
     @PostMapping("/add")
-    public Map<String, Object> addPermission(Permission permission){
+    public ResponseVo addPermission(Permission permission){
         try {
             int a = permissionService.insert(permission);
             if (a > 0) {
@@ -70,7 +70,7 @@ public class PermissionController{
     /*删除权限*/
     @ResponseBody
     @PostMapping("/delete")
-    public Map<String, Object> deletePermission(String permissionId){
+    public ResponseVo deletePermission(String permissionId){
         try {
             int subPermsByPermissionIdCount = permissionService.selectSubPermsByPermissionId(permissionId);
             if(subPermsByPermissionIdCount>0){
@@ -109,7 +109,7 @@ public class PermissionController{
     /*编辑权限*/
     @ResponseBody
     @PostMapping("/edit")
-    public Map<String, Object> editPermission(@ModelAttribute("permission")Permission permission){
+    public ResponseVo editPermission(@ModelAttribute("permission")Permission permission){
         int a = permissionService.updateByPermissionId(permission);
         if (a > 0) {
             shiroService.updatePermission();

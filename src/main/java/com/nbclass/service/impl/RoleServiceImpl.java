@@ -6,8 +6,10 @@ import com.nbclass.model.Role;
 import com.nbclass.model.RolePermission;
 import com.nbclass.model.User;
 import com.nbclass.service.RoleService;
+import com.nbclass.util.CopyUtil;
 import com.nbclass.util.ResultUtil;
 import com.nbclass.util.UUIDUtil;
+import com.nbclass.vo.base.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,10 +33,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> selectAllRoles(Map<String, Object> params) {
-        Role role = new Role();
-        role.setStatus((Integer) params.get("status"));
-        return roleMapper.select(role);
+    public List<Role> selectRoles(Role role) {
+        return roleMapper.selectRoles(role);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Map<String, Object> addAssignPermission(String roleId, List<String> permissionIds) {
+    public ResponseVo addAssignPermission(String roleId, List<String> permissionIds) {
         try{
             RolePermission rolePermission = new RolePermission();
             rolePermission.setRoleId(roleId);

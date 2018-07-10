@@ -50,7 +50,7 @@ public class User implements Serializable{
     private Integer age;
 
     /**
-     * 用户状态：1有效; 2删除
+     * 用户状态：1有效; 0无效
      */
     private Integer status;
 

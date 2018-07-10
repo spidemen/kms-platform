@@ -10,6 +10,8 @@ import java.util.Set;
 public interface RoleMapper extends MyMapper<Role> {
     Set<String> findRoleByUserId(String userId);
 
+    List<Role> selectRoles(Role role);
+
     public int updateStatusBatch(Map<String, Object> params);
 
     int updateByRoleId(Map<String, Object> params);

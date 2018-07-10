@@ -9,6 +9,7 @@ import com.nbclass.util.CoreConst;
 import com.nbclass.util.PasswordHelper;
 import com.nbclass.util.ResultUtil;
 import com.nbclass.util.UUIDUtil;
+import com.nbclass.vo.base.ResponseVo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -52,7 +53,7 @@ public class SystemController{
     /*提交注册*/
     @PostMapping("/register")
     @ResponseBody
-    public Map<String, Object> register(HttpServletRequest request, User registerUser, String confirmPassword, String verification){
+    public ResponseVo register(HttpServletRequest request, User registerUser, String confirmPassword, String verification){
         //判断验证码
         String rightCode = (String) request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
         if (StringUtils.isNotBlank(verification) && StringUtils.isNotBlank(rightCode) && verification.equals(rightCode)) {
@@ -97,8 +98,8 @@ public class SystemController{
     /*提交登录*/
     @PostMapping("/login")
     @ResponseBody
-    public Map<String, Object> login(HttpServletRequest request, String username, String password, String verification,
-                                     @RequestParam(value = "rememberMe", defaultValue = "0") Integer rememberMe){
+    public ResponseVo login(HttpServletRequest request, String username, String password, String verification,
+                            @RequestParam(value = "rememberMe", defaultValue = "0") Integer rememberMe){
         //判断验证码
         String rightCode = (String) request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
         if (StringUtils.isNotBlank(verification) && StringUtils.isNotBlank(rightCode) && verification.equals(rightCode)) {
@@ -126,7 +127,7 @@ public class SystemController{
     /*登出*/
     @RequestMapping(value = "/logout")
     @ResponseBody
-    public Map<String, Object> logout() {
+    public ResponseVo logout() {
         return ResultUtil.success();
     }
 

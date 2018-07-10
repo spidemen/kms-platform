@@ -8,9 +8,12 @@ import com.nbclass.model.User;
 import com.nbclass.service.PermissionService;
 import com.nbclass.service.RoleService;
 import com.nbclass.shiro.MyShiroRealm;
-import com.nbclass.shiro.ShiroService;
+import com.nbclass.util.CoreConst;
+import com.nbclass.util.PageUtil;
 import com.nbclass.util.ResultUtil;
 import com.nbclass.vo.PermissionTreeListVo;
+import com.nbclass.vo.base.PageResultVo;
+import com.nbclass.vo.base.ResponseVo;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +22,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/role")
@@ -29,8 +34,6 @@ public class RoleController{
     private RoleService roleService;
     @Autowired
     private PermissionService permissionService;
-    @Autowired
-    private ShiroService shiroService;
     @Autowired
     private MyShiroRealm myShiroRealm;
 
@@ -43,17 +46,10 @@ public class RoleController{
     /*角色列表数据*/
     @PostMapping("/list")
     @ResponseBody
-    public Map<String, Object> loadRoles(Integer limit, Integer offset, Integer status) {
-        Map<String, Object> params = new HashMap<String, Object>();
+    public PageResultVo pageRoles(Role role,Integer limit,Integer offset) {
         try {
-            int pageNo = 0;
-            if (offset != 0) {
-                pageNo = offset / limit;
-            }
-            pageNo += 1;
-            PageHelper.startPage(pageNo, limit);
-            params.put("status",status);
-            List<Role> roleList = roleService.selectAllRoles(params);
+            PageHelper.startPage(PageUtil.getPageNo(limit, offset),offset);
+            List<Role> roleList = roleService.selectRoles(role);
             PageInfo<Role> pages = new PageInfo<>(roleList);
             return ResultUtil.table(roleList,pages.getTotal());
         } catch (Exception e) {
@@ -66,7 +62,7 @@ public class RoleController{
     /*新增角色*/
     @PostMapping("/add")
     @ResponseBody
-    public Map<String, Object> addRole(Role role) {
+    public ResponseVo addRole(Role role) {
         try {
             int a = roleService.insert(role);
             if (a > 0) {
@@ -83,10 +79,23 @@ public class RoleController{
     /*删除角色*/
     @GetMapping("/delete")
     @ResponseBody
-    public Map<String, Object> deleteRole(String roleIdStr) {
+    public ResponseVo deleteRole(String roleId) {
+        List<String> roleIdsList = Arrays.asList(roleId);
+        int a = roleService.updateStatusBatch(roleIdsList, CoreConst.STATUS_INVALID);
+        if (a > 0) {
+            return ResultUtil.success();
+        } else {
+            return ResultUtil.error("删除失败！");
+        }
+    }
+
+    /*批量删除角色*/
+    @GetMapping("/batch/delete")
+    @ResponseBody
+    public ResponseVo batchDeleteRole(String roleIdStr) {
         String[] roleIds = roleIdStr.split(",");
         List<String> roleIdsList = Arrays.asList(roleIds);
-        int a = roleService.updateStatusBatch(roleIdsList,2);
+        int a = roleService.updateStatusBatch(roleIdsList,CoreConst.STATUS_INVALID);
         if (a > 0) {
             return ResultUtil.success();
         } else {
@@ -97,7 +106,7 @@ public class RoleController{
     /*启用角色*/
     @GetMapping("/reuse")
     @ResponseBody
-    public Map<String, Object> reuseRole(String roleIdStr) {
+    public ResponseVo reuseRole(String roleIdStr) {
         String[] roleIds = roleIdStr.split(",");
         List<String> roleIdsList = Arrays.asList(roleIds);
         int a = roleService.updateStatusBatch(roleIdsList,1);
@@ -120,7 +129,7 @@ public class RoleController{
     /*编辑角色*/
     @PostMapping("/edit")
     @ResponseBody
-    public Map<String, Object> editRole(@ModelAttribute("role") Role role) {
+    public ResponseVo editRole(@ModelAttribute("role") Role role) {
         int a = roleService.updateByRoleId(role);
         if (a > 0) {
             return ResultUtil.success();
@@ -158,13 +167,13 @@ public class RoleController{
     /*分配权限*/
     @PostMapping("/assign/permission")
     @ResponseBody
-    public Map<String,Object> assignRole(String roleId,String permissionIdStr){
+    public ResponseVo assignRole(String roleId, String permissionIdStr){
         List<String> permissionIdsList = new ArrayList<>();
         if(StringUtils.isNotBlank(permissionIdStr)){
             String[] permissionIds = permissionIdStr.split(",");
             permissionIdsList = Arrays.asList(permissionIds);
         }
-        Map<String,Object> jsonMap = roleService.addAssignPermission(roleId,permissionIdsList);
+        ResponseVo responseVo = roleService.addAssignPermission(roleId,permissionIdsList);
         /*重新加载角色下所有用户权限*/
         List<User> userList = roleService.findByRoleId(roleId);
         if(userList.size()>0){
@@ -174,7 +183,7 @@ public class RoleController{
             }
             myShiroRealm.clearAuthorizationByUserId(userIds);
         }
-        return jsonMap;
+        return responseVo;
     }
 
 }

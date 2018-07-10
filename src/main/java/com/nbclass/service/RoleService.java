@@ -3,6 +3,7 @@ package com.nbclass.service;
 import com.nbclass.model.Permission;
 import com.nbclass.model.Role;
 import com.nbclass.model.User;
+import com.nbclass.vo.base.ResponseVo;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +13,7 @@ public interface RoleService {
 
     Set<String> findRoleByUserId(String userId);
 
-    List<Role> selectAllRoles(Map<String, Object> params);
+    List<Role> selectRoles(Role role);
 
     int insert(Role role);
 
@@ -26,7 +27,7 @@ public interface RoleService {
 
     List<Permission> findPermissionsByRoleId(String roleId);
 
-    Map<String,Object> addAssignPermission(String roleId, List<String> permissionIdsList);
+    ResponseVo addAssignPermission(String roleId, List<String> permissionIdsList);
 
     List<User> findByRoleId(String roleId);
 

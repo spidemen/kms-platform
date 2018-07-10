@@ -51,7 +51,7 @@ public class Permission implements Serializable {
      */
     private String icon;
     /**
-     * 状态：1有效；2删除
+     * 状态：1有效; 0无效
      */
     private Integer status;
 

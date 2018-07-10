@@ -1,6 +1,7 @@
 package com.nbclass.service;
 
 import com.nbclass.model.User;
+import com.nbclass.vo.base.ResponseVo;
 
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ public interface UserService {
 
     int updateStatusBatch(List<String> userIds, Integer status);
 
-    Map<String,Object> addAssignRole(String userId, List<String> roleIds);
+    ResponseVo addAssignRole(String userId, List<String> roleIds);
 
     int updateUserByPrimaryKey(User user);
 
