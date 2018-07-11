@@ -1,7 +1,7 @@
 # zb-shiro
 
 #### 项目介绍
-Springboot + shiro权限管理。最精简的shiro上手项目。可以加QQ群130512958交流技术！
+Springboot + shiro权限管理。最精简的shiro上手项目。可以加[QQ群130512958](http://shang.qq.com/wpa/qunwpa?idkey=dad3420aea2111ee98653f703f61bc504bfcd6dd85d1766a344523d7e353ad43)交流技术！
 
 项目预览：[admin.nbclass.com](http://admin.nbclass.com)
     音乐：[music.nbclass.com](http://music.nbclass.com)
