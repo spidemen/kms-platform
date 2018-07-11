@@ -1,7 +1,9 @@
 # zb-shiro
 
 #### 项目介绍
-Springboot + shiro权限管理。最精简的shiro上手项目。可以加[QQ群130512958](http://shang.qq.com/wpa/qunwpa?idkey=dad3420aea2111ee98653f703f61bc504bfcd6dd85d1766a344523d7e353ad43)交流技术！
+Springboot + shiro权限管理。最精简的shiro上手项目。<br/>
+基于Spring Boot、Shiro、MyBatis、Redis、thymeleaf等框架，前端使用adminlte模板。<br/>
+可以加[QQ群130512958](http://shang.qq.com/wpa/qunwpa?idkey=dad3420aea2111ee98653f703f61bc504bfcd6dd85d1766a344523d7e353ad43)交流技术！
 
 项目预览：[admin.nbclass.com](http://admin.nbclass.com)
     音乐：[music.nbclass.com](http://music.nbclass.com)
@@ -36,8 +38,6 @@ _普通用户_： 账号：test 密码：123456<br/>
 
 注：演示系统每一小时会初始化一次sql数据。
 
-如无法及时体验系统，请群里联系我。
-
 
 **Druid监控**
 
@@ -58,6 +58,8 @@ _普通用户_： 账号：test 密码：123456<br/>
 #### 图片预览
 
 ![首页](https://gitee.com/supperzh/zb-shiro/raw/master/docs/img/workdest.png?v=1.0)
+什么？你没看错，前端模板有很棒的主题风格切换功能！<br/>
+![主题切换](https://gitee.com/supperzh/zb-shiro/raw/master/docs/img/control.png?v=1.0)
 ![用户管理](https://gitee.com/supperzh/zb-shiro/raw/master/docs/img/userlist.png?v=1.0)
 ![角色管理](https://gitee.com/supperzh/zb-shiro/raw/master/docs/img/rolelist.png?v=1.0)
 ![角色分配资源](https://gitee.com/supperzh/zb-shiro/raw/master/docs/img/assignpermission.png?v=1.0)
