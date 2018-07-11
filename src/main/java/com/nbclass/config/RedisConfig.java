@@ -8,7 +8,11 @@ import org.springframework.context.annotation.Configuration;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
-/*redis配置*/
+/**
+ * @version V1.0
+ * @date 2018年7月11日
+ * @author superzheng
+ */
 @Configuration
 @EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {

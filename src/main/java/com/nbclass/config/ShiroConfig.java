@@ -28,7 +28,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-/*shiro配置*/
+/**
+ * @version V1.0
+ * @date 2018年7月11日
+ * @author superzheng
+ */
 @Configuration
 public class ShiroConfig {
     @Autowired(required = false)

@@ -1,7 +1,9 @@
 package com.nbclass.vo;
 
 /**
- * Created by Administrator on 2017/10/10.
+ * @version V1.0
+ * @date 2018年7月11日
+ * @author superzheng
  */
 public class PermissionTreeListVo {
     private Integer id;

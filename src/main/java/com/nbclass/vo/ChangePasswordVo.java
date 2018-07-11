@@ -1,7 +1,9 @@
 package com.nbclass.vo;
 
 /**
- * Created by Administrator on 2018/2/23.
+ * @version V1.0
+ * @date 2018年7月11日
+ * @author superzheng
  */
 public class ChangePasswordVo {
     String oldPassword;

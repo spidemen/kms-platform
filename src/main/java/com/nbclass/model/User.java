@@ -5,7 +5,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
-
+/**
+ * @version V1.0
+ * @date 2018年7月11日
+ * @author superzheng
+ */
 public class User implements Serializable{
     private static final long serialVersionUID = -8736616045315083846L;
     @Id

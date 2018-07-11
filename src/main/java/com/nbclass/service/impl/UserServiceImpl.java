@@ -13,7 +13,11 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * @version V1.0
+ * @date 2018年7月11日
+ * @author superzheng
+ */
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -34,8 +38,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateLastLoginTime(User loginUser) {
-        userMapper.updateLastLoginTime(loginUser);
+    public void updateLastLoginTime(User user) {
+        userMapper.updateLastLoginTime(user);
     }
 
     @Override
@@ -55,7 +59,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int updateStatusBatch(List<String> userIds,Integer status) {
-        Map<String,Object> params = new HashMap<String,Object>();
+        Map<String,Object> params = new HashMap<String,Object>(2);
         params.put("userIds",userIds);
         params.put("status",status);
         return userMapper.updateStatusBatch(params);

@@ -1,7 +1,11 @@
 package com.nbclass.vo.base;
 
 import java.util.List;
-
+/**
+ * @version V1.0
+ * @date 2018年7月11日
+ * @author superzheng
+ */
 public class PageResultVo {
     private List rows;
     private Long total;

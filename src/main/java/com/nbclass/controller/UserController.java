@@ -18,7 +18,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-
+/**
+ * @version V1.0
+ * @date 2018年7月11日
+ * @author superzheng
+ */
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -130,9 +134,9 @@ public class UserController {
     @PostMapping("/assign/role/list")
     @ResponseBody
     public Map<String,Object> assignRoleList(String userId){
-        List<Role> roleList = roleService.selectRolesByStatus(1);
+        List<Role> roleList = roleService.selectRoles(new Role());
         Set<String> hasRoles = roleService.findRoleByUserId(userId);
-        Map<String, Object> jsonMap = new HashMap<>();
+        Map<String, Object> jsonMap = new HashMap<>(2);
         jsonMap.put("rows", roleList);
         jsonMap.put("hasRoles",hasRoles);
         return jsonMap;

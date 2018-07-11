@@ -14,7 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-
+/**
+ * @version V1.0
+ * @date 2018年7月11日
+ * @author superzheng
+ */
 @Service
 public class RoleServiceImpl implements RoleService {
 
@@ -47,7 +51,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public int updateStatusBatch(List<String> roleIds, Integer status) {
-        Map<String,Object> params = new HashMap<String,Object>();
+        Map<String,Object> params = new HashMap<String,Object>(2);
         params.put("roleIds",roleIds);
         params.put("status",status);
         return roleMapper.updateStatusBatch(params);
@@ -62,16 +66,11 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public int updateByRoleId(Role role) {
-        Map<String,Object> params  = new HashMap<>();
+        Map<String,Object> params  = new HashMap<>(3);
         params.put("name",role.getName());
         params.put("description",role.getDescription());
         params.put("role_id",role.getRoleId());
         return roleMapper.updateByRoleId(params);
-    }
-
-    @Override
-    public List<Role> selectRolesByStatus(Integer status) {
-        return roleMapper.findByStatus(status);
     }
 
     @Override

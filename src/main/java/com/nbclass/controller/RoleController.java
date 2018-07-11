@@ -1,6 +1,5 @@
 package com.nbclass.controller;
 
-import com.github.pagehelper.Constant;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.nbclass.model.Permission;
@@ -26,7 +25,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+/**
+ * @version V1.0
+ * @date 2018年7月11日
+ * @author superzheng
+ */
 @Controller
 @RequestMapping("/role")
 public class RoleController{

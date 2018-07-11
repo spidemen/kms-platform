@@ -5,7 +5,11 @@ import org.apache.commons.beanutils.PropertyUtils;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @version V1.0
+ * @date 2018年7月11日
+ * @author superzheng
+ */
 public class CoreUtils {
 
     public static <T> T copy(Object orig, Class<T> clazz) {

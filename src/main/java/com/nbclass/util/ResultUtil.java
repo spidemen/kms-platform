@@ -4,9 +4,10 @@ import com.nbclass.vo.base.PageResultVo;
 import com.nbclass.vo.base.ResponseVo;
 
 import java.util.List;
-
 /**
- * 返回数据
+ * @version V1.0
+ * @date 2018年7月11日
+ * @author superzheng
  */
 public class ResultUtil{
 

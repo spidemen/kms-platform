@@ -55,8 +55,4 @@
       role_id = #{role_id}
   </update>
 
-  <select id="findByStatus" parameterType="integer" resultMap="BaseResultMap">
-    SELECT  <include refid="Base_Column_List"/> FROM role WHERE status = #{status}
-  </select>
-
 </mapper>

@@ -18,12 +18,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @version V1.0
+ * @date 2018年7月11日
+ * @author superzheng
+ */
 @Controller
 @RequestMapping("/permission")
 public class PermissionController{
     private static final Logger logger = LoggerFactory.getLogger(PermissionController.class);
-    //1:全部资源，2：菜单资源
+    /**1:全部资源，2：菜单资源*/
     private static final String[] MENU_FLAG ={"1","2"};
     @Autowired
     private PermissionService permissionService;

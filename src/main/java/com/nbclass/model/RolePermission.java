@@ -4,7 +4,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
-
+/**
+ * @version V1.0
+ * @date 2018年7月11日
+ * @author superzheng
+ */
 public class RolePermission implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

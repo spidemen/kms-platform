@@ -1,7 +1,11 @@
 package com.nbclass.util;
 
 import java.util.UUID;
-
+/**
+ * @version V1.0
+ * @date 2018年7月11日
+ * @author superzheng
+ */
 public class UUIDUtil {
 
     private static final int SHORT_LENGTH = 8;

@@ -11,7 +11,11 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
-/*Druid数据源配置*/
+/**
+ * @version V1.0
+ * @date 2018年7月11日
+ * @author superzheng
+ */
 @Configuration
 public class DruidConfig {
     @Bean

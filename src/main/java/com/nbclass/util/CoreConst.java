@@ -1,5 +1,9 @@
 package com.nbclass.util;
-
+/**
+ * @version V1.0
+ * @date 2018年7月11日
+ * @author superzheng
+ */
 public class CoreConst {
     public static final String  SUCCESS            = "success";
     public static final String  FAIL            = "fail";

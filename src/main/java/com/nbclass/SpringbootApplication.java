@@ -2,10 +2,12 @@ package com.nbclass;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import tk.mybatis.spring.annotation.MapperScan;
-
+/**
+ * @version V1.0
+ * @date 2018年7月11日
+ * @author superzheng
+ */
 @SpringBootApplication
 @MapperScan(basePackages = "com.nbclass.mapper")
 public class SpringbootApplication {

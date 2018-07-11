@@ -11,7 +11,11 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-
+/**
+ * @version V1.0
+ * @date 2018年7月11日
+ * @author superzheng
+ */
 @Service
 public class PermissionServiceImpl implements PermissionService {
     @Autowired
@@ -30,11 +34,6 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public List<Permission> selectAllMenuName(Integer status) {
         return permissionMapper.selectAllMenuName(status);
-    }
-
-    @Override
-    public List<Permission> selectByUserId(String userId) {
-        return permissionMapper.selectByUserId(userId);
     }
 
     @Override
