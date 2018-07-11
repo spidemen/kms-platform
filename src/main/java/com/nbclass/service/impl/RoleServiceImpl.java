@@ -90,9 +90,9 @@ public class RoleServiceImpl implements RoleService {
                 rolePermission.setPermissionId(permissionId);
                 rolePermissionMapper.insert(rolePermission);
             }
-            return ResultUtil.success();
+            return ResultUtil.success("分配权限成功");
         }catch(Exception e){
-            return ResultUtil.error("启用失败！");
+            return ResultUtil.error("分配权限失败");
         }
     }
 

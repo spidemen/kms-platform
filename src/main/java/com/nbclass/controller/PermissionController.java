@@ -57,9 +57,9 @@ public class PermissionController{
             int a = permissionService.insert(permission);
             if (a > 0) {
                 shiroService.updatePermission();
-                return ResultUtil.success();
+                return ResultUtil.success("添加权限成功");
             } else {
-                return ResultUtil.error("保存失败！");
+                return ResultUtil.error("添加权限失败");
             }
         } catch (Exception e) {
             logger.error(String.format("PermissionController.addPermission%s", e));
@@ -79,9 +79,9 @@ public class PermissionController{
             int a = permissionService.updateStatus(permissionId,CoreConst.STATUS_INVALID);
             if (a > 0) {
                 shiroService.updatePermission();
-                return ResultUtil.success();
+                return ResultUtil.success("删除权限成功");
             } else {
-                return ResultUtil.error("删除失败！");
+                return ResultUtil.error("删除权限失败");
             }
         } catch (Exception e) {
             logger.error(String.format("PermissionController.deletePermission%s", e));
@@ -90,8 +90,8 @@ public class PermissionController{
     }
 
     /*权限详情*/
-    @GetMapping("/detail")
-    public String detail(Model model, String permissionId, String opertype) {
+    @GetMapping("/edit")
+    public String detail(Model model, String permissionId) {
         Permission permission = permissionService.findByPermissionId(permissionId);
         if(null!=permission){
             if(permission.getParentId().equals(CoreConst.TOP_MENU_ID)){
@@ -102,7 +102,6 @@ public class PermissionController{
             }
         }
         model.addAttribute("permission", permission);
-        model.addAttribute("opertype", opertype);
         return "permission/detail";
     }
 
@@ -113,9 +112,9 @@ public class PermissionController{
         int a = permissionService.updateByPermissionId(permission);
         if (a > 0) {
             shiroService.updatePermission();
-            return ResultUtil.success();
+            return ResultUtil.success("编辑权限成功");
         } else {
-            return ResultUtil.error("保存失败！");
+            return ResultUtil.error("编辑权限失败");
         }
     }
 

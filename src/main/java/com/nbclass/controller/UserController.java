@@ -79,12 +79,11 @@ public class UserController {
         }
     }
 
-    /**用户详情*/
-    @GetMapping("/detail")
-    public String userDetail(Model model, String userId, String opertype){
+    /**编辑用户详情*/
+    @GetMapping("/edit")
+    public String userDetail(Model model, String userId){
         User user = userService.selectByUserId(userId);
         model.addAttribute("user", user);
-        model.addAttribute("opertype", opertype);
         return "user/userDetail";
     }
 
@@ -146,7 +145,6 @@ public class UserController {
         String[] roleIds = roleIdStr.split(",");
         List<String> roleIdsList = Arrays.asList(roleIds);
         ResponseVo responseVo = userService.addAssignRole(userId,roleIdsList);
-
         List<String> userIds = new ArrayList<>();
         userIds.add(userId);
         myShiroRealm.clearAuthorizationByUserId(userIds);

@@ -72,9 +72,9 @@ public class UserServiceImpl implements UserService {
                 userRole.setRoleId(roleId);
                 userRoleMapper.insert(userRole);
             }
-            return ResultUtil.success();
+            return ResultUtil.success("分配角色成功");
         }catch(Exception e){
-            return ResultUtil.error("启用失败！");
+            return ResultUtil.error("分配角色失败");
         }
     }
 

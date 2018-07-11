@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="col-md-1 col-sm-6 " style="text-align:left;">
-                    <button type="button" id="btn_query" class="btn btn-primary">查询</button>
+                    <button type="button" id="btn_query" class="btn btn-info">查询</button>
                 </div>
             </div>
         </form>
@@ -242,7 +242,7 @@
 
     /*编辑*/
     function editUser(userId) {
-        Core.load("#userOpenWindow","/user/detail?opertype=edit&userId="+userId,function(){
+        Core.load("#userOpenWindow","/user/edit?userId="+userId,function(){
             $("#userDetailModal").modal("show");
         });
     }
@@ -259,7 +259,6 @@
     }
     /*分配角色-列表查询*/
     function assignRoleList(userId) {
-        console.log(userId);
         userIdChecked=userId;
         $("#assignRoleModal").modal("show");
         if(loadRoleCount==0){
@@ -397,13 +396,11 @@
                 Core.postAjax("/user/add",$("#userForm").serialize(),function (data) {
                     Core.unmask("#saveUser");
                     if(data.status=="success"){
-                        layer.msg("保存成功！");
                         $("#userModal").modal("hide");
                         $("#userForm")[0].reset();
                         Core.refreshTable("#table")
-                    }else{
-                        layer.msg(data.msg);
                     }
+                    layer.msg(data.msg);
                 })
             };
         });
@@ -420,11 +417,9 @@
                 Core.postAjax('/user/assign/role',{userId:userIdChecked,roleIdStr:roleIdStr},function (data) {
                     Core.unmask("#saveAssign");
                     if(data.status=="success"){
-                        layer.msg("分配成功！");
                         $("#assignRoleModal").modal("hide");
-                    }else{
-                        layer.msg(data.msg);
                     }
+                    layer.msg(data.msg);
                 })
             }
         })

@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="col-md-5 col-xs-4 " style="text-align:left;">
-                    <button type="button" id="btn_query" class="btn btn-primary">查询</button>
+                    <button type="button" id="btn_query" class="btn btn-info">查询</button>
                 </div>
 
             </div>
@@ -202,11 +202,9 @@
                     roleIdStr=roleIdStr.substring(0,roleIdStr.length-1);
                     Core.postAjax("/role/batch/delete",{"roleIdStr":roleIdStr},function(data){
                         if(data.status=="success"){
-                            layer.msg("删除成功！");
                             Core.refreshTable("#table");
-                        }else{
-                            layer.msg(data.msg);
                         }
+                        layer.msg(data.msg);
                     },"get")
                 })
             }
@@ -218,13 +216,11 @@
                 Core.postAjax("/role/add",$("#roleForm").serialize(),function (data) {
                     Core.unmask("#saveRole");
                     if(data.status=="success"){
-                        layer.msg("保存成功！");
                         $("#roleModal").modal("hide");
                         $("#roleForm")[0].reset();
                         Core.refreshTable("#table")
-                    }else{
-                        layer.msg(data.msg);
                     }
+                    layer.msg(data.msg);
                 })
             };
         });
@@ -245,11 +241,9 @@
             Core.postAjax( '/role/assign/permission',{roleId:roleId,permissionIdStr:permissionIdStr},function (data) {
                 Core.unmask("#saveAssign");
                 if(data.status=="success"){
-                    layer.msg("分配成功！");
                     $("#assignPermissionModal").modal("hide");
-                }else{
-                    layer.msg(data.msg);
                 }
+                layer.msg(data.msg);
             });
         });
     });
@@ -265,7 +259,7 @@
     }
     /*编辑*/
     function editRole(id) {
-        Core.load("#roleOpenWindow","/role/detail?opertype=edit&id="+id, function(){
+        Core.load("#roleOpenWindow","/role/edit?&id="+id, function(){
             $("#roleDetailModal").modal("show");
         });
     }
@@ -274,11 +268,9 @@
         Core.confirm("确定删除该角色？",function () {
             Core.postAjax("/role/delete", {"roleId": id}, function (data) {
                 if (data.status == "success") {
-                    layer.msg("删除成功！");
                     Core.refreshTable("#table");
-                } else {
-                    layer.msg(data.msg);
                 }
+                layer.msg(data.msg);
             }, "get")
         })
     }

@@ -199,7 +199,7 @@
     };
     /*编辑权限*/
     function editPermission(permissionId) {
-        Core.load("#permissionOpenWindow","/permission/detail?opertype=edit&permissionId="+permissionId, function(){
+        Core.load("#permissionOpenWindow","/permission/edit?permissionId="+permissionId, function(){
             $("#permissionDetailModal").modal("show");
         });
     }
@@ -208,11 +208,9 @@
         Core.confirm("确认删除该权限？",function () {
             Core.postAjax('/permission/delete',{"permissionId":permissionId},function (data) {
                 if(data.status=="success"){
-                    layer.msg("删除成功！");
                     Menu.table.refresh();
-                }else{
-                    layer.msg(data.msg);
                 }
+                layer.msg(data.msg);
             });
         })
     }
@@ -268,12 +266,10 @@
                 Core.postAjax("/permission/add",$("#permissionForm").serialize(),function (data) {
                     if(data.status=="success"){
                         Core.unmask("#savePermission");
-                        layer.msg("保存成功！");
                         $("#permissionModal").modal("hide");
                         Menu.table.refresh();
-                    }else{
-                        layer.msg(data.msg);
                     }
+                    layer.msg(data.msg);
                 });
 
             }

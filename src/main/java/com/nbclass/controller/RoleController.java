@@ -1,5 +1,6 @@
 package com.nbclass.controller;
 
+import com.github.pagehelper.Constant;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.nbclass.model.Permission;
@@ -66,9 +67,9 @@ public class RoleController{
         try {
             int a = roleService.insert(role);
             if (a > 0) {
-                return ResultUtil.success();
+                return ResultUtil.success("添加角色成功");
             } else {
-                return ResultUtil.error("保存失败！");
+                return ResultUtil.error("添加角色失败");
             }
         } catch (Exception e) {
             logger.error(String.format("RoleController.addRole%s", e));
@@ -83,9 +84,9 @@ public class RoleController{
         List<String> roleIdsList = Arrays.asList(roleId);
         int a = roleService.updateStatusBatch(roleIdsList, CoreConst.STATUS_INVALID);
         if (a > 0) {
-            return ResultUtil.success();
+            return ResultUtil.success("删除角色成功");
         } else {
-            return ResultUtil.error("删除失败！");
+            return ResultUtil.error("删除角色失败");
         }
     }
 
@@ -97,32 +98,17 @@ public class RoleController{
         List<String> roleIdsList = Arrays.asList(roleIds);
         int a = roleService.updateStatusBatch(roleIdsList,CoreConst.STATUS_INVALID);
         if (a > 0) {
-            return ResultUtil.success();
+            return ResultUtil.success("删除角色成功");
         } else {
-            return ResultUtil.error("删除失败！");
+            return ResultUtil.error("删除角色失败");
         }
     }
 
-    /*启用角色*/
-    @GetMapping("/reuse")
-    @ResponseBody
-    public ResponseVo reuseRole(String roleIdStr) {
-        String[] roleIds = roleIdStr.split(",");
-        List<String> roleIdsList = Arrays.asList(roleIds);
-        int a = roleService.updateStatusBatch(roleIdsList,1);
-        if (a > 0) {
-            return ResultUtil.success();
-        } else {
-            return ResultUtil.error("启用失败！");
-        }
-    }
-
-    /*角色详情*/
-    @GetMapping("/detail")
-    public String detail(Model model, Integer id, String opertype) {
+    /*编辑角色详情*/
+    @GetMapping("/edit")
+    public String detail(Model model, Integer id) {
         Role role = roleService.findById(id);
         model.addAttribute("role", role);
-        model.addAttribute("opertype", opertype);
         return "role/detail";
     }
 
@@ -132,9 +118,9 @@ public class RoleController{
     public ResponseVo editRole(@ModelAttribute("role") Role role) {
         int a = roleService.updateByRoleId(role);
         if (a > 0) {
-            return ResultUtil.success();
+            return ResultUtil.success("编辑角色成功");
         } else {
-            return ResultUtil.error("修改失败！");
+            return ResultUtil.error("编辑角色失败");
         }
     }
 
@@ -143,7 +129,7 @@ public class RoleController{
     @ResponseBody
     public List<PermissionTreeListVo> assignRole(String roleId){
         List<PermissionTreeListVo> listVos = new ArrayList<>();
-        List<Permission> allPermissions = permissionService.selectAll(1);
+        List<Permission> allPermissions = permissionService.selectAll(CoreConst.STATUS_VALID);
         List<Permission> hasPermissions = roleService.findPermissionsByRoleId(roleId);
         for(Permission permission : allPermissions){
             PermissionTreeListVo vo = new PermissionTreeListVo();
