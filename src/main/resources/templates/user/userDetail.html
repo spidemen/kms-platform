@@ -51,7 +51,7 @@
             if (doValidForm(userDetailForm)) {
                 Core.mask("#saveDetailUser");
                 Core.postAjax("/user/edit",$("#userDetailForm").serialize(),function (data) {
-                    if (data.status == "success") {
+                    if (data.status == 200) {
                         Core.unmask("#saveDetailUser");
                         $("#userDetailModal").modal("hide");
                         Core.refreshTable("#table",true);

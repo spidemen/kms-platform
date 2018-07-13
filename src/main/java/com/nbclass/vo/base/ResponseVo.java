@@ -5,15 +5,15 @@ package com.nbclass.vo.base;
  * @author superzheng
  */
 public class ResponseVo<T> {
-    private String status;
+    private Integer status;
     private String msg;
     private T data;
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -33,7 +33,7 @@ public class ResponseVo<T> {
         this.data = data;
     }
 
-    public ResponseVo(String status, String msg, T data) {
+    public ResponseVo(Integer status, String msg, T data) {
         this.status = status;
         this.msg = msg;
         this.data = data;

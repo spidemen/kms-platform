@@ -6,6 +6,7 @@ import com.nbclass.model.User;
 import com.nbclass.service.PermissionService;
 import com.nbclass.service.RoleService;
 import com.nbclass.util.CoreConst;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -50,8 +51,8 @@ public class ShiroService {
         filterChainDefinitionMap.put("/verificationCode", "anon");
         List<Permission> permissionList = permissionService.selectAll(CoreConst.STATUS_VALID);
         for(Permission permission : permissionList){
-            if (StringUtil.isNotEmpty(permission.getUrl())) {
-                String perm = "perms[" + permission.getUrl()+ "]";
+            if (StringUtils.isNotBlank(permission.getUrl())&& StringUtils.isNotBlank(permission.getPerms())) {
+                String perm = "perms[" + permission.getPerms()+ "]";
                 filterChainDefinitionMap.put(permission.getUrl(),perm);
             }
         }

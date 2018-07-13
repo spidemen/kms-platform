@@ -16,7 +16,7 @@ public interface PermissionService {
      * @param userId
      * @return set
      */
-    Set<String> findPermissionsByUserId(String userId);
+    Set<String> findPermsByUserId(String userId);
 
     /**
      * 查询全部权限

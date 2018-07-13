@@ -57,20 +57,33 @@ var Core = (function () {
             error:function (XMLHttpRequest, textStatus, errorThrown) {
                 if(XMLHttpRequest.status==403){
                     layer.msg("您没有权限访问，请联系管理员！")
+                }else if(XMLHttpRequest.status==500){
+                    layer.msg("服务器内部错误！")
+                }else{
+                    layer.msg("服务器未知错误！")
                 }
             }
         });
     };
-
     /*load()*/
-    core.load = function (id,url,d) {
+    core.load = function (id,url,d,t) {
         $(id).html("");
-        $(id).load(url,function(response,status,xhr){
+        $(id).load(url,function(response,status,XMLHttpRequest){
             if (typeof d == "function" && status=="success") {
                 d();
             }
             if(status=="error"){
-                $("#content").html(response);
+                if(t==undefined||t==1){
+                    $("#content").html(response);
+                }else if(t=2){
+                    if(XMLHttpRequest.status==403){
+                        layer.msg("您没有权限访问！")
+                    }else if(XMLHttpRequest.status==500){
+                        layer.msg("服务器内部错误！")
+                    }else{
+                        layer.msg("服务器未知错误！")
+                    }
+                }
             }
         })
     }

@@ -16,9 +16,11 @@
                         <input type="text" class="form-control" id="roleName">
                     </div>
                 </div>
-                <div class="col-md-5 col-xs-4 " style="text-align:left;">
-                    <button type="button" id="btn_query" class="btn btn-info">查询</button>
-                </div>
+                <shiro:hasPermission name="role:list">
+                    <div class="col-md-5 col-xs-4 " style="text-align:left;">
+                        <button type="button" id="btn_query" class="btn btn-info">查询</button>
+                    </div>
+                </shiro:hasPermission>
 
             </div>
 
@@ -26,12 +28,12 @@
     </div>
     <div class="jax-box jax-box-table">
         <div id="toolbar" class="btn-group">
-            <shiro:hasPermission name="/role/add">
+            <shiro:hasPermission name="role:add">
                 <button id="btn_add" type="button" class="btn btn-primary" data-toggle="modal" data-target="#roleModal">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
                 </button>
             </shiro:hasPermission>
-            <shiro:hasPermission name="/role/batch/delete">
+            <shiro:hasPermission name="role:batchDelete">
                 <button id="btn_batch_delete" type="button" class="btn btn-danger">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>批量删除
                 </button>
@@ -121,9 +123,9 @@
 
 
 <script>
-    var editFlag = "[[${@perms.hasPerm('/role/edit')}]]";
-    var deleteFlag = "[[${@perms.hasPerm('/role/delete')}]]";
-    var assignPermsFlag="[[${@perms.hasPerm('/role/assign/permission')}]]";
+    var editFlag = "[[${@perms.hasPerm('role:edit')}]]";
+    var deleteFlag = "[[${@perms.hasPerm('role:delete')}]]";
+    var assignPermsFlag="[[${@perms.hasPerm('role:assignPerms')}]]";
     var roleId="";
     var roleIdStr;//批量
     var columns=[
@@ -201,7 +203,7 @@
                     })
                     roleIdStr=roleIdStr.substring(0,roleIdStr.length-1);
                     Core.postAjax("/role/batch/delete",{"roleIdStr":roleIdStr},function(data){
-                        if(data.status=="success"){
+                        if(data.status==200){
                             Core.refreshTable("#table");
                         }
                         layer.msg(data.msg);
@@ -215,7 +217,7 @@
                 Core.mask("#saveRole");
                 Core.postAjax("/role/add",$("#roleForm").serialize(),function (data) {
                     Core.unmask("#saveRole");
-                    if(data.status=="success"){
+                    if(data.status==200){
                         $("#roleModal").modal("hide");
                         $("#roleForm")[0].reset();
                         Core.refreshTable("#table")
@@ -237,10 +239,9 @@
                     permissionIdStr+=nodes[i].permissionId+",";
                 }
             }
-            console.log(roleId);
             Core.postAjax( '/role/assign/permission',{roleId:roleId,permissionIdStr:permissionIdStr},function (data) {
                 Core.unmask("#saveAssign");
-                if(data.status=="success"){
+                if(data.status==200){
                     $("#assignPermissionModal").modal("hide");
                 }
                 layer.msg(data.msg);
@@ -261,13 +262,13 @@
     function editRole(id) {
         Core.load("#roleOpenWindow","/role/edit?&id="+id, function(){
             $("#roleDetailModal").modal("show");
-        });
+        },2);
     }
     /*删除*/
     function deleteRole(id) {
         Core.confirm("确定删除该角色？",function () {
             Core.postAjax("/role/delete", {"roleId": id}, function (data) {
-                if (data.status == "success") {
+                if (data.status == 200) {
                     Core.refreshTable("#table");
                 }
                 layer.msg(data.msg);

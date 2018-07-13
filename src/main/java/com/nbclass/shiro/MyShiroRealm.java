@@ -49,7 +49,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         User user = (User) principals.getPrimaryPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.setRoles(roleService.findRoleByUserId(user.getUserId()));
-        info.setStringPermissions(permissionService.findPermissionsByUserId(user.getUserId()));
+        info.setStringPermissions(permissionService.findPermsByUserId(user.getUserId()));
         return info;
     }
 

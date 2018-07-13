@@ -21,11 +21,16 @@
                     <input type="text" class="form-control cursor-pointer" id="detailParentMenu" th:value="${parentName}" onclick="showMenu(2)" readonly="readonly">
                 </div>
             </div>
-
             <div th:if="${permission.type} != 0" class="form-group">
                 <label class="col-sm-3 control-label">资源url :</label>
                 <div class="col-sm-8">
                     <input type="text" class="form-control" th:value="${permission.url}"  name="url" require="必填项" placeholder="">
+                </div>
+            </div>
+            <div th:if="${permission.type} != 0" class="form-group">
+                <label class="col-sm-3 control-label">资源标识 :</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" th:value="${permission.perms}"  name="perms" require="必填项" placeholder="">
                 </div>
             </div>
             <div th:if="${permission.type} != 2"  class="form-group">
@@ -58,7 +63,7 @@
         <!-- /.box-body -->
         <div class="box-footer">
             <div class="pull-right">
-                <button type="button" id="saveDetailpermission" class="btn btn-info">确定</button>
+                <button type="button" id="saveDetailPermission" class="btn btn-info">确定</button>
                 <button type="button" data-dismiss="modal" class="btn btn-default">取消</button>
             </div>
         </div>
@@ -67,7 +72,7 @@
     <script>
         var detailMenuType = "[[${permission.type}]]";
         $(function () {
-            $("#saveDetailpermission").on('click', function () {
+            $("#saveDetailPermission").on('click', function () {
                 if(doValidForm(permissionDetailForm)){
                     if(detailMenuCheckedType!=null){
                         if((detailMenuType=="0"||detailMenuType=="1")&&detailMenuCheckedType!=0){
@@ -78,10 +83,10 @@
                             return;
                         }
                     }
-                    Core.mask("#saveDetailpermission");
+                    Core.mask("#saveDetailPermission");
                     Core.postAjax("/permission/edit",$("#permissionDetailForm").serialize(),function (data) {
-                        Core.unmask("#saveDetailpermission");
-                        if(data.status=="success"){
+                        Core.unmask("#saveDetailPermission");
+                        if(data.status==200){
                             $("#permissionDetailModal").modal("hide");
                             Menu.table.refresh();
                         }

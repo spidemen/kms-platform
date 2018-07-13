@@ -32,7 +32,7 @@ public interface PermissionMapper extends MyMapper<Permission> {
      * @param userId 状态
      * @return set
      */
-    Set<String> findPermissionsByUserId(String userId);
+    Set<String> findPermsByUserId(String userId);
 
     /**
      * 根据角色id查询权限

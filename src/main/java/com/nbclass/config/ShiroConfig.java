@@ -6,6 +6,7 @@ import com.nbclass.model.Permission;
 import com.nbclass.service.PermissionService;
 import com.nbclass.shiro.MyShiroRealm;
 import com.nbclass.util.CoreConst;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
@@ -106,8 +107,8 @@ public class ShiroConfig {
         //自定义加载权限资源关系
         List<Permission> permissionList = permissionService.selectAll(CoreConst.STATUS_VALID);;
          for(Permission permission : permissionList){
-            if (StringUtil.isNotEmpty(permission.getUrl())) {
-                String perms = "perms[" + permission.getUrl()+ "]";
+            if (StringUtils.isNotBlank(permission.getUrl())&& StringUtils.isNotBlank(permission.getPerms())) {
+                String perms = "perms[" + permission.getPerms()+ "]";
                 filterChainDefinitionMap.put(permission.getUrl(),perms);
             }
         }

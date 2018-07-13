@@ -36,17 +36,6 @@ public class SystemController{
     private UserService userService;
     @Autowired
     private PermissionService permissionService;
-    /*首页*/
-    @RequestMapping(value={"/","/index"})
-    public String index(){
-        return "index/index";
-    }
-
-    /*工作台*/
-    @GetMapping("/workdest")
-    public String workdest(){
-        return "index/workdest";
-    }
 
     /*注册*/
     @GetMapping(value = "/register")

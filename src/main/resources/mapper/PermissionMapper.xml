@@ -10,6 +10,7 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="perms" property="perms" jdbcType="VARCHAR" />
     <result column="parent_id" property="parentId" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="INTEGER" />
     <result column="order_num" property="orderNum" jdbcType="INTEGER" />
@@ -22,7 +23,7 @@
     <!--
       WARNING - @mbggenerated
     -->
-    id, permission_id, name, description, url, parent_id, type, order_num, icon, status, create_time, update_time
+    id, permission_id, name, description, url, perms, parent_id, type, order_num, icon, status, create_time, update_time
   </sql>
 
   <select id="selectAllPerms" parameterType="integer" resultMap="BaseResultMap">
@@ -33,10 +34,10 @@
     SELECT id, permission_id, `name`, parent_id, `type`  FROM  permission WHERE status=#{status} AND `type` in (0,1) ORDER BY order_num
   </select>
 
-  <select id="findPermissionsByUserId" resultType="java.lang.String">
-    SELECT DISTINCT p.url FROM permission p LEFT JOIN role_permission rp ON
+  <select id="findPermsByUserId" resultType="java.lang.String">
+    SELECT DISTINCT p.perms FROM permission p LEFT JOIN role_permission rp ON
     p.permission_id = rp.permission_id LEFT JOIN user_role ur on rp.role_id = ur.role_id
-    WHERE ur.user_id = #{userId,jdbcType=VARCHAR} and p.url is not null and p.url!='' and p.status=1
+    WHERE ur.user_id = #{userId} and p.perms is not null and p.perms!='' and p.status=1
   </select>
 
   <select id="findByRoleId" parameterType="string" resultMap="BaseResultMap">
@@ -44,15 +45,18 @@
   </select>
 
   <select id="selectByUserId" parameterType="string" resultMap="BaseResultMap">
-    SELECT DISTINCT p.id, p.permission_id, p.name, p.description, p.url, p.parent_id FROM permission p LEFT JOIN role_permission rp ON
-    p.permission_id = rp.permission_id LEFT JOIN user_role ur on rp.role_id = ur.role_id
-    WHERE ur.user_id = #{userId,jdbcType=VARCHAR} and p.status=1
+    SELECT DISTINCT p.id, p.permission_id, p.name, p.description, p.url, p.perms, p.parent_id FROM permission p
+    LEFT JOIN role_permission rp ON p.permission_id = rp.permission_id
+    LEFT JOIN user_role ur on rp.role_id = ur.role_id
+    WHERE ur.user_id = #{userId} and p.status=1
   </select>
 
   <select id="selectMenuByUserId" parameterType="string" resultMap="BaseResultMap">
     SELECT DISTINCT p.id, p.permission_id, p.name, p.description, p.url, p.parent_id, p.icon, p.order_num FROM permission p LEFT JOIN role_permission rp ON
-    p.permission_id = rp.permission_id LEFT JOIN user_role ur on rp.role_id = ur.role_id
-    WHERE ur.user_id = #{userId,jdbcType=VARCHAR} and p.type in(0,1) and p.status=1
+    p.permission_id = rp.permission_id
+    LEFT JOIN user_role ur on rp.role_id = ur.role_id
+    WHERE ur.user_id = #{userId,jdbcType=VARCHAR}
+    and p.type in(0,1) and p.status=1
     ORDER BY p.order_num
   </select>
 
@@ -74,7 +78,7 @@
     UPDATE
     permission
     SET
-    name=#{name},description=#{description},url=#{url}, parent_id=#{parentId}, order_num=#{orderNum}, icon=#{icon}, update_time=now()
+    name=#{name},description=#{description},url=#{url},perms=#{perms}, parent_id=#{parentId}, order_num=#{orderNum}, icon=#{icon}, update_time=now()
     where
     permission_id = #{permissionId}
   </update>

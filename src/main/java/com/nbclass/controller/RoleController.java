@@ -15,6 +15,7 @@ import com.nbclass.vo.PermissionTreeListVo;
 import com.nbclass.vo.base.PageResultVo;
 import com.nbclass.vo.base.ResponseVo;
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +41,6 @@ public class RoleController{
     private PermissionService permissionService;
     @Autowired
     private MyShiroRealm myShiroRealm;
-
-    /*角色列表入口*/
-    @GetMapping("/list")
-    public String roleList() {
-        return "role/list";
-    }
 
     /*角色列表数据*/
     @PostMapping("/list")

@@ -7,6 +7,12 @@ import com.nbclass.util.CoreConst;
 import com.nbclass.util.ResultUtil;
 import com.nbclass.vo.base.ResponseVo;
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +22,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -34,11 +42,7 @@ public class PermissionController{
     @Autowired
     private ShiroService shiroService;
 
-    /*权限列表入口*/
-    @GetMapping("/list")
-    public String permissionList(){
-        return "permission/list";
-    }
+
 
     /*权限列表数据*/
     @PostMapping("/list")

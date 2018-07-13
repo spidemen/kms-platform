@@ -29,21 +29,23 @@
                         <input type="text" class="form-control" id="phone">
                     </div>
                 </div>
+                <shiro:hasPermission name="user:list">
                 <div class="col-md-1 col-sm-6 " style="text-align:left;">
                     <button type="button" id="btn_query" class="btn btn-info">查询</button>
                 </div>
+                </shiro:hasPermission>
             </div>
         </form>
     </div>
     <div class="jax-box jax-box-table">
         <div id="toolbar" class="btn-group">
-            <shiro:hasPermission name="/user/add">
+            <shiro:hasPermission name="user:add">
             <button id="btn_add" type="button" class="btn btn-primary" data-toggle="modal" data-target="#userModal">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
             </button>
             </shiro:hasPermission>
             </shiro:hasPermission>
-            <shiro:hasPermission name="/user/batch/delete">
+            <shiro:hasPermission name="user:batchDelete">
             <button id="btn_batch_delete" type="button" class="btn btn-danger">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>批量删除
             </button>
@@ -159,9 +161,9 @@
     </div>
 </div>
 <script>
-    var editFlag = "[[${@perms.hasPerm('/user/edit')}]]";
-    var deleteFlag = "[[${@perms.hasPerm('/user/delete')}]]";
-    var assignRoleFlag="[[${@perms.hasPerm('/user/assign/role')}]]";
+    var editFlag = "[[${@perms.hasPerm('user:edit')}]]";
+    var deleteFlag = "[[${@perms.hasPerm('user:delete')}]]";
+    var assignRoleFlag="[[${@perms.hasPerm('user:assignRole')}]]";
     var userIdStr;//批量用户id
     var roleIdStr;//分配的角色
     var selectRoleIds;
@@ -244,13 +246,13 @@
     function editUser(userId) {
         Core.load("#userOpenWindow","/user/edit?userId="+userId,function(){
             $("#userDetailModal").modal("show");
-        });
+        },2);
     }
     /*删除*/
     function deleteUser(userId) {
         Core.confirm("确定删除该用户？",function () {
             Core.postAjax("/user/delete",{"userId":userId},function (data) {
-                if(data.status=="success"){
+                if(data.status==200){
                     Core.refreshTable("#table");
                 }
                 layer.msg(data.msg);
@@ -331,9 +333,8 @@
                         userIdStr += (item.userId + ",");
                     })
                     userIdStr = userIdStr.substring(0, userIdStr.length - 1);
-                    console.log()
                     Core.postAjax("/user/batch/delete", {"userIdStr": userIdStr}, function (data) {
-                        if (data.status == "success") {
+                        if (data.status == 200) {
                             Core.refreshTable("#table");
                         }
                         layer.msg(data.msg);
@@ -395,7 +396,7 @@
                 Core.mask("#saveUser");
                 Core.postAjax("/user/add",$("#userForm").serialize(),function (data) {
                     Core.unmask("#saveUser");
-                    if(data.status=="success"){
+                    if(data.status==200){
                         $("#userModal").modal("hide");
                         $("#userForm")[0].reset();
                         Core.refreshTable("#table")
@@ -416,7 +417,7 @@
                 roleIdStr=roleIdStr.substring(0,roleIdStr.length-1);
                 Core.postAjax('/user/assign/role',{userId:userIdChecked,roleIdStr:roleIdStr},function (data) {
                     Core.unmask("#saveAssign");
-                    if(data.status=="success"){
+                    if(data.status==200){
                         $("#assignRoleModal").modal("hide");
                     }
                     layer.msg(data.msg);

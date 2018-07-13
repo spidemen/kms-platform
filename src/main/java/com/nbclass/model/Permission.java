@@ -36,6 +36,11 @@ public class Permission implements Serializable {
     private String url;
 
     /**
+     * 权限标识
+     */
+    private String perms;
+
+    /**
      * 父级权限id
      */
     private Integer parentId;
@@ -147,6 +152,14 @@ public class Permission implements Serializable {
      */
     public void setUrl(String url) {
         this.url = url == null ? null : url.trim();
+    }
+
+    public String getPerms() {
+        return perms;
+    }
+
+    public void setPerms(String perms) {
+        this.perms = perms;
     }
 
     /**

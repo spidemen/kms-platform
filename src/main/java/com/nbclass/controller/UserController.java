@@ -12,6 +12,7 @@ import com.nbclass.vo.ChangePasswordVo;
 import com.nbclass.vo.base.PageResultVo;
 import com.nbclass.vo.base.ResponseVo;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,12 +36,6 @@ public class UserController {
     private RoleService roleService;
     @Autowired
     private MyShiroRealm shiroRealm;
-
-    /**用户列表入口*/
-    @GetMapping("/list")
-    public String userList(){
-        return "user/list";
-    }
 
     /**用户列表数据*/
     @PostMapping("/list")

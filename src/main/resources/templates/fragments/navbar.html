@@ -122,7 +122,7 @@
                     Core.mask("#savePassword")
                     Core.postAjax("/user/changePassword",$("#passwordForm").serialize(),function(data){
                         Core.unmask("#savePassword")
-                        if(data.status=="success"){
+                        if(data.status==200){
                             $("#passwordModal").modal("hide");
                             layer.msg('密码修改成功!');
                         }else{

@@ -9,7 +9,7 @@
 <section class="content">
     <div class="jax-box jax-box-table">
         <div id="toolbar" class="btn-group grid-table-toolbar">
-            <shiro:hasPermission name="/permission/add">
+            <shiro:hasPermission name="permission:add">
             <button id="btn_add" type="button" class="btn btn-primary" data-toggle="modal" data-target="#permissionModal">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
             </button>
@@ -60,6 +60,12 @@
                                     <label class="col-sm-3 control-label">资源url :</label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control menuFlag btnFlag"  name="url" id="url" require="必填项" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group menuFlag btnFlag">
+                                    <label class="col-sm-3 control-label">权限标识 :</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control menuFlag btnFlag"  name="perms" id="perms" require="必填项" placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-group menuFlag catalogFlag">
@@ -119,8 +125,8 @@
     </div>
 </section>
 <script>
-    var editFlag = "[[${@perms.hasPerm('/permission/edit')}]]";
-    var deleteFlag = "[[${@perms.hasPerm('/permission/delete')}]]";
+    var editFlag = "[[${@perms.hasPerm('permission:edit')}]]";
+    var deleteFlag = "[[${@perms.hasPerm('permission:delete')}]]";
     var menuType="1";/*默认选中菜单类型*/
     var menuCheckedType=0;/*选中的上级的菜单类型*/
     var detailMenuCheckedType;/*详情中选中的上级的菜单类型*/
@@ -147,6 +153,10 @@
             {title: '菜单URL',
                 field: 'url',
                 align: 'left',
+            },
+            {title: '权限标识',
+                field: 'perms',
+                align: 'center',
             },
             {
                 title: '类型',
@@ -201,13 +211,13 @@
     function editPermission(permissionId) {
         Core.load("#permissionOpenWindow","/permission/edit?permissionId="+permissionId, function(){
             $("#permissionDetailModal").modal("show");
-        });
+        },2);
     }
     /*删除权限*/
     function deletePermission(permissionId) {
         Core.confirm("确认删除该权限？",function () {
             Core.postAjax('/permission/delete',{"permissionId":permissionId},function (data) {
-                if(data.status=="success"){
+                if(data.status==200){
                     Menu.table.refresh();
                 }
                 layer.msg(data.msg);
@@ -264,7 +274,7 @@
                 }
                 Core.mask("#savePermission");
                 Core.postAjax("/permission/add",$("#permissionForm").serialize(),function (data) {
-                    if(data.status=="success"){
+                    if(data.status==200){
                         Core.unmask("#savePermission");
                         $("#permissionModal").modal("hide");
                         Menu.table.refresh();
@@ -289,6 +299,7 @@
     function  initPermissionForm() {
         $("#name").val("");
         $("#url").val("");
+        $("#perms").val("");
         $("#orderNum").val("");
         $("#icon").val("");
         $("#description").val("");
