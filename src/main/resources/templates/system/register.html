@@ -96,7 +96,7 @@
                 data: $("#registerForm").serialize(),
                 dataType: "json",
                 success: function (data) {
-                    if (data.status == "success") {
+                    if (data.status == 200) {
                         layer.msg(data.msg, {
                             offset:'30%',
                             time:800
