@@ -309,7 +309,7 @@ input{
 }
 .login-content {
     position: relative;
-    /*margin-top: 55px;*/
+    margin-top: 55px;
 }
 
 .login-bg {
