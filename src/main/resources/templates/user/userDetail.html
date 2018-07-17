@@ -54,6 +54,7 @@
                     if (data.status == 200) {
                         Core.unmask("#saveDetailUser");
                         $("#userDetailModal").modal("hide");
+                        $("#myModal").modal("hide");
                         Core.refreshTable("#table",true);
                     }
                     layer.msg(data.msg);

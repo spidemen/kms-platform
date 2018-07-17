@@ -30,6 +30,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img th:src="@{/img/person.jpg}" class="user-image" alt="User Image">
                             <span><shiro:principal property="username" /></span>
+                            <span id="userId" style="display: none"><shiro:principal property="userId" /></span>
                         </a>
                         <ul class="dropdown-menu dropdown-left">
                             <li><a id="userInfoBtn" href="#">个人信息</a></li>
@@ -107,7 +108,7 @@
         $(function () {
             //修改信息
             $("#userInfoBtn").on('click', function () {
-                Core.load("#myInfoOpenWindow","/user/detail?userId=1", function(){
+                Core.load("#myInfoOpenWindow","/user/edit?userId="+$("#userId").text(), function(){
                     $("#myModal").modal("show");
                 });
             })
