@@ -41,7 +41,7 @@ public class UserController {
     @PostMapping("/list")
     @ResponseBody
     public PageResultVo loadUsers(User user, Integer limit, Integer offset){
-        PageHelper.startPage(PageUtil.getPageNo(limit, offset),offset);
+        PageHelper.startPage(PageUtil.getPageNo(limit, offset),limit);
         List<User> userList = userService.selectUsers(user);
         PageInfo<User> pages = new PageInfo<>(userList);
         return ResultUtil.table(userList,pages.getTotal());

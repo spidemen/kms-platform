@@ -47,7 +47,7 @@ public class RoleController{
     @ResponseBody
     public PageResultVo pageRoles(Role role,Integer limit,Integer offset) {
         try {
-            PageHelper.startPage(PageUtil.getPageNo(limit, offset),offset);
+            PageHelper.startPage(PageUtil.getPageNo(limit, offset),limit);
             List<Role> roleList = roleService.selectRoles(role);
             PageInfo<Role> pages = new PageInfo<>(roleList);
             return ResultUtil.table(roleList,pages.getTotal());
