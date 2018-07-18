@@ -1,8 +1,10 @@
 package com.nbclass.service;
 
 import com.nbclass.model.User;
+import com.nbclass.vo.UserOnlineVo;
 import com.nbclass.vo.base.ResponseVo;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 /**
@@ -75,5 +77,11 @@ public interface UserService {
      * @return int
      */
     int updateUserByPrimaryKey(User user);
+
+
+    List<UserOnlineVo> selectOnlineUsers(UserOnlineVo userOnlineVo);
+
+
+    public void kickout(Serializable sessionId);
 
 }

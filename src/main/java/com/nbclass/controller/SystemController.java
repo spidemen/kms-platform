@@ -116,6 +116,12 @@ public class SystemController{
         userService.updateLastLoginTime((User) SecurityUtils.getSubject().getPrincipal());
         return ResultUtil.success("登录成功！");
     }
+    /*登陆*/
+    @GetMapping("/kickout")
+    public String kickout(Map map){
+        return "system/kickout";
+    }
+
 
     /*登出*/
     @RequestMapping(value = "/logout")
@@ -135,6 +141,16 @@ public class SystemController{
     /*图标*/
     @GetMapping(value = "/icons")
     public String getIcons(){
+        return "ui/icons";
+    }
+
+    @GetMapping(value = "/test")
+    public String test(){
+        return "ui/icons";
+    }
+
+    @GetMapping(value = "/test1")
+    public String test1(){
         return "ui/icons";
     }
 

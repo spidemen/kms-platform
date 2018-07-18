@@ -5,6 +5,7 @@ import com.github.pagehelper.util.StringUtil;
 import com.nbclass.model.Permission;
 import com.nbclass.service.PermissionService;
 import com.nbclass.shiro.MyShiroRealm;
+import com.nbclass.shiro.filter.KickoutSessionControlFilter;
 import com.nbclass.util.CoreConst;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
@@ -25,6 +26,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.servlet.Filter;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -88,12 +90,20 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSuccessUrl("/index");
         //未授权界面;
         shiroFilterFactoryBean.setUnauthorizedUrl("/error/403");
+
+        //自定义拦截器
+        Map<String, Filter> filtersMap = new LinkedHashMap<String, Filter>();
+        //限制同一帐号同时在线的个数。
+        filtersMap.put("kickout", kickoutSessionControlFilter());
+        shiroFilterFactoryBean.setFilters(filtersMap);
+
         //拦截器.
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<String,String>();
 
         //配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
         filterChainDefinitionMap.put("/register", "anon");
         filterChainDefinitionMap.put("/login", "anon");
+        filterChainDefinitionMap.put("/kickout", "anon");
         filterChainDefinitionMap.put("/error/**", "anon");
         filterChainDefinitionMap.put("/logout", "logout");
         filterChainDefinitionMap.put("/css/**","anon");
@@ -109,10 +119,10 @@ public class ShiroConfig {
          for(Permission permission : permissionList){
             if (StringUtils.isNotBlank(permission.getUrl())&& StringUtils.isNotBlank(permission.getPerms())) {
                 String perms = "perms[" + permission.getPerms()+ "]";
-                filterChainDefinitionMap.put(permission.getUrl(),perms);
+                filterChainDefinitionMap.put(permission.getUrl(),perms+",kickout");
             }
         }
-        filterChainDefinitionMap.put("/**", "user");
+        filterChainDefinitionMap.put("/**", "user,kickout");
 
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
@@ -239,5 +249,26 @@ public class ShiroConfig {
         sessionManager.setSessionDAO(redisSessionDAO());
         return sessionManager;
     }
+    /**
+     * 限制同一账号登录同时登录人数控制
+     * @return
+     */
+    public KickoutSessionControlFilter kickoutSessionControlFilter(){
+        KickoutSessionControlFilter kickoutSessionControlFilter = new KickoutSessionControlFilter();
+        //使用cacheManager获取相应的cache来缓存用户登录的会话；用于保存用户—会话之间的关系的；
+        //这里我们还是用之前shiro使用的redisManager()实现的cacheManager()缓存管理
+        //也可以重新另写一个，重新配置缓存时间之类的自定义缓存属性
+        kickoutSessionControlFilter.setCacheManager(cacheManager());
+        //用于根据会话ID，获取会话进行踢出操作的；
+        kickoutSessionControlFilter.setSessionManager(sessionManager());
+        //是否踢出后来登录的，默认是false；即后者登录的用户踢出前者登录的用户；踢出顺序。
+        kickoutSessionControlFilter.setKickoutAfter(false);
+        //同一个用户最大的会话数，默认1；比如2的意思是同一个用户允许最多同时两个人登录；
+        kickoutSessionControlFilter.setMaxSession(10);
+        //被踢出后重定向到的地址；
+        kickoutSessionControlFilter.setKickoutUrl("/kickout");
+        return kickoutSessionControlFilter;
+    }
+
 
 }

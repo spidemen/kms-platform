@@ -27,23 +27,24 @@ public class RenderController {
     }
 
     /**用户列表入口*/
-    @RequiresPermissions("users")
     @GetMapping("/users")
     public String userList(){
         return "user/list";
     }
 
     /*角色列表入口*/
-    @RequiresPermissions("roles")
     @GetMapping("/roles")
     public String roleList() {
         return "role/list";
     }
 
     /*权限列表入口*/
-    @RequiresPermissions("permissions")
     @GetMapping("/permissions")
     public String permissionList(){
         return "permission/list";
     }
+
+    /*在线用户入口*/
+    @GetMapping("/onlineUsers")
+    public String onlineUsers(){return "onlineUsers/list";}
 }
