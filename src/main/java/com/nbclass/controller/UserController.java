@@ -1,6 +1,5 @@
 package com.nbclass.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.nbclass.model.Role;
@@ -10,11 +9,9 @@ import com.nbclass.service.UserService;
 import com.nbclass.shiro.MyShiroRealm;
 import com.nbclass.util.*;
 import com.nbclass.vo.ChangePasswordVo;
-import com.nbclass.vo.UserOnlineVo;
 import com.nbclass.vo.base.PageResultVo;
 import com.nbclass.vo.base.ResponseVo;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

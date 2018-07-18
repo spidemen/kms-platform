@@ -23,19 +23,14 @@ import java.util.LinkedList;
 import java.util.Map;
 
 /**
- * @author 作者 z77z
- * @date 创建时间：2017年3月5日 下午1:16:38
- * 1.读取当前登录用户名，获取在缓存中的sessionId队列
- * 2.判断队列的长度，大于最大登录限制的时候，按踢出规则
- *  将之前的sessionId中的session域中存入kickout：true，并更新队列缓存
- * 3.判断当前登录的session域中的kickout如果为true，
- * 想将其做退出登录处理，然后再重定向到踢出登录提示页面
+ * @author superzheng
+ * @date 2018-07-18
  */
 public class KickoutSessionControlFilter extends AccessControlFilter {
 
     private String kickoutUrl; //踢出后到的地址
     private boolean kickoutAfter = false; //踢出之前登录的/之后登录的用户 默认踢出之前登录的用户
-    private int maxSession = 10; //同一个帐号最大会话数 默认1
+    private int maxSession = 5; //同一个帐号最大会话数 默认5
 
     private SessionManager sessionManager;
     private Cache<String, Deque<Serializable>> cache;

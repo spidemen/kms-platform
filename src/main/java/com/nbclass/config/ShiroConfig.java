@@ -84,7 +84,7 @@ public class ShiroConfig {
 
         // 必须设置 SecurityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
+        // 登录url
         shiroFilterFactoryBean.setLoginUrl("/login");
         // 登录成功后要跳转的链接
         shiroFilterFactoryBean.setSuccessUrl("/index");
@@ -264,7 +264,7 @@ public class ShiroConfig {
         //是否踢出后来登录的，默认是false；即后者登录的用户踢出前者登录的用户；踢出顺序。
         kickoutSessionControlFilter.setKickoutAfter(false);
         //同一个用户最大的会话数，默认1；比如2的意思是同一个用户允许最多同时两个人登录；
-        kickoutSessionControlFilter.setMaxSession(10);
+        kickoutSessionControlFilter.setMaxSession(5);
         //被踢出后重定向到的地址；
         kickoutSessionControlFilter.setKickoutUrl("/kickout");
         return kickoutSessionControlFilter;
