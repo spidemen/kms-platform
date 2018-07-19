@@ -94,7 +94,7 @@
     /*踢出用户*/
     function  kickoutUser(sessionId) {
         Core.confirm("确定踢除该用户？",function () {
-            Core.postAjax("/onlineUser/kickout",{"sessionId":sessionId},function (data) {
+            Core.postAjax("/online/user/kickout",{"sessionId":sessionId},function (data) {
                 if(data.status==200){
                     Core.refreshTable("#table");
                 }
