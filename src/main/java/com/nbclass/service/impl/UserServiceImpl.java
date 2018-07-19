@@ -116,7 +116,9 @@ public class UserServiceImpl implements UserService {
             // 现在直接取就是了
             Session session = it.next();
             //标记为已提出的不加入在线列表
-            if(session.getAttribute("kickout")==null?false:true)continue;
+            if(session.getAttribute("kickout")==null?false:true) {
+                continue;
+            }
             UserOnlineVo onlineUser = getSessionBo(session);
             if(onlineUser!=null){
                 onlineUserList.add(onlineUser);
@@ -153,7 +155,7 @@ public class UserServiceImpl implements UserService {
                 //最后一次和系统交互的时间
                 userBo.setLastAccess(session.getLastAccessTime());
                 //主机的ip地址
-                userBo.setHost(session.getHost());
+                userBo.setHost(null==session.getAttribute("ipAddress") ? "" : session.getAttribute("ipAddress").toString());
                 //session ID
                 userBo.setSessionId(session.getId().toString());
                 //最后登录时间

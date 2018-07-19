@@ -5,16 +5,14 @@ import com.nbclass.model.Permission;
 import com.nbclass.model.User;
 import com.nbclass.service.PermissionService;
 import com.nbclass.service.UserService;
-import com.nbclass.util.CoreConst;
-import com.nbclass.util.PasswordHelper;
-import com.nbclass.util.ResultUtil;
-import com.nbclass.util.UUIDUtil;
+import com.nbclass.util.*;
 import com.nbclass.vo.base.ResponseVo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
 /**
  * @version V1.0
  * @date 2018年7月11日
@@ -36,6 +35,12 @@ public class SystemController{
     private UserService userService;
     @Autowired
     private PermissionService permissionService;
+
+    /*首页*/
+    @RequestMapping(value={"/","/index"})
+    public String index(){
+        return "index/index";
+    }
 
     /*注册*/
     @GetMapping(value = "/register")
@@ -112,16 +117,19 @@ public class SystemController{
             token.clear();
             return ResultUtil.error("用户名或者密码错误！");
         }
+        /*登录成功后ip放入session*/
+        Session session = SecurityUtils.getSubject().getSession();
+        session.setAttribute("ipAddress", IpUtil.getIpAddr(request));
         //更新最后登录时间
         userService.updateLastLoginTime((User) SecurityUtils.getSubject().getPrincipal());
         return ResultUtil.success("登录成功！");
     }
-    /*登陆*/
+
+    /*踢出*/
     @GetMapping("/kickout")
     public String kickout(Map map){
         return "system/kickout";
     }
-
 
     /*登出*/
     @RequestMapping(value = "/logout")

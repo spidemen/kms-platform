@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/onlineUser")
@@ -34,7 +32,6 @@ public class OnlineUserController {
     @PostMapping(value = "kickout")
     @ResponseBody
     public ResponseVo kickout(String sessionId) {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
         try {
             userService.kickout(sessionId);
             return ResultUtil.success("踢出用户成功");
