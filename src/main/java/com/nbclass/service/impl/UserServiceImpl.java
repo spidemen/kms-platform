@@ -8,6 +8,7 @@ import com.nbclass.service.UserService;
 import com.nbclass.util.ResultUtil;
 import com.nbclass.vo.UserOnlineVo;
 import com.nbclass.vo.base.ResponseVo;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.DefaultSessionKey;
 import org.apache.shiro.session.mgt.SessionManager;
@@ -103,7 +104,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserOnlineVo> selectOnlineUsers(UserOnlineVo userOnlineVo) {
+    public List<UserOnlineVo> selectOnlineUsers(UserOnlineVo userVo) {
         // 因为我们是用redis实现了shiro的session的Dao,而且是采用了shiro+redis这个插件
         // 所以从spring容器中获取redisSessionDAO
         // 来获取session列表.
@@ -116,12 +117,19 @@ public class UserServiceImpl implements UserService {
             // 现在直接取就是了
             Session session = it.next();
             //标记为已提出的不加入在线列表
-            if(session.getAttribute("kickout")==null?false:true) {
+            if(session.getAttribute("kickout") != null) {
                 continue;
             }
             UserOnlineVo onlineUser = getSessionBo(session);
             if(onlineUser!=null){
-                onlineUserList.add(onlineUser);
+                /*用户名搜索*/
+                if(StringUtils.isNotBlank(userVo.getUsername())){
+                    if(onlineUser.getUsername().contains(userVo.getUsername()) ){
+                        onlineUserList.add(onlineUser);
+                    }
+                }else{
+                    onlineUserList.add(onlineUser);
+                }
             }
         }
         return onlineUserList;
