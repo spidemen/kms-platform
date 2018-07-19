@@ -39,6 +39,6 @@ public class RenderController {
     }
 
     /*在线用户入口*/
-    @GetMapping("/onlineUsers")
+    @GetMapping("/online/users")
     public String onlineUsers(){return "onlineUsers/list";}
 }

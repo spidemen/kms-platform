@@ -25,6 +25,13 @@
         </form>
     </div>
     <div class="jax-box jax-box-table">
+        <div id="toolbar" class="btn-group">
+            <shiro:hasPermission name="onlineUser:batchKickout">
+                <button id="btn_batch_kickout" type="button" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>批量踢出
+                </button>
+            </shiro:hasPermission>
+        </div>
         <table id="table"></table>
     </div>
 </section>
@@ -66,8 +73,9 @@
         }];
     var options={
         id:"#table",
-        url: '/onlineUser/list',
+        url: '/online/user/list',
         columns:columns,
+        toolbar: '#toolbar',
         showRefresh: true,
         queryParams : queryParams
     }
@@ -99,6 +107,24 @@
         $("#btn_query").click(function(){
             Core.refreshTable("#table");
         });
+        $("#btn_batch_kickout").click(function(){
+            var checkedRows= Core.selectMutiData("#table");
+            if(checkedRows){
+                Core.confirm("确定踢出选中的"+checkedRows.length+"条记录？",function () {
+                    var sessionIds=[];
+                    $.each(checkedRows, function (i, item) {
+                        sessionIds.push(item.sessionId);
+                    })
+                    Core.postAjax("/online/user/batch/kickout", {"sessionIds": sessionIds}, function (data) {
+                        if (data.status == 200) {
+                            Core.refreshTable("#table");
+                        }
+                        layer.msg(data.msg);
+                    })
+                })
+            }
+        });
+
     })
 
 </script>

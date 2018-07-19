@@ -38,7 +38,10 @@ public class SystemController{
 
     /*首页*/
     @RequestMapping(value={"/","/index"})
-    public String index(){
+    public String index(HttpServletRequest request){
+         /*ip放入session*/
+        Session session = SecurityUtils.getSubject().getSession();
+        session.setAttribute("ipAddress", IpUtil.getIpAddr(request));
         return "index/index";
     }
 
@@ -117,9 +120,6 @@ public class SystemController{
             token.clear();
             return ResultUtil.error("用户名或者密码错误！");
         }
-        /*登录成功后ip放入session*/
-        Session session = SecurityUtils.getSubject().getSession();
-        session.setAttribute("ipAddress", IpUtil.getIpAddr(request));
         //更新最后登录时间
         userService.updateLastLoginTime((User) SecurityUtils.getSubject().getPrincipal());
         return ResultUtil.success("登录成功！");

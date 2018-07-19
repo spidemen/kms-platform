@@ -9,18 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
 @Controller
-@RequestMapping("/onlineUser")
+@RequestMapping("/online/user")
 public class OnlineUserController {
     @Autowired
     private UserService userService;
 
     // 在线用户列表
-    @PostMapping(value = "list")
+    @PostMapping("/list")
     @ResponseBody
     public PageResultVo onlineUsers(UserOnlineVo user, Integer limit, Integer offset){
         List<UserOnlineVo> userList = userService.selectOnlineUsers(user);
@@ -29,11 +30,25 @@ public class OnlineUserController {
     }
 
     // 强制踢出用户
-    @PostMapping(value = "kickout")
+    @PostMapping("/kickout")
     @ResponseBody
     public ResponseVo kickout(String sessionId) {
         try {
             userService.kickout(sessionId);
+            return ResultUtil.success("踢出用户成功");
+        } catch (Exception e) {
+            return ResultUtil.error("踢出用户失败");
+        }
+    }
+
+    // 批量强制踢出用户
+    @PostMapping("/batch/kickout")
+    @ResponseBody
+    public ResponseVo kickout(@RequestParam(value = "sessionIds[]") String[] sessionIds) {
+        try {
+            for (String sessionId : sessionIds) {
+                userService.kickout(sessionId);
+            }
             return ResultUtil.success("踢出用户成功");
         } catch (Exception e) {
             return ResultUtil.error("踢出用户失败");
