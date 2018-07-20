@@ -14,6 +14,7 @@ import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,8 @@ import java.util.Map;
  */
 @Controller
 public class SystemController{
+    @Autowired
+    RedisSessionDAO redisSessionDAO;
 
     @Autowired
     private UserService userService;
@@ -39,9 +42,6 @@ public class SystemController{
     /*首页*/
     @RequestMapping(value={"/","/index"})
     public String index(HttpServletRequest request){
-         /*ip放入session*/
-        Session session = SecurityUtils.getSubject().getSession();
-        session.setAttribute("ipAddress", IpUtil.getIpAddr(request));
         return "index/index";
     }
 
@@ -120,6 +120,9 @@ public class SystemController{
             token.clear();
             return ResultUtil.error("用户名或者密码错误！");
         }
+        Session session = SecurityUtils.getSubject().getSession();
+        session.setAttribute("ipAddress", IpUtil.getIpAddr(request));
+        redisSessionDAO.update(session);
         //更新最后登录时间
         userService.updateLastLoginTime((User) SecurityUtils.getSubject().getPrincipal());
         return ResultUtil.success("登录成功！");

@@ -72,9 +72,6 @@ public class MyShiroRealm extends AuthorizingRealm {
                 ByteSource.Util.bytes(user.getCredentialsSalt()),
                 getName()
         );
-        // 当验证都通过后，把用户信息放在session里
-        Session session = SecurityUtils.getSubject().getSession();
-        session.setAttribute("userSession", user);
         return authenticationInfo;
     }
 
