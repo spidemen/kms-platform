@@ -42,13 +42,14 @@ var Core = (function () {
         }
     };
     /*ajax请求*/
-    core.postAjax = function (url, dataToPost, d, type, async) {
+    core.postAjax = function (url, dataToPost, d, type, contentType, async) {
         $.ajax({
             url: url,
             cache: false,
             async: async == undefined ? true : async,
             data: dataToPost,
             type: type == undefined ? "POST" : type,
+            contentType: contentType == undefined ? 'application/x-www-form-urlencoded; charset=UTF-8' : contentType,
             success: function (data) {
                 if (typeof d == "function") {
                     d(data);

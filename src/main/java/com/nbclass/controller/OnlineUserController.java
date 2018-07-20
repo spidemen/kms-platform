@@ -3,14 +3,12 @@ package com.nbclass.controller;
 import com.nbclass.service.UserService;
 import com.nbclass.util.ResultUtil;
 import com.nbclass.vo.UserOnlineVo;
+import com.nbclass.vo.UserSessionVo;
 import com.nbclass.vo.base.PageResultVo;
 import com.nbclass.vo.base.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -44,10 +42,10 @@ public class OnlineUserController {
     // 批量强制踢出用户
     @PostMapping("/batch/kickout")
     @ResponseBody
-    public ResponseVo kickout(@RequestParam(value = "sessionIds[]") String[] sessionIds) {
+    public ResponseVo kickout(@RequestBody List<UserSessionVo> sessions) {
         try {
-            for (String sessionId : sessionIds) {
-                userService.kickout(sessionId,"");
+            for (UserSessionVo sessionVo : sessions) {
+                userService.kickout(sessionVo.getSessionId(),sessionVo.getUsername());
             }
             return ResultUtil.success("踢出用户成功");
         } catch (Exception e) {

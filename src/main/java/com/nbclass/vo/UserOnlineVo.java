@@ -6,9 +6,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Session  + User Bo
- * @author z77z
- *
+ * @version V1.0
+ * @date 2018年7月20日
+ * @author superzheng
  */
 public class UserOnlineVo implements Serializable {
 

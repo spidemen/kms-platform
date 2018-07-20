@@ -111,16 +111,20 @@
             var checkedRows= Core.selectMutiData("#table");
             if(checkedRows){
                 Core.confirm("确定踢出选中的"+checkedRows.length+"条记录？",function () {
-                    var sessionIds=[];
+                    var sessions=[];
                     $.each(checkedRows, function (i, item) {
-                        sessionIds.push(item.sessionId);
+                        var session={};
+                        session.sessionId = item.sessionId;
+                        session.username = item.username;
+                        sessions.push(session);
                     })
-                    Core.postAjax("/online/user/batch/kickout", {"sessionIds": sessionIds}, function (data) {
+                    var jsonStr = JSON.stringify(sessions)
+                    Core.postAjax("/online/user/batch/kickout", jsonStr, function (data) {
                         if (data.status == 200) {
                             Core.refreshTable("#table");
                         }
                         layer.msg(data.msg);
-                    })
+                    },"POST","application/json; charset=UTF-8")
                 })
             }
         });

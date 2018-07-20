@@ -265,7 +265,7 @@ public class ShiroConfig {
         //是否踢出后来登录的，默认是false；即后者登录的用户踢出前者登录的用户；踢出顺序。
         kickoutSessionControlFilter.setKickoutAfter(false);
         //同一个用户最大的会话数，默认5；比如5的意思是同一个用户允许最多同时五个人登录；
-        kickoutSessionControlFilter.setMaxSession(1);
+        kickoutSessionControlFilter.setMaxSession(5);
         //被踢出后重定向到的地址；
         kickoutSessionControlFilter.setKickoutUrl("/kickout");
         return kickoutSessionControlFilter;
