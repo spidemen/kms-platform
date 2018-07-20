@@ -67,7 +67,7 @@
             align : "center",
             formatter : function(value,
                                  row, index) {
-                var kickout = kickoutFlag=="true" ?  '<a class="table-btn table-btn-danger" href="javascript:void(0)" onclick="kickoutUser(\''+row.sessionId+'\')">踢出</a>' : '';
+                var kickout = kickoutFlag=="true" ?  '<a class="table-btn table-btn-danger" href="javascript:void(0)" onclick="kickoutUser(\''+row.sessionId+'\',\''+row.username+'\')">踢出</a>' : '';
                 return kickout;
             }
         }];
@@ -92,9 +92,9 @@
     }
 
     /*踢出用户*/
-    function  kickoutUser(sessionId) {
+    function  kickoutUser(sessionId,username) {
         Core.confirm("确定踢除该用户？",function () {
-            Core.postAjax("/online/user/kickout",{"sessionId":sessionId},function (data) {
+            Core.postAjax("/online/user/kickout",{"sessionId":sessionId,"username":username},function (data) {
                 if(data.status==200){
                     Core.refreshTable("#table");
                 }

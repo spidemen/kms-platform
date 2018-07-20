@@ -32,9 +32,9 @@ public class OnlineUserController {
     // 强制踢出用户
     @PostMapping("/kickout")
     @ResponseBody
-    public ResponseVo kickout(String sessionId) {
+    public ResponseVo kickout(String sessionId,String username) {
         try {
-            userService.kickout(sessionId);
+            userService.kickout(sessionId,username);
             return ResultUtil.success("踢出用户成功");
         } catch (Exception e) {
             return ResultUtil.error("踢出用户失败");
@@ -47,7 +47,7 @@ public class OnlineUserController {
     public ResponseVo kickout(@RequestParam(value = "sessionIds[]") String[] sessionIds) {
         try {
             for (String sessionId : sessionIds) {
-                userService.kickout(sessionId);
+                userService.kickout(sessionId,"");
             }
             return ResultUtil.success("踢出用户成功");
         } catch (Exception e) {

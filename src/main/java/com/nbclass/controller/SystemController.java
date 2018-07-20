@@ -5,22 +5,28 @@ import com.nbclass.model.Permission;
 import com.nbclass.model.User;
 import com.nbclass.service.PermissionService;
 import com.nbclass.service.UserService;
-import com.nbclass.util.*;
+import com.nbclass.util.CoreConst;
+import com.nbclass.util.PasswordHelper;
+import com.nbclass.util.ResultUtil;
+import com.nbclass.util.UUIDUtil;
 import com.nbclass.vo.base.ResponseVo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.cache.Cache;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
-import org.crazycake.shiro.RedisSessionDAO;
+import org.crazycake.shiro.RedisCacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.Deque;
 import java.util.List;
 import java.util.Map;
 
@@ -32,12 +38,11 @@ import java.util.Map;
 @Controller
 public class SystemController{
     @Autowired
-    RedisSessionDAO redisSessionDAO;
-
-    @Autowired
     private UserService userService;
     @Autowired
     private PermissionService permissionService;
+    @Autowired
+    private RedisCacheManager redisCacheManager;
 
     /*首页*/
     @RequestMapping(value={"/","/index"})
@@ -135,7 +140,22 @@ public class SystemController{
     @RequestMapping(value = "/logout")
     @ResponseBody
     public ResponseVo logout() {
-        return ResultUtil.success();
+        Subject subject = SecurityUtils.getSubject();
+        if(null!=subject){
+            String username = ((User) SecurityUtils.getSubject().getPrincipal()).getUsername();
+            Serializable sessionId = SecurityUtils.getSubject().getSession().getId();
+            Cache<String, Deque<Serializable>> cache = redisCacheManager.getCache(redisCacheManager.getKeyPrefix()+username);
+            Deque<Serializable> deques = cache.get(username);
+            for(Serializable deque : deques){
+                if(sessionId.equals(deque)){
+                    deques.remove(deque);
+                    break;
+                }
+            }
+            cache.put(username,deques);
+        }
+        subject.logout();
+        return ResultUtil.success("退出成功");
     }
 
     /*获取当前登录用户的菜单*/

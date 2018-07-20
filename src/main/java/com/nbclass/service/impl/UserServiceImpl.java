@@ -9,15 +9,20 @@ import com.nbclass.util.ResultUtil;
 import com.nbclass.vo.UserOnlineVo;
 import com.nbclass.vo.base.ResponseVo;
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.cache.Cache;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.DefaultSessionKey;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.support.DefaultSubjectContext;
+import org.crazycake.shiro.RedisCacheManager;
+import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.*;
 
@@ -31,11 +36,13 @@ public class UserServiceImpl implements UserService {
 
 
     @Autowired
-    RedisSessionDAO redisSessionDAO;
+    private RedisSessionDAO redisSessionDAO;
 
     @Autowired
-    SessionManager sessionManager;
+    private SessionManager sessionManager;
 
+    @Autowired
+    private RedisCacheManager redisCacheManager;
 
     @Autowired
     private UserMapper userMapper;
@@ -136,8 +143,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void kickout(Serializable sessionId) {
+    public void kickout(Serializable sessionId, String username) {
         getSessionBysessionId(sessionId).setAttribute("kickout", true);
+        //读取缓存,找到并从队列中移除
+        Cache<String, Deque<Serializable>> cache = redisCacheManager.getCache(redisCacheManager.getKeyPrefix()+username);
+        Deque<Serializable> deques = cache.get(username);
+        for(Serializable deque : deques){
+            if(sessionId.equals(deque)){
+                deques.remove(deque);
+                break;
+            }
+        }
+        cache.put(username,deques);
     }
 
 

@@ -82,6 +82,6 @@ public interface UserService {
     List<UserOnlineVo> selectOnlineUsers(UserOnlineVo userOnlineVo);
 
 
-    public void kickout(Serializable sessionId);
+    void kickout(Serializable sessionId, String username);
 
 }

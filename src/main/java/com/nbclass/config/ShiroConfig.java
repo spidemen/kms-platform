@@ -105,7 +105,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/kickout", "anon");
         filterChainDefinitionMap.put("/error/**", "anon");
-        filterChainDefinitionMap.put("/logout", "logout");
+        /*filterChainDefinitionMap.put("/logout", "logout");*/
         filterChainDefinitionMap.put("/css/**","anon");
         filterChainDefinitionMap.put("/js/**","anon");
         filterChainDefinitionMap.put("/img/**","anon");
@@ -153,7 +153,7 @@ public class ShiroConfig {
         return cookieRememberMeManager;
     }
 
-    @Bean
+    @Bean(name = "securityManager")
     public SecurityManager securityManager(){
         DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
         //设置realm.
@@ -161,7 +161,7 @@ public class ShiroConfig {
         /*记住我*/
         securityManager.setRememberMeManager(rememberMeManager());
         // 自定义缓存实现 使用redis
-        securityManager.setCacheManager(cacheManager());
+        securityManager.setCacheManager(redisCacheManager());
         // 自定义session管理 使用redis
         securityManager.setSessionManager(sessionManager());
         return securityManager;
@@ -222,7 +222,8 @@ public class ShiroConfig {
      * 使用的是shiro-redis开源插件
      * @return
      */
-    public RedisCacheManager cacheManager() {
+    @Bean
+    public RedisCacheManager redisCacheManager() {
         RedisCacheManager redisCacheManager = new RedisCacheManager();
         redisCacheManager.setRedisManager(redisManager());
         return redisCacheManager;
@@ -258,7 +259,7 @@ public class ShiroConfig {
         //使用cacheManager获取相应的cache来缓存用户登录的会话；用于保存用户—会话之间的关系的；
         //这里我们还是用之前shiro使用的redisManager()实现的cacheManager()缓存管理
         //也可以重新另写一个，重新配置缓存时间之类的自定义缓存属性
-        kickoutSessionControlFilter.setCacheManager(cacheManager());
+        kickoutSessionControlFilter.setCacheManager(redisCacheManager());
         //用于根据会话ID，获取会话进行踢出操作的；
         kickoutSessionControlFilter.setSessionManager(sessionManager());
         //是否踢出后来登录的，默认是false；即后者登录的用户踢出前者登录的用户；踢出顺序。
