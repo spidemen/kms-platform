@@ -122,7 +122,7 @@ public class SystemController{
         }
         Session session = SecurityUtils.getSubject().getSession();
         session.setAttribute("ipAddress", IpUtil.getIpAddr(request));
-        redisSessionDAO.update(session);
+        /*redisSessionDAO.update(session);*/
         //更新最后登录时间
         userService.updateLastLoginTime((User) SecurityUtils.getSubject().getPrincipal());
         return ResultUtil.success("登录成功！");
