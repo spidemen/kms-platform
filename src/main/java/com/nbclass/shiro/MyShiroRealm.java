@@ -5,6 +5,7 @@ import com.nbclass.service.PermissionService;
 import com.nbclass.service.RoleService;
 import com.nbclass.service.UserService;
 import com.nbclass.util.CoreConst;
+import com.nbclass.util.IpUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationException;
@@ -19,7 +20,10 @@ import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.apache.shiro.util.ByteSource;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -72,6 +76,11 @@ public class MyShiroRealm extends AuthorizingRealm {
                 ByteSource.Util.bytes(user.getCredentialsSalt()),
                 getName()
         );
+
+        // 当验证都通过后，把ip放入session则会存入redis缓存里
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        Session session = SecurityUtils.getSubject().getSession();
+        session.setAttribute("ipAddress", IpUtil.getIpAddr(request));
         return authenticationInfo;
     }
 
