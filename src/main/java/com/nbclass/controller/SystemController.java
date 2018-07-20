@@ -16,7 +16,6 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.cache.Cache;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.crazycake.shiro.RedisCacheManager;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -9,7 +9,6 @@ import com.nbclass.util.ResultUtil;
 import com.nbclass.vo.UserOnlineVo;
 import com.nbclass.vo.base.ResponseVo;
 import org.apache.commons.lang.StringUtils;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.DefaultSessionKey;
@@ -17,12 +16,10 @@ import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.crazycake.shiro.RedisCacheManager;
-import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.*;
 
@@ -180,7 +177,7 @@ public class UserServiceImpl implements UserService {
                 //最后一次和系统交互的时间
                 userBo.setLastAccess(session.getLastAccessTime());
                 //主机的ip地址
-                userBo.setHost(null==session.getAttribute("ipAddress") ? "" : session.getAttribute("ipAddress").toString());
+                userBo.setHost(user.getLoginIpAddress());
                 //session ID
                 userBo.setSessionId(session.getId().toString());
                 //最后登录时间

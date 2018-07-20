@@ -70,17 +70,15 @@ public class MyShiroRealm extends AuthorizingRealm {
             // 帐号锁定
             throw new LockedAccountException();
         }
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        // 把ip放入user存入redis缓存里
+        user.setLoginIpAddress(IpUtil.getIpAddr(request));
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
                 user,
                 user.getPassword(),
                 ByteSource.Util.bytes(user.getCredentialsSalt()),
                 getName()
         );
-
-        // 当验证都通过后，把ip放入session则会存入redis缓存里
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        Session session = SecurityUtils.getSubject().getSession();
-        session.setAttribute("ipAddress", IpUtil.getIpAddr(request));
         return authenticationInfo;
     }
 

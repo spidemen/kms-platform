@@ -5,6 +5,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
+
 /**
  * @version V1.0
  * @date 2018年7月11日
@@ -72,6 +73,11 @@ public class User implements Serializable{
      * 最后登录时间
      */
     private Date lastLoginTime;
+
+    /**
+     * 登录ip
+     */
+    private String loginIpAddress;
 
     /**
      * @return id
@@ -309,5 +315,13 @@ public class User implements Serializable{
      */
     public void setLastLoginTime(Date lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
+    }
+
+    public String getLoginIpAddress() {
+        return loginIpAddress;
+    }
+
+    public void setLoginIpAddress(String loginIpAddress) {
+        this.loginIpAddress = loginIpAddress;
     }
 }
