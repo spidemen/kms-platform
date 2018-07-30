@@ -3,6 +3,7 @@ package com.nbclass.model;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -77,6 +78,7 @@ public class User implements Serializable{
     /**
      * 登录ip
      */
+    @Transient
     private String loginIpAddress;
 
     /**
