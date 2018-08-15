@@ -78,10 +78,18 @@ public interface UserService {
      */
     int updateUserByPrimaryKey(User user);
 
-
+    /**
+     * 查询在线用户
+     * @param userOnlineVo
+     * @return list
+     */
     List<UserOnlineVo> selectOnlineUsers(UserOnlineVo userOnlineVo);
 
-
+    /**
+     * 踢出用户
+     * @param sessionId 会话id
+     * @param username 用户名
+     */
     void kickout(Serializable sessionId, String username);
 
 }

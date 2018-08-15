@@ -7,6 +7,9 @@ package com.nbclass.enums;
  */
 public enum ResponseStatus {
 
+    /**
+     * 返回状态
+     */
     SUCCESS(200, "操作成功！"),
     FORBIDDEN(403, "您没有权限访问！"),
     NOT_FOUND(404, "资源不存在！"),

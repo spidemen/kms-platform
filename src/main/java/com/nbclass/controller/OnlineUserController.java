@@ -14,6 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * @version V1.0
+ * @date 2018年7月11日
+ * @author superzheng
+ */
+
 @Controller
 @RequestMapping("/online/user")
 public class OnlineUserController {
