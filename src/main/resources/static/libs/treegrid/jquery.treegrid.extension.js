@@ -1,6 +1,6 @@
 (function($) {
     "use strict";
-
+    var treeData;
     $.fn.bootstrapTreeTable = function(options, param) {
         // 如果是调用方法
         if (typeof options == 'string') {
@@ -130,6 +130,7 @@
                 data : parms?parms:options.ajaxParams,
                 dataType : "JSON",
                 success : function(data, textStatus, jqXHR) {
+                    treeData=data;
                     // 加载完数据先清空
                     tbody.html("");
                     if(!data||data.length<=0){
@@ -207,16 +208,25 @@
     $.fn.bootstrapTreeTable.methods = {
         // 返回选中记录的id（返回的id由配置中的id属性指定）
         // 为了兼容bootstrap-table的写法，统一返回数组，这里只返回了指定的id
-        getSelections : function(target, data) {
+        getSelections : function(target, params) {
+            var idField = params.id;
             // 所有被选中的记录input
             var _ipt = target.find("tbody").find("tr").find("input[name='select_item']:checked");
             var chk_value =[];
             // 如果是radio
             if(_ipt.attr("type")=="radio"){
-                chk_value.push({id:_ipt.val()});
+                $(treeData).each(function (i,item) {
+                    if(_ipt.val()==item[idField]){
+                        chk_value.push(item);
+                    };
+                })
             }else{
                 _ipt.each(function(_i,_item){
-                    chk_value.push({id:$(_item).val()});
+                    $(treeData).each(function (i,data) {
+                        if($(_item).val()==data[idField]){
+                            chk_value.push(data);
+                        };
+                    })
                 });
             }
             return chk_value;

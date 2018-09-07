@@ -39,9 +39,9 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">类型 :</label>
                                     <div class="col-sm-8">
-                                        <label class="radio-inline pr-5"><input type="radio" name="type" value="0"> 目录</label>
+                                        <label class="radio-inline pr-5"><input type="radio" name="type" value="0" id="type-category"> 目录</label>
                                         <label class="radio-inline pr-5"><input type="radio" name="type" value="1" checked="checked" id="type-menu"> 菜单</label>
-                                        <label class="radio-inline pr-5"><input type="radio" name="type" value="2"> 按钮</label>
+                                        <label class="radio-inline pr-5"><input type="radio" name="type" value="2" id="type-btn"> 按钮</label>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -78,7 +78,6 @@
                                     <label class="col-sm-3 control-label">图标 :</label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control menuFlag catalogFlag"  name="icon"  id="icon" require="必填项" placeholder="">
-                                        <a target="_blank" th:href="@{/index#icons}"><i class="fa fa-star"></i>查看系统图标<i class="fa fa-star"></i></a>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -239,6 +238,35 @@
     });
 
     $(function () {
+        $("#btn_add").on("click",function () {
+            var selections = getSelections();
+            if(selections.length==0||selections[0].type==2){
+                $("#type-menu").click();
+                $("#parentMenu").val("顶层菜单");
+                $("#parentId").val(0);
+                $(".menuFlag").show();
+                menuType="1";
+                menuCheckedType=0;
+            }else{
+                var parentMenuData=selections[0];
+                menuCheckedType=parentMenuData.type;
+                $("#parentMenu").val(parentMenuData.name);
+                $("#parentId").val(parentMenuData.id);
+                if(parentMenuData.type==0){
+                    $("#type-menu").click();
+                    menuType="1";
+                    $(".menuFlag").show();
+                }else if(parentMenuData.type==1){
+                    $("#type-btn").click();
+                    menuType="2";
+                    $(".menuFlag").hide();
+                    $(".btnFlag").show();
+                }
+
+            }
+
+        })
+        
         /*类型选择事件*/
         $('input:radio[name="type"]').on("click",function(){
             initPermissionForm();
@@ -287,12 +315,6 @@
         /*新增权限modal框关闭后清空数据*/
         $("#permissionModal").on('hidden.bs.modal',function(){
             initPermissionForm();
-            $("#type-menu").click();
-            $("#parentMenu").val("顶层菜单");
-            $("#parentId").val(0);
-            $(".menuFlag").show();
-            menuType="1";
-            menuCheckedType=0;
         })
     })
     
@@ -306,14 +328,9 @@
     }
 
 
-    function getMenuId () {
-        var selected = $('#menuTable').bootstrapTreeTable('getSelections');
-        if (selected.length == 0) {
-            layer.msg("请选择一条记录");
-            return false;
-        } else {
-            return selected[0].id;
-        }
+    function getSelections () {
+        var selected = $('#menuTable').bootstrapTreeTable('getSelections',{id:"permissionId"});
+        return selected;
     }
 
     /*选择上级菜单树*/
@@ -372,8 +389,6 @@
                 }
             });
         });
-
-
     }
 
 
