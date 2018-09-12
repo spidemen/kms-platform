@@ -5,6 +5,7 @@ import com.github.pagehelper.util.StringUtil;
 import com.nbclass.model.Permission;
 import com.nbclass.service.PermissionService;
 import com.nbclass.shiro.MyShiroRealm;
+import com.nbclass.shiro.ShiroService;
 import com.nbclass.shiro.filter.KickoutSessionControlFilter;
 import com.nbclass.util.CoreConst;
 import org.apache.commons.lang.StringUtils;
@@ -38,8 +39,8 @@ import java.util.Map;
  */
 @Configuration
 public class ShiroConfig {
-    @Autowired(required = false)
-    private PermissionService permissionService;
+    @Autowired
+    private ShiroService shiroService;
 
     @Value("${spring.redis.host}")
     private String host;
@@ -79,9 +80,7 @@ public class ShiroConfig {
      */
     @Bean
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager){
-        System.out.println("ShiroConfiguration.shirFilter()");
         ShiroFilterFactoryBean shiroFilterFactoryBean  = new ShiroFilterFactoryBean();
-
         // 必须设置 SecurityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         // 登录url
@@ -90,41 +89,13 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSuccessUrl("/index");
         //未授权界面;
         shiroFilterFactoryBean.setUnauthorizedUrl("/error/403");
-
         //自定义拦截器
         Map<String, Filter> filtersMap = new LinkedHashMap<String, Filter>();
         //限制同一帐号同时在线的个数。
         filtersMap.put("kickout", kickoutSessionControlFilter());
         shiroFilterFactoryBean.setFilters(filtersMap);
-
         //拦截器.
-        Map<String,String> filterChainDefinitionMap = new LinkedHashMap<String,String>();
-
-        //配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
-        filterChainDefinitionMap.put("/register", "anon");
-        filterChainDefinitionMap.put("/login", "anon");
-        filterChainDefinitionMap.put("/kickout", "anon");
-        filterChainDefinitionMap.put("/error/**", "anon");
-        /*filterChainDefinitionMap.put("/logout", "logout");*/
-        filterChainDefinitionMap.put("/css/**","anon");
-        filterChainDefinitionMap.put("/js/**","anon");
-        filterChainDefinitionMap.put("/img/**","anon");
-        filterChainDefinitionMap.put("/libs/**","anon");
-        filterChainDefinitionMap.put("/favicon.ico", "anon");
-        filterChainDefinitionMap.put("/verificationCode", "anon");
-        //<!-- 过滤链定义，从上向下顺序执行，一般将 /**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
-        //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
-        //自定义加载权限资源关系
-        List<Permission> permissionList = permissionService.selectAll(CoreConst.STATUS_VALID);;
-         for(Permission permission : permissionList){
-            if (StringUtils.isNotBlank(permission.getUrl())&& StringUtils.isNotBlank(permission.getPerms())) {
-                String perms = "perms[" + permission.getPerms()+ "]";
-                filterChainDefinitionMap.put(permission.getUrl(),perms+",kickout");
-            }
-        }
-        filterChainDefinitionMap.put("/**", "user,kickout");
-
-
+        Map<String,String> filterChainDefinitionMap = shiroService.loadFilterChainDefinitions();
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
