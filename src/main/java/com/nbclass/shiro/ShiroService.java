@@ -1,6 +1,7 @@
 package com.nbclass.shiro;
 
 import com.github.pagehelper.util.StringUtil;
+import com.nbclass.holder.SpringContextHolder;
 import com.nbclass.model.Permission;
 import com.nbclass.model.User;
 import com.nbclass.service.PermissionService;
@@ -29,8 +30,6 @@ import java.util.Map;
  */
 @Service
 public class ShiroService {
-    @Autowired
-    private ShiroFilterFactoryBean shiroFilterFactoryBean;
     @Autowired
     private PermissionService permissionService;
     /**
@@ -65,7 +64,7 @@ public class ShiroService {
      * 重新加载权限
      */
     public void updatePermission() {
-
+        ShiroFilterFactoryBean shiroFilterFactoryBean = SpringContextHolder.getBean(ShiroFilterFactoryBean.class);
         synchronized (shiroFilterFactoryBean) {
 
             AbstractShiroFilter shiroFilter = null;

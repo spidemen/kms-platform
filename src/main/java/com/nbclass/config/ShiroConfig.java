@@ -1,14 +1,9 @@
 package com.nbclass.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
-import com.github.pagehelper.util.StringUtil;
-import com.nbclass.model.Permission;
-import com.nbclass.service.PermissionService;
 import com.nbclass.shiro.MyShiroRealm;
 import com.nbclass.shiro.ShiroService;
 import com.nbclass.shiro.filter.KickoutSessionControlFilter;
-import com.nbclass.util.CoreConst;
-import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
@@ -29,7 +24,6 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
