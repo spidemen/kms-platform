@@ -1,12 +1,14 @@
 package com.nbclass.service.impl;
 
-import com.nbclass.mapper.*;
+import com.nbclass.mapper.PermissionMapper;
+import com.nbclass.mapper.RoleMapper;
+import com.nbclass.mapper.RolePermissionMapper;
+import com.nbclass.mapper.UserMapper;
 import com.nbclass.model.Permission;
 import com.nbclass.model.Role;
 import com.nbclass.model.RolePermission;
 import com.nbclass.model.User;
 import com.nbclass.service.RoleService;
-import com.nbclass.util.CopyUtil;
 import com.nbclass.util.ResultUtil;
 import com.nbclass.util.UUIDUtil;
 import com.nbclass.vo.base.ResponseVo;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+
 /**
  * @version V1.0
  * @date 2018年7月11日
@@ -99,4 +102,10 @@ public class RoleServiceImpl implements RoleService {
     public List<User> findByRoleId(String roleId) {
         return userMapper.findByRoleId(roleId);
     }
+
+    @Override
+    public List<User> findByRoleIds(List<String> roleIds) {
+        return userMapper.findByRoleIds(roleIds);
+    }
+
 }

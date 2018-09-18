@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @version V1.0
@@ -80,6 +81,12 @@ public class User implements Serializable{
      */
     @Transient
     private String loginIpAddress;
+
+    /**
+     * 角色
+     */
+    @Transient
+    private List<Role> roles;
 
     /**
      * @return id
@@ -325,5 +332,13 @@ public class User implements Serializable{
 
     public void setLoginIpAddress(String loginIpAddress) {
         this.loginIpAddress = loginIpAddress;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }

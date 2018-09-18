@@ -15,7 +15,6 @@ import com.nbclass.vo.PermissionTreeListVo;
 import com.nbclass.vo.base.PageResultVo;
 import com.nbclass.vo.base.ResponseVo;
 import org.apache.commons.lang.StringUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 /**
  * @version V1.0
  * @date 2018年7月11日
@@ -33,7 +33,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/role")
-public class RoleController{
+public class RoleController {
     private static final Logger logger = LoggerFactory.getLogger(RoleController.class);
     @Autowired
     private RoleService roleService;
@@ -45,7 +45,7 @@ public class RoleController{
     /*角色列表数据*/
     @PostMapping("/list")
     @ResponseBody
-    public PageResultVo pageRoles(Role role,Integer limit,Integer offset) {
+    public PageResultVo pageRoles(Role role, Integer limit, Integer offset) {
         try {
             PageHelper.startPage(PageUtil.getPageNo(limit, offset),limit);
             List<Role> roleList = roleService.selectRoles(role);
@@ -79,6 +79,9 @@ public class RoleController{
     @GetMapping("/delete")
     @ResponseBody
     public ResponseVo deleteRole(String roleId) {
+        if(roleService.findByRoleId(roleId).size()>0){
+            return ResultUtil.error("删除失败,该角色下存在用户");
+        }
         List<String> roleIdsList = Arrays.asList(roleId);
         int a = roleService.updateStatusBatch(roleIdsList, CoreConst.STATUS_INVALID);
         if (a > 0) {
@@ -94,7 +97,10 @@ public class RoleController{
     public ResponseVo batchDeleteRole(String roleIdStr) {
         String[] roleIds = roleIdStr.split(",");
         List<String> roleIdsList = Arrays.asList(roleIds);
-        int a = roleService.updateStatusBatch(roleIdsList,CoreConst.STATUS_INVALID);
+        if(roleService.findByRoleIds(roleIdsList).size()>0){
+            return ResultUtil.error("删除失败,选择的角色下存在用户");
+        }
+        int a = roleService.updateStatusBatch(roleIdsList, CoreConst.STATUS_INVALID);
         if (a > 0) {
             return ResultUtil.success("删除角色成功");
         } else {

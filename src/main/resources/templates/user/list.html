@@ -8,7 +8,7 @@
 <!-- Main content -->
 <section class="content">
     <div class="jax-box">
-        <form id="formSearch" class="form-horizontal">
+        <form id="formSearch" class="form-horizontal form-search">
             <div class="form-group">
                 <div class="col-md-4 col-sm-6">
                     <label class="control-label  col-xs-4" for="username">用户名:</label>
@@ -181,6 +181,20 @@
             field: 'phone',
             title: '电话',
             align : "center",
+        },{
+            field: 'roles',
+            title: '角色',
+            align : "center",
+            formatter:function(value,row, index){
+                var roles="";
+                $.each(value,function (i,item) {
+                    roles+=item.name+",";
+                })
+                if (roles!=""){
+                    roles = roles.substr(0, roles.length - 1);
+                }
+                return roles;
+            }
         },
         {
             field: 'status',
@@ -189,11 +203,6 @@
             formatter:function(value,row, index){
                 return row.status == '1' ? "启用" : "禁用";
             }
-        },
-        {
-            field: 'lastLoginTime',
-            title: '最后登录时间',
-            align : "center"
         },
         {
             field : 'operation',
@@ -414,6 +423,7 @@
                     Core.unmask("#saveAssign");
                     if(data.status==200){
                         $("#assignRoleModal").modal("hide");
+                        Core.refreshTable("#table");
                     }
                     layer.msg(data.msg);
                 })

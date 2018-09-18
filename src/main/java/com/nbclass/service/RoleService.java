@@ -6,8 +6,8 @@ import com.nbclass.model.User;
 import com.nbclass.vo.base.ResponseVo;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
+
 /**
  * @version V1.0
  * @date 2018年7月11日
@@ -74,10 +74,18 @@ public interface RoleService {
     ResponseVo addAssignPermission(String roleId, List<String> permissionIdsList);
 
     /**
-     * 根据角色id下的所有角色
+     * 根据角色id下的所有用户
      * @param roleId
      * @return list
      */
     List<User> findByRoleId(String roleId);
+
+    /**
+     * 根据角色id下的所有用户
+     * @param roleIds
+     * @return list
+     */
+    List<User> findByRoleIds(List<String> roleIds);
+
 
 }
