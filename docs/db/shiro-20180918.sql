@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2018-07-19 13:23:20
+Date: 2018-09-18 11:40:47
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -61,7 +61,7 @@ INSERT INTO `permission` VALUES ('19', '20302', '新增', '新增资源', '/perm
 INSERT INTO `permission` VALUES ('20', '20303', '编辑', '编辑资源', '/permission/edit', 'permission:edit', '17', '2', '0', null, '1', '2017-09-27 21:29:04', '2018-02-27 10:53:14');
 INSERT INTO `permission` VALUES ('21', '20304', '删除', '删除资源', '/permission/delete', 'permission:delete', '17', '2', '0', null, '1', '2017-09-27 21:29:50', '2018-02-27 10:53:14');
 INSERT INTO `permission` VALUES ('22', '3', '运维管理', '运维管理', '', null, '0', '0', '3', 'fa fa-th-list', '1', '2018-07-06 15:19:26', '2018-07-06 15:19:26');
-INSERT INTO `permission` VALUES ('23', '301', '数据监控', '数据监控', '/database/monitoring', 'database', '22', '1', '1', 'fa fa-circle-o', '1', '2018-07-06 15:19:55', '2018-07-06 15:19:55');
+INSERT INTO `permission` VALUES ('23', '301', '数据监控', '数据监控', '/database/monitoring', 'database', '22', '1', '1', 'fa fa-circle-o', '1', '2018-07-06 15:19:55', '2018-09-12 13:14:48');
 INSERT INTO `permission` VALUES ('24', '4', '系统工具', '系统工具', '', null, '0', '0', '4', 'fa fa-th-list', '1', '2018-07-06 15:20:38', '2018-07-06 15:20:38');
 INSERT INTO `permission` VALUES ('25', '401', '图标工具', '图标工具', '/icons', 'icons', '24', '1', '1', 'fa fa-circle-o', '1', '2018-07-06 15:21:00', '2018-07-06 15:21:00');
 INSERT INTO `permission` VALUES ('28', '1000000884924014', '在线用户', '在线用户', '/online/users', 'onlineUsers', '2', '1', '4', 'fa fa-circle-o', '1', '2018-07-18 21:00:38', '2018-07-19 12:47:42');
@@ -82,7 +82,7 @@ CREATE TABLE `role` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of role
@@ -101,7 +101,7 @@ CREATE TABLE `role_permission` (
   `role_id` varchar(20) NOT NULL COMMENT '角色id',
   `permission_id` varchar(20) NOT NULL COMMENT '权限id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=869 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=892 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of role_permission
@@ -135,6 +135,21 @@ INSERT INTO `role_permission` VALUES ('865', '1', '3');
 INSERT INTO `role_permission` VALUES ('866', '1', '301');
 INSERT INTO `role_permission` VALUES ('867', '1', '4');
 INSERT INTO `role_permission` VALUES ('868', '1', '401');
+INSERT INTO `role_permission` VALUES ('877', '3', '2');
+INSERT INTO `role_permission` VALUES ('878', '3', '201');
+INSERT INTO `role_permission` VALUES ('879', '3', '20101');
+INSERT INTO `role_permission` VALUES ('880', '3', '20102');
+INSERT INTO `role_permission` VALUES ('881', '3', '20103');
+INSERT INTO `role_permission` VALUES ('882', '3', '20104');
+INSERT INTO `role_permission` VALUES ('883', '3', '20105');
+INSERT INTO `role_permission` VALUES ('884', '3', '20106');
+INSERT INTO `role_permission` VALUES ('885', '3', '202');
+INSERT INTO `role_permission` VALUES ('886', '3', '20201');
+INSERT INTO `role_permission` VALUES ('887', '3', '20202');
+INSERT INTO `role_permission` VALUES ('888', '3', '20203');
+INSERT INTO `role_permission` VALUES ('889', '3', '20204');
+INSERT INTO `role_permission` VALUES ('890', '3', '20205');
+INSERT INTO `role_permission` VALUES ('891', '3', '20206');
 
 -- ----------------------------
 -- Table structure for `user`
@@ -160,8 +175,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', '1', 'admin', '872359cc44c637cc73b7cd55c06d95e4', '8cd50474d2a3c1e88298e91df8bf6f1c', '523179414@qq.com', '187888899991', '1', '22', '1', '2018-05-23 21:22:06', '2018-07-17 23:04:46', '2018-07-18 22:08:54');
-INSERT INTO `user` VALUES ('5', '1000001355092833', 'test', '3504d351416424a2b6ee409f27ab4df9', '79c2eb64ee63cbf7f3891b514fc2d958', null, null, null, null, '1', '2018-07-19 11:52:51', '2018-07-19 11:52:51', '2018-07-19 13:17:59');
+INSERT INTO `user` VALUES ('1', '1', 'admin', '872359cc44c637cc73b7cd55c06d95e4', '8cd50474d2a3c1e88298e91df8bf6f1c', '523179414@qq.com', '187888899991', '1', '22', '1', '2018-05-23 21:22:06', '2018-07-17 23:04:46', '2018-09-12 13:13:31');
 
 -- ----------------------------
 -- Table structure for `user_role`
@@ -172,7 +186,7 @@ CREATE TABLE `user_role` (
   `user_id` varchar(20) NOT NULL COMMENT '用户id',
   `role_id` varchar(20) NOT NULL COMMENT '角色id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_role
