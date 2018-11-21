@@ -162,6 +162,16 @@ var Core = (function () {
                     var $label = (i==0?$('<label for="'+ id +'"></label>'):(tableOptions.clickToSelect==true?$('<label></label>'):$('<label for="'+ id +'"></label>')));
                     $check.attr("id", id).parent().addClass("zb-checkbox").append($label);
                 });
+                $(tableOptions.id).find("input:radio").each(function (i) {
+                    var $check = $(this);
+                    if ($check.attr("id") && $check.next("label")) {
+                        return;
+                    }
+                    var name = $check.attr("name");
+                    var id = name + "-" + i;
+                    var $label = (i==0?$('<label for="'+ id +'"></label>'):(tableOptions.clickToSelect==true?$('<label></label>'):$('<label for="'+ id +'"></label>')));
+                    $check.attr("id", id).parent().addClass("zb-radio").append($label);
+                });
                 if ($.isFunction(options.onPostBody)) {
                     options.onPostBody();
                 }
