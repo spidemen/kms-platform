@@ -363,7 +363,7 @@ thead .zb-checkbox label{
     background: #fff;
 }
 thead .zb-checkbox input[type="checkbox"]:checked + label:after {
-    top:25%;
+    top:24%;
 }
 .zb-checkbox input[type="checkbox"]:checked + label:after {
     display: inline-block;
