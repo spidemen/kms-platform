@@ -5,7 +5,7 @@ Springboot + shiro权限管理。最精简的shiro上手项目。<br/>
 基于Spring Boot、Shiro、MyBatis、Redis、thymeleaf等框架，前端使用adminlte模板。<br/>
 可以加[QQ群130512958](http://shang.qq.com/wpa/qunwpa?idkey=dad3420aea2111ee98653f703f61bc504bfcd6dd85d1766a344523d7e353ad43)交流技术！
 
-项目预览：[www.nbclass.com/index](http://www.nbclass.com/index)
+项目预览：[admin.nbclass.com](http://admin.nbclass.com)
     音乐：[music.nbclass.com](http://music.nbclass.com)
 
 **如果喜欢，请多多分享！！多多Star！！**
