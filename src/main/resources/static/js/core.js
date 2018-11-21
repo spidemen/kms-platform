@@ -149,7 +149,23 @@ var Core = (function () {
             escape: tableOptions.escape,//html转意
             //            align: "center",
             columns: tableOptions.columns,//表格列
-            onLoadSuccess: tableOptions.onLoadSuccess
+            onLoadSuccess: tableOptions.onLoadSuccess,
+            onPostBody : function () {
+                //改变复选框样式
+                $(tableOptions.id).find("input:checkbox").each(function (i) {
+                    var $check = $(this);
+                    if ($check.attr("id") && $check.next("label")) {
+                        return;
+                    }
+                    var name = $check.attr("name");
+                    var id = name + "-" + i;
+                    var $label = (i==0?$('<label for="'+ id +'"></label>'):$('<label></label>'));
+                    $check.attr("id", id).parent().addClass("zb-checkbox").append($label);
+                });
+                if ($.isFunction(options.onPostBody)) {
+                    options.onPostBody();
+                }
+            }
         });
     }
     function queryInitParams(params) {

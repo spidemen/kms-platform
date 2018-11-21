@@ -30,11 +30,12 @@ spring:
     port: 6379
     password:
     timeout: 0
-    pool:
-      max-idle: 8
-      min-idle: 0
-      max-active: 8
-      max-wait: -1
+    jedis:
+      pool:
+        max-idle: 8
+        min-idle: 0
+        max-active: 8
+        max-wait: -1
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
