@@ -343,6 +343,7 @@
     -webkit-border-radius: 50%;
     border-radius: 50%;
     background: #fff;
+    box-sizing: content-box;
     cursor: pointer!important
 }
 

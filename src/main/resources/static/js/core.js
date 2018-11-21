@@ -159,7 +159,7 @@ var Core = (function () {
                     }
                     var name = $check.attr("name");
                     var id = name + "-" + i;
-                    var $label = (i==0?$('<label for="'+ id +'"></label>'):$('<label></label>'));
+                    var $label = (i==0?$('<label for="'+ id +'"></label>'):(tableOptions.clickToSelect==true?$('<label></label>'):$('<label for="'+ id +'"></label>')));
                     $check.attr("id", id).parent().addClass("zb-checkbox").append($label);
                 });
                 if ($.isFunction(options.onPostBody)) {
