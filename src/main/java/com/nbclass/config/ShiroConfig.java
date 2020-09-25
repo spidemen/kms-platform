@@ -6,6 +6,7 @@ import com.nbclass.shiro.ShiroService;
 import com.nbclass.shiro.ShiroSessionIdGenerator;
 import com.nbclass.shiro.ShiroSessionManager;
 import com.nbclass.shiro.filter.KickoutSessionControlFilter;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
@@ -16,6 +17,7 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
@@ -23,6 +25,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
@@ -38,11 +42,11 @@ public class ShiroConfig {
     @Autowired
     private ShiroService shiroService;
 
-    private final String CACHE_KEY = "shiro:cache:";
-    private final String SESSION_KEY = "shiro:session:";
-
     @Value("${spring.redis.host}")
     private String host;
+
+    @Value("${spring.redis.password}")
+    private String password;
 
     @Value("${spring.redis.port}")
     private int port;
@@ -50,8 +54,15 @@ public class ShiroConfig {
     @Value("${spring.redis.timeout}")
     private int timeout;
 
-    @Value("${spring.redis.password}")
-    private String password;
+    @Value("${spring.redis.jedis.pool.max-idle}")
+    private int maxIdle;
+
+    @Value("${spring.redis.jedis.pool.max-wait}")
+    private long maxWaitMillis;
+
+    private final String CACHE_KEY = "shiro:cache:";
+    private final String SESSION_KEY = "shiro:session:";
+    private final int EXPIRE = 1800;
 
     @Bean
     public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
@@ -180,8 +191,11 @@ public class ShiroConfig {
         RedisManager redisManager = new RedisManager();
         redisManager.setHost(host);
         redisManager.setPort(port);
+        // 配置缓存过期时间
         redisManager.setTimeout(timeout);
-        redisManager.setPassword(password);
+        if(StringUtils.isNotBlank(password)){
+            redisManager.setPassword(password);
+        }
         return redisManager;
     }
 
@@ -195,15 +209,19 @@ public class ShiroConfig {
         RedisCacheManager redisCacheManager = new RedisCacheManager();
         redisCacheManager.setRedisManager(redisManager());
         redisCacheManager.setKeyPrefix(CACHE_KEY);
-        // 配置缓存的话要求放在session里面的实体类必须有个id标识
-        redisCacheManager.setPrincipalIdFieldName("userId");
+        // 配置缓存的话要求放在session里面的实体类必须有个id标识 注：这里id为用户表中的主键，否-> 报：User must has getter for field: xx
+        redisCacheManager.setPrincipalIdFieldName("id");
         return redisCacheManager;
     }
 
+    /**
+     * SessionID生成器
+     */
     @Bean
     public ShiroSessionIdGenerator sessionIdGenerator(){
         return new ShiroSessionIdGenerator();
     }
+
 
     /**
      * RedisSessionDAO shiro sessionDao层的实现 通过redis
@@ -215,7 +233,7 @@ public class ShiroConfig {
         redisSessionDAO.setRedisManager(redisManager());
         redisSessionDAO.setSessionIdGenerator(sessionIdGenerator());
         redisSessionDAO.setKeyPrefix(SESSION_KEY);
-        redisSessionDAO.setExpire(timeout);
+        redisSessionDAO.setExpire(EXPIRE);
         return redisSessionDAO;
     }
 
@@ -248,6 +266,5 @@ public class ShiroConfig {
         kickoutSessionControlFilter.setKickoutUrl("/kickout");
         return kickoutSessionControlFilter;
     }
-
 
 }

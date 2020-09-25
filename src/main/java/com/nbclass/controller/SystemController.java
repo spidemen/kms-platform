@@ -143,7 +143,7 @@ public class SystemController{
         if(null!=subject){
             String username = ((User) SecurityUtils.getSubject().getPrincipal()).getUsername();
             Serializable sessionId = SecurityUtils.getSubject().getSession().getId();
-            Cache<String, Deque<Serializable>> cache = redisCacheManager.getCache(redisCacheManager.getKeyPrefix()+username);
+            Cache<String, Deque<Serializable>> cache = redisCacheManager.getCache("shiro_redis_cache:"+username);
             Deque<Serializable> deques = cache.get(username);
             for(Serializable deque : deques){
                 if(sessionId.equals(deque)){
