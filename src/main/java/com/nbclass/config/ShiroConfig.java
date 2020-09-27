@@ -4,9 +4,11 @@ import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.nbclass.shiro.MyShiroRealm;
 import com.nbclass.shiro.ShiroService;
 import com.nbclass.shiro.filter.KickoutSessionControlFilter;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -39,14 +41,16 @@ public class ShiroConfig {
     @Value("${spring.redis.host}")
     private String host;
 
+    @Value("${spring.redis.password}")
+    private String password;
+
     @Value("${spring.redis.port}")
     private int port;
 
     @Value("${spring.redis.timeout}")
     private int timeout;
 
-    @Value("${spring.redis.password}")
-    private String password;
+    private final int EXPIRE = 1800;
 
     @Bean
     public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
@@ -176,9 +180,10 @@ public class ShiroConfig {
         redisManager.setHost(host);
         redisManager.setPort(port);
         // 配置缓存过期时间
-        redisManager.setExpire(1800);
         redisManager.setTimeout(timeout);
-        redisManager.setPassword(password);
+        if(StringUtils.isNotBlank(password)){
+            redisManager.setPassword(password);
+        }
         return redisManager;
     }
 
@@ -191,6 +196,8 @@ public class ShiroConfig {
     public RedisCacheManager redisCacheManager() {
         RedisCacheManager redisCacheManager = new RedisCacheManager();
         redisCacheManager.setRedisManager(redisManager());
+        // 配置缓存的话要求放在session里面的实体类必须有个id标识 注：这里id为用户表中的主键，否-> 报：User must has getter for field: xx
+        redisCacheManager.setPrincipalIdFieldName("id");
         return redisCacheManager;
     }
 
@@ -203,6 +210,7 @@ public class ShiroConfig {
     public RedisSessionDAO redisSessionDAO() {
         RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
         redisSessionDAO.setRedisManager(redisManager());
+        redisSessionDAO.setExpire(EXPIRE);
         return redisSessionDAO;
     }
 
@@ -210,11 +218,12 @@ public class ShiroConfig {
      * shiro session的管理
      */
     @Bean
-    public DefaultWebSessionManager sessionManager() {
+    public SessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         sessionManager.setSessionDAO(redisSessionDAO());
         return sessionManager;
     }
+
     /**
      * 限制同一账号登录同时登录人数控制
      * @return
@@ -235,6 +244,5 @@ public class ShiroConfig {
         kickoutSessionControlFilter.setKickoutUrl("/kickout");
         return kickoutSessionControlFilter;
     }
-
 
 }

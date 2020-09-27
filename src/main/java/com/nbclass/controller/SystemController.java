@@ -5,6 +5,7 @@ import com.nbclass.model.Permission;
 import com.nbclass.model.User;
 import com.nbclass.service.PermissionService;
 import com.nbclass.service.UserService;
+import com.nbclass.shiro.filter.KickoutSessionControlFilter;
 import com.nbclass.util.CoreConst;
 import com.nbclass.util.PasswordHelper;
 import com.nbclass.util.ResultUtil;
@@ -19,13 +20,14 @@ import org.apache.shiro.cache.Cache;
 import org.apache.shiro.subject.Subject;
 import org.crazycake.shiro.RedisCacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +44,8 @@ public class SystemController{
     private PermissionService permissionService;
     @Autowired
     private RedisCacheManager redisCacheManager;
+    @Autowired
+    private RedisProperties redisProperties;
 
     /*首页*/
     @RequestMapping(value={"/","/index"})
@@ -143,8 +147,8 @@ public class SystemController{
         if(null!=subject){
             String username = ((User) SecurityUtils.getSubject().getPrincipal()).getUsername();
             Serializable sessionId = SecurityUtils.getSubject().getSession().getId();
-            Cache<String, Deque<Serializable>> cache = redisCacheManager.getCache(redisCacheManager.getKeyPrefix()+username);
-            Deque<Serializable> deques = cache.get(username);
+            Cache<String, LinkedList<Serializable>> cache = redisCacheManager.getCache(KickoutSessionControlFilter.ONLINE_USER);
+            LinkedList<Serializable> deques = cache.get(username);
             for(Serializable deque : deques){
                 if(sessionId.equals(deque)){
                     deques.remove(deque);
