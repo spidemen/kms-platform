@@ -41,8 +41,10 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
      */
     private int maxSession = 5;
 
+    public static String ONLINE_USER = "online_user";
+
     private SessionManager sessionManager;
-    private Cache<String, Deque<Serializable>> cache;
+    private Cache<String, LinkedList<Serializable>> cache;
 
     public void setKickoutUrl(String kickoutUrl) {
         this.kickoutUrl = kickoutUrl;
@@ -61,7 +63,7 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
     }
 
     public void setCacheManager(CacheManager cacheManager) {
-        this.cache = cacheManager.getCache("shiro_redis_cache");
+        this.cache = cacheManager.getCache(ONLINE_USER);
     }
 
     @Override
@@ -84,18 +86,18 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
         Serializable sessionId = session.getId();
 
         //读取缓存   没有就存入
-        Deque<Serializable> deque = cache.get(username);
+        LinkedList<Serializable> deque = cache.get(username);
         
         //如果此用户没有session队列，也就是还没有登录过，缓存中没有
         //就new一个空队列，不然deque对象为空，会报空指针
         if(deque==null){
-        	deque = new LinkedList<Serializable>();
+        	deque = new LinkedList<>();
         }
         
         //如果队列里没有此sessionId，且用户没有被踢出；放入队列
         if(!deque.contains(sessionId) && session.getAttribute("kickout") == null) {
             //将sessionId存入队列
-        	deque.push(sessionId);
+        	deque.add(sessionId);
         	//将用户的sessionId队列缓存
             cache.put(username, deque);
         }

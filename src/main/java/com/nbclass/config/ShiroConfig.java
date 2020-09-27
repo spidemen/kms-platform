@@ -3,8 +3,6 @@ package com.nbclass.config;
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.nbclass.shiro.MyShiroRealm;
 import com.nbclass.shiro.ShiroService;
-import com.nbclass.shiro.ShiroSessionIdGenerator;
-import com.nbclass.shiro.ShiroSessionManager;
 import com.nbclass.shiro.filter.KickoutSessionControlFilter;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
@@ -25,8 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
 
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
@@ -54,14 +50,6 @@ public class ShiroConfig {
     @Value("${spring.redis.timeout}")
     private int timeout;
 
-    @Value("${spring.redis.jedis.pool.max-idle}")
-    private int maxIdle;
-
-    @Value("${spring.redis.jedis.pool.max-wait}")
-    private long maxWaitMillis;
-
-    private final String CACHE_KEY = "shiro:cache:";
-    private final String SESSION_KEY = "shiro:session:";
     private final int EXPIRE = 1800;
 
     @Bean
@@ -208,18 +196,9 @@ public class ShiroConfig {
     public RedisCacheManager redisCacheManager() {
         RedisCacheManager redisCacheManager = new RedisCacheManager();
         redisCacheManager.setRedisManager(redisManager());
-        redisCacheManager.setKeyPrefix(CACHE_KEY);
         // 配置缓存的话要求放在session里面的实体类必须有个id标识 注：这里id为用户表中的主键，否-> 报：User must has getter for field: xx
         redisCacheManager.setPrincipalIdFieldName("id");
         return redisCacheManager;
-    }
-
-    /**
-     * SessionID生成器
-     */
-    @Bean
-    public ShiroSessionIdGenerator sessionIdGenerator(){
-        return new ShiroSessionIdGenerator();
     }
 
 
@@ -231,8 +210,6 @@ public class ShiroConfig {
     public RedisSessionDAO redisSessionDAO() {
         RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
         redisSessionDAO.setRedisManager(redisManager());
-        redisSessionDAO.setSessionIdGenerator(sessionIdGenerator());
-        redisSessionDAO.setKeyPrefix(SESSION_KEY);
         redisSessionDAO.setExpire(EXPIRE);
         return redisSessionDAO;
     }
@@ -242,10 +219,11 @@ public class ShiroConfig {
      */
     @Bean
     public SessionManager sessionManager() {
-        ShiroSessionManager shiroSessionManager = new ShiroSessionManager();
-        shiroSessionManager.setSessionDAO(redisSessionDAO());
-        return shiroSessionManager;
+        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        sessionManager.setSessionDAO(redisSessionDAO());
+        return sessionManager;
     }
+
     /**
      * 限制同一账号登录同时登录人数控制
      * @return
