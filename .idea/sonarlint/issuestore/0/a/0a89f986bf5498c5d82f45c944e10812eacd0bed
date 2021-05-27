@@ -1,0 +1,11 @@
+
+†squid:S1488G"jImmediately return this expression instead of assigning it to the temporary variable "authenticationInfo".(©Âœ¥şÿÿÿÿ
+Osquid:S2589„"7Remove this expression which always evaluates to "true"(êø’ƒ
+Tsquid:S1155R">Use isEmpty() to check whether the collection is empty or not.(•óÔO
+Tsquid:S1155c">Use isEmpty() to check whether the collection is empty or not.(•óÔO
+¯%squid:RedundantThrowsDeclarationCheck9"yRemove the declaration of thrown exception 'org.apache.shiro.authc.AuthenticationException' which is a runtime exception.(Ë´ã›ùÿÿÿÿ
+usquid:S2293w"YReplace the type specification in this constructor call with the diamond operator ("<>").(‰¤—äüÿÿÿÿ
+esquid:S4201{"IRemove this unnecessary null check; "instanceof" returns false for nulls.(¼Ââ‡ÿÿÿÿÿ
+asquid:S4201€"IRemove this unnecessary null check; "instanceof" returns false for nulls.(ê¬³
+P
+squid:S106‚"9Replace this use of System.out or System.err by a logger.(‹ş—¯

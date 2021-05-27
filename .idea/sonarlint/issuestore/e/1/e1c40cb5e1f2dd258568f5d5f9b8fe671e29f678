@@ -1,0 +1,5 @@
+
+gsquid:CommentedOutCodeLineT"<This block of commented-out lines of code should be removed.(Υ¦λ£όÿÿÿÿ
+usquid:S2293W"YReplace the type specification in this constructor call with the diamond operator ("<>").(Γη„ÿÿÿÿÿ
+=squid:S11701"!Make this final field static too.(€†μωÿÿÿÿ
+nsquid:S001161"QRename this field "EXPIRE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(€†μωÿÿÿÿ
